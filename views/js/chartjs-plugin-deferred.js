@@ -1,1 +1,216 @@
-"use strict";!function(){function e(e,t){var n=parseInt(e,10);return isNaN(n)?0:"string"==typeof e&&-1!==e.indexOf("%")?n/100*t:n}function t(t){var n=t[s],r=t.chart.canvas;if(null===r.offsetParent)return!1;var a=r.getBoundingClientRect(),f=e(n.yOffset||0,a.height),d=e(n.xOffset||0,a.width);return a.right-d>=0&&a.bottom-f>=0&&a.left+d<=window.innerWidth&&a.top+f<=window.innerHeight}function n(e){var t=l.Deferred.defaults,n=e.options.deferred,r=o.getValueOrDefault;return void 0===n?n={}:"boolean"==typeof n&&(n={enabled:n}),{enabled:r(n.enabled,t.enabled),xOffset:r(n.xOffset,t.xOffset),yOffset:r(n.yOffset,t.yOffset),delay:r(n.delay,t.delay),appeared:!1,delayed:!1,loaded:!1,elements:[]}}function r(e){var n=e.target[i];n.ticking||(n.ticking=!0,l.platform.defer(function(){var e,r,a=n.instances.slice(),f=a.length;for(r=0;r<f;++r)t(e=a[r])&&(d(e),e[s].appeared=!0,e.update());n.ticking=!1}))}function a(e){if(e.nodeType===Node.ELEMENT_NODE){var t=o.getStyle(e,"overflow-x"),n=o.getStyle(e,"overflow-y");return"auto"===t||"scroll"===t||"auto"===n||"scroll"===n}return e.nodeType===Node.DOCUMENT_NODE}function f(e){for(var t,n,f=e.chart.canvas.parentElement;f;)a(f)&&(0===(n=(t=f[i]||(f[i]={})).instances||(t.instances=[])).length&&f.addEventListener("scroll",r,{passive:!0}),n.push(e),e[s].elements.push(f)),f=f.parentElement||f.ownerDocument}function d(e){e[s].elements.forEach(function(t){var n=t[i].instances;n.splice(n.indexOf(e),1),n.length||(o.removeEvent(t,"scroll",r),delete t[i])}),e[s].elements=[]}var l=window.Chart,o=l.helpers,i="_chartjs_deferred",s="_deferred_model";l.Deferred=l.Deferred||{},l.Deferred.defaults={enabled:!0,xOffset:0,yOffset:0,delay:0},l.platform=o.extend(l.platform||{},{defer:function(e,t,n){var r=function(){e.call(n)};t?window.setTimeout(r,t):o.requestAnimFrame.call(window,r)}}),l.plugins.register({beforeInit:function(e){(e[s]=n(e)).enabled&&f(e)},beforeDatasetsUpdate:function(e){var n=e[s];if(!n.enabled)return!0;if(!n.loaded){if(!n.appeared&&!t(e))return!1;if(n.appeared=!0,n.loaded=!0,d(e),n.delay>0)return n.delayed=!0,l.platform.defer(function(){n.delayed=!1,e.update()},n.delay),!1}return!n.delayed&&void 0}})}();
+/*!
+ * chartjs-plugin-deferred
+ * http://chartjs.org/
+ * Version: 0.2.0
+ *
+ * Copyright 2016 Simon Brunel
+ * Released under the MIT license
+ * https://github.com/chartjs/chartjs-plugin-deferred/blob/master/LICENSE.md
+ */
+/* global window: false */
+
+'use strict';
+
+(function() {
+
+	var Chart = window.Chart;
+	var helpers = Chart.helpers;
+	var STUB_KEY = '_chartjs_deferred';
+	var MODEL_KEY = '_deferred_model';
+
+	/**
+	 * Plugin based on discussion from Chart.js issue #2745.
+	 * @see https://github.com/chartjs/Chart.js/issues/2745
+	 */
+	Chart.Deferred = Chart.Deferred || {};
+	Chart.Deferred.defaults = {
+		enabled: true,
+		xOffset: 0,
+		yOffset: 0,
+		delay: 0
+	};
+
+	// DOM implementation
+	// @TODO move it in Chart.js: src/core/core.platform.js
+	Chart.platform = helpers.extend(Chart.platform || {}, {
+		defer: function(fn, delay, scope) {
+			var callback = function() {
+				fn.call(scope);
+			};
+			if (!delay) {
+				helpers.requestAnimFrame.call(window, callback);
+			} else {
+				window.setTimeout(callback, delay);
+			}
+		}
+	});
+
+	function computeOffset(value, base) {
+		var number = parseInt(value, 10);
+		if (isNaN(number)) {
+			return 0;
+		} else if (typeof value === 'string' && value.indexOf('%') !== -1) {
+			return number / 100 * base;
+		}
+		return number;
+	}
+
+	function chartInViewport(instance) {
+		var model = instance[MODEL_KEY];
+		var canvas = instance.chart.canvas;
+
+		// http://stackoverflow.com/a/21696585
+		if (canvas.offsetParent === null) {
+			return false;
+		}
+
+		var rect = canvas.getBoundingClientRect();
+		var dy = computeOffset(model.yOffset || 0, rect.height);
+		var dx = computeOffset(model.xOffset || 0, rect.width);
+
+		return rect.right - dx >= 0
+			&& rect.bottom - dy >= 0
+			&& rect.left + dx <= window.innerWidth
+			&& rect.top + dy <= window.innerHeight;
+	}
+
+	function buildDeferredModel(instance) {
+		var defaults = Chart.Deferred.defaults;
+		var options = instance.options.deferred;
+		var getValue = helpers.getValueOrDefault;
+
+		if (options === undefined) {
+			options = {};
+		} else if (typeof options === 'boolean') {
+			// accepting { options: { deferred: true } }
+			options = {enabled: options};
+		}
+
+		return {
+			enabled: getValue(options.enabled, defaults.enabled),
+			xOffset: getValue(options.xOffset, defaults.xOffset),
+			yOffset: getValue(options.yOffset, defaults.yOffset),
+			delay: getValue(options.delay, defaults.delay),
+			appeared: false,
+			delayed: false,
+			loaded: false,
+			elements: []
+		};
+	}
+
+	function onScroll(event) {
+		var node = event.target;
+		var stub = node[STUB_KEY];
+		if (stub.ticking) {
+			return;
+		}
+
+		stub.ticking = true;
+		Chart.platform.defer(function() {
+			var instances = stub.instances.slice();
+			var ilen = instances.length;
+			var instance, i;
+
+			for (i=0; i<ilen; ++i) {
+				instance = instances[i];
+				if (chartInViewport(instance)) {
+					unwatch(instance); // eslint-disable-line
+					instance[MODEL_KEY].appeared = true;
+					instance.update();
+				}
+			}
+
+			stub.ticking = false;
+		});
+	}
+
+	function isScrollable(node) {
+		var type = node.nodeType;
+		if (type === Node.ELEMENT_NODE) {
+			var overflowX = helpers.getStyle(node, 'overflow-x');
+			var overflowY = helpers.getStyle(node, 'overflow-y');
+			return overflowX === 'auto' || overflowX === 'scroll'
+				|| overflowY === 'auto' || overflowY === 'scroll';
+		}
+
+		return node.nodeType === Node.DOCUMENT_NODE;
+	}
+
+	function watch(instance) {
+		var canvas = instance.chart.canvas;
+		var parent = canvas.parentElement;
+		var stub, instances;
+
+		while (parent) {
+			if (isScrollable(parent)) {
+				stub = parent[STUB_KEY] || (parent[STUB_KEY] = {});
+				instances = stub.instances || (stub.instances = []);
+				if (instances.length === 0) {
+					parent.addEventListener('scroll', onScroll, {passive: true});
+				}
+
+				instances.push(instance);
+				instance[MODEL_KEY].elements.push(parent);
+			}
+
+			parent = parent.parentElement || parent.ownerDocument;
+		}
+	}
+
+	function unwatch(instance) {
+		instance[MODEL_KEY].elements.forEach(function(element) {
+			var instances = element[STUB_KEY].instances;
+			instances.splice(instances.indexOf(instance), 1);
+			if (!instances.length) {
+				helpers.removeEvent(element, 'scroll', onScroll);
+				delete element[STUB_KEY];
+			}
+		});
+
+		instance[MODEL_KEY].elements = [];
+	}
+
+	Chart.plugins.register({
+		beforeInit: function(instance) {
+			var model = instance[MODEL_KEY] = buildDeferredModel(instance);
+			if (model.enabled) {
+				watch(instance);
+			}
+		},
+
+		beforeDatasetsUpdate: function(instance) {
+			var model = instance[MODEL_KEY];
+			if (!model.enabled) {
+				return true;
+			}
+
+			if (!model.loaded) {
+				if (!model.appeared && !chartInViewport(instance)) {
+					// cancel the datasets update
+					return false;
+				}
+
+				model.appeared = true;
+				model.loaded = true;
+				unwatch(instance);
+
+				if (model.delay > 0) {
+					model.delayed = true;
+					Chart.platform.defer(function() {
+						model.delayed = false;
+						instance.update();
+					}, model.delay);
+
+					return false;
+				}
+			}
+
+			if (model.delayed) {
+				// in case of delayed update, ensure to block external requests, such
+				// as interacting with the legend label, or direct calls to update()
+				return false;
+			}
+		}
+	});
+
+}());
