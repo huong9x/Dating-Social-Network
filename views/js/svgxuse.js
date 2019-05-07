@@ -1,1 +1,230 @@
-!function(){"use strict";if("undefined"!=typeof window&&window.addEventListener){var e,t,n=Object.create(null),o=function(){clearTimeout(t),t=setTimeout(e,100)},i=function(){},r=function(){var e;window.addEventListener("resize",o,!1),window.addEventListener("orientationchange",o,!1),window.MutationObserver?((e=new MutationObserver(o)).observe(document.documentElement,{childList:!0,subtree:!0,attributes:!0}),i=function(){try{e.disconnect(),window.removeEventListener("resize",o,!1),window.removeEventListener("orientationchange",o,!1)}catch(e){}}):(document.documentElement.addEventListener("DOMSubtreeModified",o,!1),i=function(){document.documentElement.removeEventListener("DOMSubtreeModified",o,!1),window.removeEventListener("resize",o,!1),window.removeEventListener("orientationchange",o,!1)})},u=function(e){function t(e){var t;return void 0!==e.protocol?t=e:(t=document.createElement("a")).href=e,t.protocol.replace(/:/g,"")+t.host}var n,o,i;return window.XMLHttpRequest&&(n=new XMLHttpRequest,o=t(location),i=t(e),n=void 0===n.withCredentials&&""!==i&&i!==o?XDomainRequest||void 0:XMLHttpRequest),n},s="http://www.w3.org/1999/xlink";e=function(){function e(){0===(E-=1)&&(i(),r())}function t(e){return function(){!0!==n[e.base]&&(e.useEl.setAttributeNS(s,"xlink:href","#"+e.hash),e.useEl.hasAttribute("href")&&e.useEl.setAttribute("href","#"+e.hash))}}function o(t){return function(){t.onerror=null,t.ontimeout=null,e()}}var d,a,l,c,h,f,m,v,w,b,E=0;for(i(),w=document.getElementsByTagName("use"),h=0;h<w.length;h+=1){try{a=w[h].getBoundingClientRect()}catch(e){a=!1}d=(v=(c=w[h].getAttribute("href")||w[h].getAttributeNS(s,"href")||w[h].getAttribute("xlink:href"))&&c.split?c.split("#"):["",""])[0],l=v[1],f=a&&0===a.left&&0===a.right&&0===a.top&&0===a.bottom,a&&0===a.width&&0===a.height&&!f?(w[h].hasAttribute("href")&&w[h].setAttributeNS(s,"xlink:href",c),d.length&&(!0!==(b=n[d])&&setTimeout(t({useEl:w[h],base:d,hash:l}),0),void 0===b&&void 0!==(m=u(d))&&(b=new m,n[d]=b,b.onload=function(t){return function(){var n,o=document.body,i=document.createElement("x");t.onload=null,i.innerHTML=t.responseText,(n=i.getElementsByTagName("svg")[0])&&(n.setAttribute("aria-hidden","true"),n.style.position="absolute",n.style.width=0,n.style.height=0,n.style.overflow="hidden",o.insertBefore(n,o.firstChild)),e()}}(b),b.onerror=o(b),b.ontimeout=o(b),b.open("GET",d),b.send(),E+=1))):f?d.length&&n[d]&&setTimeout(t({useEl:w[h],base:d,hash:l}),0):void 0===n[d]?n[d]=!0:n[d].onload&&(n[d].abort(),delete n[d].onload,n[d]=!0)}w="",E+=1,e()};var d;d=function(){window.removeEventListener("load",d,!1),t=setTimeout(e,0)},"complete"!==document.readyState?window.addEventListener("load",d,!1):d()}}();
+/*!
+ * @copyright Copyright (c) 2017 IcoMoon.io
+ * @license   Licensed under MIT license
+ *            See https://github.com/Keyamoon/svgxuse
+ * @version   1.2.6
+ */
+/*jslint browser: true */
+/*global XDomainRequest, MutationObserver, window */
+(function () {
+	"use strict";
+	if (typeof window !== "undefined" && window.addEventListener) {
+		var cache = Object.create(null); // holds xhr objects to prevent multiple requests
+		var checkUseElems;
+		var tid; // timeout id
+		var debouncedCheck = function () {
+			clearTimeout(tid);
+			tid = setTimeout(checkUseElems, 100);
+		};
+		var unobserveChanges = function () {
+			return;
+		};
+		var observeChanges = function () {
+			var observer;
+			window.addEventListener("resize", debouncedCheck, false);
+			window.addEventListener("orientationchange", debouncedCheck, false);
+			if (window.MutationObserver) {
+				observer = new MutationObserver(debouncedCheck);
+				observer.observe(document.documentElement, {
+					childList: true,
+					subtree: true,
+					attributes: true
+				});
+				unobserveChanges = function () {
+					try {
+						observer.disconnect();
+						window.removeEventListener("resize", debouncedCheck, false);
+						window.removeEventListener("orientationchange", debouncedCheck, false);
+					} catch (ignore) {}
+				};
+			} else {
+				document.documentElement.addEventListener("DOMSubtreeModified", debouncedCheck, false);
+				unobserveChanges = function () {
+					document.documentElement.removeEventListener("DOMSubtreeModified", debouncedCheck, false);
+					window.removeEventListener("resize", debouncedCheck, false);
+					window.removeEventListener("orientationchange", debouncedCheck, false);
+				};
+			}
+		};
+		var createRequest = function (url) {
+			// In IE 9, cross origin requests can only be sent using XDomainRequest.
+			// XDomainRequest would fail if CORS headers are not set.
+			// Therefore, XDomainRequest should only be used with cross origin requests.
+			function getOrigin(loc) {
+				var a;
+				if (loc.protocol !== undefined) {
+					a = loc;
+				} else {
+					a = document.createElement("a");
+					a.href = loc;
+				}
+				return a.protocol.replace(/:/g, "") + a.host;
+			}
+			var Request;
+			var origin;
+			var origin2;
+			if (window.XMLHttpRequest) {
+				Request = new XMLHttpRequest();
+				origin = getOrigin(location);
+				origin2 = getOrigin(url);
+				if (Request.withCredentials === undefined && origin2 !== "" && origin2 !== origin) {
+					Request = XDomainRequest || undefined;
+				} else {
+					Request = XMLHttpRequest;
+				}
+			}
+			return Request;
+		};
+		var xlinkNS = "http://www.w3.org/1999/xlink";
+		checkUseElems = function () {
+			var base;
+			var bcr;
+			var fallback = ""; // optional fallback URL in case no base path to SVG file was given and no symbol definition was found.
+			var hash;
+			var href;
+			var i;
+			var inProgressCount = 0;
+			var isHidden;
+			var Request;
+			var url;
+			var uses;
+			var xhr;
+			function observeIfDone() {
+				// If done with making changes, start watching for chagnes in DOM again
+				inProgressCount -= 1;
+				if (inProgressCount === 0) { // if all xhrs were resolved
+					unobserveChanges(); // make sure to remove old handlers
+					observeChanges(); // watch for changes to DOM
+				}
+			}
+			function attrUpdateFunc(spec) {
+				return function () {
+					if (cache[spec.base] !== true) {
+						spec.useEl.setAttributeNS(xlinkNS, "xlink:href", "#" + spec.hash);
+						if (spec.useEl.hasAttribute("href")) {
+							spec.useEl.setAttribute("href", "#" + spec.hash);
+						}
+					}
+				};
+			}
+			function onloadFunc(xhr) {
+				return function () {
+					var body = document.body;
+					var x = document.createElement("x");
+					var svg;
+					xhr.onload = null;
+					x.innerHTML = xhr.responseText;
+					svg = x.getElementsByTagName("svg")[0];
+					if (svg) {
+						svg.setAttribute("aria-hidden", "true");
+						svg.style.position = "absolute";
+						svg.style.width = 0;
+						svg.style.height = 0;
+						svg.style.overflow = "hidden";
+						body.insertBefore(svg, body.firstChild);
+					}
+					observeIfDone();
+				};
+			}
+			function onErrorTimeout(xhr) {
+				return function () {
+					xhr.onerror = null;
+					xhr.ontimeout = null;
+					observeIfDone();
+				};
+			}
+			unobserveChanges(); // stop watching for changes to DOM
+			// find all use elements
+			uses = document.getElementsByTagName("use");
+			for (i = 0; i < uses.length; i += 1) {
+				try {
+					bcr = uses[i].getBoundingClientRect();
+				} catch (ignore) {
+					// failed to get bounding rectangle of the use element
+					bcr = false;
+				}
+				href = uses[i].getAttribute("href")
+					|| uses[i].getAttributeNS(xlinkNS, "href")
+					|| uses[i].getAttribute("xlink:href");
+				if (href && href.split) {
+					url = href.split("#");
+				} else {
+					url = ["", ""];
+				}
+				base = url[0];
+				hash = url[1];
+				isHidden = bcr && bcr.left === 0 && bcr.right === 0 && bcr.top === 0 && bcr.bottom === 0;
+				if (bcr && bcr.width === 0 && bcr.height === 0 && !isHidden) {
+					// the use element is empty
+					// if there is a reference to an external SVG, try to fetch it
+					// use the optional fallback URL if there is no reference to an external SVG
+					if (fallback && !base.length && hash && !document.getElementById(hash)) {
+						base = fallback;
+					}
+					if (uses[i].hasAttribute("href")) {
+						uses[i].setAttributeNS(xlinkNS, "xlink:href", href);
+					}
+					if (base.length) {
+						// schedule updating xlink:href
+						xhr = cache[base];
+						if (xhr !== true) {
+							// true signifies that prepending the SVG was not required
+							setTimeout(attrUpdateFunc({
+								useEl: uses[i],
+								base: base,
+								hash: hash
+							}), 0);
+						}
+						if (xhr === undefined) {
+							Request = createRequest(base);
+							if (Request !== undefined) {
+								xhr = new Request();
+								cache[base] = xhr;
+								xhr.onload = onloadFunc(xhr);
+								xhr.onerror = onErrorTimeout(xhr);
+								xhr.ontimeout = onErrorTimeout(xhr);
+								xhr.open("GET", base);
+								xhr.send();
+								inProgressCount += 1;
+							}
+						}
+					}
+				} else {
+					if (!isHidden) {
+						if (cache[base] === undefined) {
+							// remember this URL if the use element was not empty and no request was sent
+							cache[base] = true;
+						} else if (cache[base].onload) {
+							// if it turns out that prepending the SVG is not necessary,
+							// abort the in-progress xhr.
+							cache[base].abort();
+							delete cache[base].onload;
+							cache[base] = true;
+						}
+					} else if (base.length && cache[base]) {
+						setTimeout(attrUpdateFunc({
+							useEl: uses[i],
+							base: base,
+							hash: hash
+						}), 0);
+					}
+				}
+			}
+			uses = "";
+			inProgressCount += 1;
+			observeIfDone();
+		};
+		var winLoad;
+		winLoad = function () {
+			window.removeEventListener("load", winLoad, false); // to prevent memory leaks
+			tid = setTimeout(checkUseElems, 0);
+		};
+		if (document.readyState !== "complete") {
+			// The load event fires when all resources have finished loading, which allows detecting whether SVG use elements are empty.
+			window.addEventListener("load", winLoad, false);
+		} else {
+			// No need to add a listener if the document is already loaded, initialize immediately.
+			winLoad();
+		}
+	}
+}());
