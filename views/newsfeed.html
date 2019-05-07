@@ -119,7 +119,7 @@
          <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1">
             <a href="02-ProfilePage.html" class="logo">
                <div class="img-wrap">
-                  <img src="https://html.crumina.net/html-olympus/img/logo.png" alt="Olympus">
+                  <img src="img/logo.png" alt="Olympus">
                </div>
                <div class="title-block">
                   <h6 class="logo-title">olympus</h6>
@@ -236,13 +236,13 @@
       <div class="fixed-sidebar fixed-sidebar-responsive">
          <div class="fixed-sidebar-left sidebar--small" id="sidebar-left-responsive">
             <a href="#" class="logo js-sidebar-open">
-            <img src="https://html.crumina.net/html-olympus/img/logo.png" alt="Olympus">
+            <img src="img/logo.png" alt="Olympus">
             </a>
          </div>
          <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1-responsive">
             <a href="#" class="logo">
                <div class="img-wrap">
-                  <img src="https://html.crumina.net/html-olympus/img/logo.png" alt="Olympus">
+                  <img src="img/logo.png" alt="Olympus">
                </div>
                <div class="title-block">
                   <h6 class="logo-title">olympus</h6>
@@ -1092,9 +1092,7 @@
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#request" role="tab">
                      <div class="control-icon has-items">
-                        <svg class="olymp-happy-face-icon">
-                           <use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-                        </svg>
+                        <i class="fa fa-user"></i>
                         <div class="label-avatar bg-blue">6</div>
                      </div>
                   </a>
@@ -1102,9 +1100,7 @@
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#chat" role="tab">
                      <div class="control-icon has-items">
-                        <svg class="olymp-chat---messages-icon">
-                           <use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
-                        </svg>
+                        <i class="fa fa-comments"></i>
                         <div class="label-avatar bg-purple">2</div>
                      </div>
                   </a>
@@ -1112,9 +1108,7 @@
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#notification" role="tab">
                      <div class="control-icon has-items">
-                        <svg class="olymp-thunder-icon">
-                           <use xlink:href="svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
-                        </svg>
+                        <i class="fa fa-bell"></i>
                         <div class="label-avatar bg-primary">8</div>
                      </div>
                   </a>
@@ -1306,9 +1300,7 @@
                            <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">9 hours ago</time></span>
                         </div>
                         <span class="notification-icon">
-                           <svg class="olymp-happy-face-icon">
-                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-                           </svg>
+                           <i class="fa fa-user"></i>
                         </span>
                         <div class="more">
                            <svg class="olymp-three-dots-icon">
@@ -1354,9 +1346,7 @@
                            <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">March 5th at 6:43pm</time></span>
                         </div>
                         <span class="notification-icon">
-                           <svg class="olymp-happy-face-icon">
-                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-                           </svg>
+                           <i class="fa fa-user"></i>
                         </span>
                         <div class="more">
                            <svg class="olymp-three-dots-icon">
@@ -1408,7 +1398,7 @@
       <div class="container">
          <div class="row">
             <!-- Main Content -->
-            <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
                <div class="ui-block">
                   <!-- News Feed Form  -->
                   <div class="news-feed-form">
@@ -1584,12 +1574,12 @@
                      </article>
                   </div>
                <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
-                  <i class="fa fa-plus"></i>
+                  <i class="fa fa-chevron-down"></i>
                </a>
             </main>
             <!-- ... end Main Content -->
-            <!-- Left Sidebar -->
-            <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+            <!-- Right Sidebar -->
+            <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
                <div class="ui-block">
                   <div class="ui-block-title">
                      <h6 class="title">Friend Requests</h6>
@@ -1601,13 +1591,13 @@
                   </div>
                   <!-- W-Action -->
                   <ul class="widget w-friend-pages-added notification-list friend-requests">
-                     <li class="inline-items">
+                     <li>
                         <div class="author-thumb">
-                           <img src="https://html.crumina.net/html-olympus/img/avatar38-sm.jpg" alt="author">
+                           <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
                         </div>
                         <div class="notification-event">
-                           <a href="#" class="h6 notification-friend">Francine Smith</a>
-                           <span class="chat-message-item">8 Friends in Common</span>
+                           <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
+                           <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
                         </div>
                         <span class="notification-icon">
                            <a href="#" class="accept-request">
@@ -1615,16 +1605,21 @@
                                  <i class="fas fa-user-plus"></i>
                               </span>
                            </a>
+                           <a href="#" class="accept-request request-del">
+                              <span class="">
+                                 <i class="fas fa-user-times"></i>
+                              </span>
+                           </a>
                         </span>
+                        <div class="more">
+                           <svg class="olymp-three-dots-icon">
+                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                           </svg>
+                        </div>
                      </li>
                   </ul>
                   <!-- ... end W-Action -->
                </div>
-            </aside>
-            <!-- ... end Left Sidebar -->
-            <!-- Right Sidebar -->
-            <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
-               
                <div class="ui-block">
                   <div class="ui-block-title">
                      <h6 class="title">Notifications</h6>

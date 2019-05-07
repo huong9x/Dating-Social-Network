@@ -1,3 +1,10 @@
+/*Mobile*/
+@media only screen and (max-width: 768px) {
+    .col.col-xl-4.order-xl-3.col-lg-6.order-lg-3.col-md-6.col-sm-12.col-12 {
+        display: none;
+    }
+}
+
 .ranges ul,
 ol li,
 ul {
