@@ -1,3 +1,10 @@
+/*Mobile*/
+@media only screen and (max-width: 768px) {
+    .col.col-xl-4.order-xl-3.col-lg-6.order-lg-3.col-md-6.col-sm-12.col-12 {
+        display: none;
+    }
+}
+
 .ranges ul,
 ol li,
 ul {
@@ -4951,7 +4958,6 @@ fieldset[disabled] .checkbox input[type=checkbox] {
     position: fixed;
     z-index: 22;
     width: 70px;
-    min-height: 1000vh
 }
 
 .fixed-sidebar-left,
@@ -7190,7 +7196,7 @@ body.overlay-enable:before {
 .upload-photo-item {
     display: inline-block;
     vertical-align: middle;
-    width: 49%;
+    width: 100%;
     padding: 50px;
     text-align: center;
     fill: #c2c5d9;
