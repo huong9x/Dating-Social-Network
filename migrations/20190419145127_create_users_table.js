@@ -4,6 +4,11 @@ exports.up = async knex => {
         table.increments('user_id');
         table.string('username').unique();
         table.integer('password');
+        table.string('first_name');
+        table.string('last_name');
+        table.date('birth_date');
+        table.string('gender', 10);
+        table.string('email');
     });
 };
 
