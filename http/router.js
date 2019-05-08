@@ -1,11 +1,17 @@
-const Router = require('koa-router');
-// const UserController = require('./user-controller');
-
-const router = new Router();
+const Router                       = require('koa-router');
+const koaBody                      = require('koa-body');
+const SearchByExactlyNameCondition = require('../User/SearchByExactlyNameCondition');
+const router                       = new Router();
 
 router
-    .get('/login', async (context) => {
-        context.render('login.html', { username: 'username' });
+    .get('/login', koaBody(),async (context) => {
+        context.render('login.html', {  });
+    })
+    .post('/login', koaBody(), async (context) => {
+        var username = context.request.body.username;
+        var password = context.request.body.password;
+        let newusers    = await context.userRepository.search(new SearchByExactlyNameCondition(username));
+        console.log(newusers);
     });
 
 module.exports = router.routes();
