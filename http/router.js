@@ -10,7 +10,7 @@ router
     .post('/login', koaBody(), async (context) => {
         var username = context.request.body.username;
         var password = context.request.body.password;
-        let newusers    = await context.userRepository.search(new SearchByExactlyNameCondition(username));
+        let newusers = await context.userRepository.search(new SearchByExactlyNameCondition(username));
         console.log(newusers);
     });
 
