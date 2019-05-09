@@ -1,4 +1,4 @@
-const nunjucks      = require('nunjucks');
+const nunjucks = require('nunjucks');
 
 module.exports = () => {
 

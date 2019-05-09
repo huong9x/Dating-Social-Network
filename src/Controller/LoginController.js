@@ -17,13 +17,12 @@ class LoginController {
         
         try {
             let user = await ctx.authenticator.attempt(username, password); 
-            console.log(user);   
 
             ctx.authenticator.login(user);
             ctx.redirect('/newsfeed');
 
         } catch(e) {
-            return ctx.redirect('/login2');    
+            return ctx.redirect('/login');    
         }
         
     }

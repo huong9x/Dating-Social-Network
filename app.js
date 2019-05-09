@@ -15,6 +15,7 @@ const njProvider     = require('./nunjucks.provider');
 const staticPath     = './config/views';
 
 const app            = new Koa();
+app.keys             = ['some-secret-key'];
 
 app.use(static(path.join( __dirname, staticPath)));
 app.use(session(app));
@@ -27,5 +28,5 @@ app.use(database.connectionProvider(config));
 app.use(routes);
 
 app.listen(process.env.PORT, () => {
-    console.log('Server started');
+    console.log('Server started ' + process.env.PORT);
 });
