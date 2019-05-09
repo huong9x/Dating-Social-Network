@@ -2,7 +2,7 @@ const nunjucks      = require('nunjucks');
 
 module.exports = () => {
 
-    nunjucks.configure('views', {autoescape: true});
+    nunjucks.configure('./config/views', {autoescape: true});
 
     return async(context, next) => {
         context.render = (template, data) => {
