@@ -4,7 +4,7 @@ const knex   = require('knex')(config);
 class NewsfeedController {
 
     async getNewsfeed(ctx) {
-        return ctx.render('newsfeed.html', true);
+        return ctx.render('newsfeed2.html', true);
     }
 
 }
