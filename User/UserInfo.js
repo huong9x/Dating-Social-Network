@@ -16,6 +16,9 @@ class UserInfo {
     getUserId() {
         return this.user_id;
     }
+    getName() {
+        return lodash.startCase(this.first_name);
+    }
     getPresentationName() {
         return lodash.startCase(this.first_name + ' ' + this.last_name);
     }
