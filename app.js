@@ -14,6 +14,7 @@ const hasherProvider = require('./config/hasher/hasherProvider');
 const njProvider     = require('./nunjucks.provider');
 const staticPath     = './config/views';
 
+
 const app            = new Koa();
 app.keys             = ['some-secret-key'];
 
@@ -27,6 +28,6 @@ app.use(njProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);
 
-app.listen(process.env.PORT, () => {
+app.listen(5000, () => {
     console.log('Server started on port: 5000');
 });
