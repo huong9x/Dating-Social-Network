@@ -1,7 +1,7 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('user_information').del()
+  return knex('followers').del()
     .then(() => {
       return knex('users').del();
     })
@@ -29,7 +29,5 @@ exports.seed = function(knex, Promise) {
     .then(() => {
       return knex('notifications').del();
     })
-    .then(() => {
-      return knex('followers').del();
-    })
+
 };
