@@ -4,7 +4,8 @@ const knex   = require('knex')(config);
 class NewsfeedController {
 
     async getNewsfeed(ctx) {
-        return ctx.render('newsfeed.html', true);
+        let user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+        ctx.render('newsfeed.html', { user });
     }
 
 }

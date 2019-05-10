@@ -5,7 +5,6 @@ class ProfileController {
 
     async getProfile(ctx) {
         let user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        console.log(user);
         ctx.render('profile.html', { user });
     }
 }
