@@ -4,7 +4,8 @@ const knex   = require('knex')(config);
 class ProfileController {
 
     async getProfile(ctx) {
-        ctx.render('profile.html', true);
+        let user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+        ctx.render('profile.html', user);
     }
 }
 

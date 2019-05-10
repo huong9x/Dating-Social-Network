@@ -1,4 +1,5 @@
-const User = require('./User');
+const User     = require('./User');
+const UserInfo = require('./UserInfo');
 
 class UserRepository {
     constructor(knex) {
@@ -14,7 +15,7 @@ class UserRepository {
 
         return null;
     }
-    async getByUserId(id) {
+    async getByUserId(user_id) {
         let rawUser = await this.knex.select('*').from('users').where('user_id', user_id);
 
         if(rawUser.length) {
@@ -24,8 +25,8 @@ class UserRepository {
         return null;
     }
 
-    async getUserInfo(id) {
-        let rawUser      = await this.knex.select('*').from('users').where('user_id', user_id);
+    async getUserInfo(user_id) {
+        let rawUser = await this.knex.select('*').from('users').where('user_id', user_id);
 
         if(rawUser.length) {
             return new UserInfo(rawUser);

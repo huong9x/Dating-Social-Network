@@ -13,6 +13,7 @@ class LoginController {
 
     async postLogin(ctx, next) {
         const {username, password} = ctx.request.body;
+        console.log(ctx.request.body.username);
         console.log(username, password);
         
         try {
