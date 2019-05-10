@@ -5,7 +5,7 @@ class LoginController {
 
     async getLogin(ctx) {
         if (ctx.authenticator.check()) {
-            return ctx.redirect('/profile');
+            return ctx.redirect('/newsfeed');
         }
 
         ctx.render('login.html', true);

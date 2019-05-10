@@ -1,13 +1,13 @@
 const Router                   = require('koa-router');
 const logginRequiredMiddleware = require('../../Middleware/logginRequiredMiddleware');
 const LoginController          = require('../../src/Controller/LoginController');
-const DatingController         = require('../../src/Controller/DatingController');
+const NewsfeedController         = require('../../src/Controller/NewsfeedController');
 const LogoutController = require('../../src/Controller/LogoutController');
 
 const router                   = new Router();
 const loginController          = new LoginController();
 const logoutController = new LogoutController();
-const datingController         = new DatingController();
+const newsfeedController         = new NewsfeedController();
 
 router
     .get('/login', loginController.getLogin)
@@ -16,6 +16,6 @@ router
     .post('/signup', () => {
         ctx.body = {message: signup};
     })   
-    .get('/newsfeed', logginRequiredMiddleware, datingController.getNewsfeed);
+    .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed);
 
 module.exports = router.routes();

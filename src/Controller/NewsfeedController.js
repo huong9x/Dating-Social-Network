@@ -1,7 +1,7 @@
 const config = require('../../knexfile');
 const knex   = require('knex')(config); 
 
-class DatingController {
+class NewsfeedController {
 
     async getNewsfeed(ctx) {
         return ctx.render('newsfeed.html', true);
@@ -9,4 +9,4 @@ class DatingController {
 
 }
 
-module.exports = DatingController;
+module.exports = NewsfeedController;
