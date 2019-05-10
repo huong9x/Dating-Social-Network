@@ -4,6 +4,10 @@ class UserRepository {
     constructor(knex) {
         this.knex = knex;
     }
+    async getUserInfo(username) {
+        
+    }
+
     async findByUsername(username) {
         let rawUser = await this.knex.select('*').from('users').where('username', username);
 
