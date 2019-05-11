@@ -179,17 +179,12 @@
     <!-- ... end Header-BP -->
     <!-- Responsive Header-BP -->
     <div class="fixed-sidebar fixed-sidebar-responsive">
-
         <div class="fixed-sidebar-left sidebar--small">
-            <!-- <a href="#" class="logo js-sidebar-open active">
-                <img src="img/logo.png" alt="Dating Social Network">
-            </a> -->
             <a href="/newsfeed" class="logo">
                 <div class="img-wrap">
                     <img src="img/logo.png" alt="Dating Social Network">
                 </div>
             </a>
-
         </div>
     </div>
     <header class="header header-responsive" id="site-header-responsive">
@@ -199,9 +194,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#request" role="tab">
                         <div class="control-icon has-items">
-                            <svg class="olymp-happy-face-icon">
-                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-                            </svg>
+                            <i class="fa fa-user"></i>
                             <div class="label-avatar bg-blue">6</div>
                         </div>
                     </a>
@@ -210,53 +203,29 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#notification" role="tab">
                         <div class="control-icon has-items">
-                            <svg class="olymp-thunder-icon">
-                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
-                            </svg>
+                            <i class="fa fa-bell"></i>
                             <div class="label-avatar bg-primary">8</div>
                         </div>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#search" role="tab">
-                        <svg class="olymp-magnifying-glass-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
-                        </svg>
-                        <svg class="olymp-close-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use>
-                        </svg>
                     </a>
                 </li>
             </ul>
         </div>
 
     </header>
-    <a href="/profile">
+    
     <div class="fixed-sidebar right fixed-sidebar-responsive">
-
-        <!-- <div class="fixed-sidebar-right sidebar--small">
-            <a href="/profile" class="olympus-chat inline-items js-chat-open">
-                <svg class="olymp-chat---messages-icon">
-                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
-                </svg>
-            </a>
-        </div> -->
-        
-            <div class="fixed-sidebar right fixed-sidebar-responsive">
-                    
-                <div class="fixed-sidebar-right sidebar--small">
-                    <div class="olympus-chat inline-items js-chat-open">
-                        <svg class="olymp-chat---messages-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
-                        </svg>
-                    </div>
+        <div class="fixed-sidebar-right sidebar--small">
+            <div class="fixed-sidebar fixed-sidebar-responsive">
+                <div class="fixed-sidebar-left sidebar--small">
+                    <a href="/profile" class="logo" style="background-color: #38a9ff;">
+                        <div class="img-wrap">
+                            <img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="Dating Social Network" style="border-radius: 50%;">
+                        </div>
+                    </a>
                 </div>
-           
-        </div> 
-        
-
-    </div></a>
+            </div>
+        </div>
+    </div>
     <!-- ... end Responsive Header-BP -->
     <div class="header-spacer"></div>
     {% block container %} {% endblock %}
