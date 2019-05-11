@@ -18,7 +18,9 @@ const staticPath     = './config/views';
 const app            = new Koa();
 app.keys             = ['some-secret-key'];
 
+console.log(path.join( __dirname, staticPath));
 app.use(static(path.join( __dirname, staticPath)));
+
 app.use(session(app));
 app.use(hasherProvider(10));
 app.use(bodyParser());
@@ -28,6 +30,6 @@ app.use(njProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log('Server started on port: 5000');
 });
