@@ -1,5 +1,5 @@
-const User     = require('./User');
-const UserInfo = require('./UserInfo');
+const User           = require('./User');
+const UserInfo       = require('./UserInfo');
 
 class UserRepository {
     constructor(knex) {

@@ -1,6 +1,6 @@
 version: "3"
 services:
-    my-node-app:
+    dating-social-network:
         build: .
         ports:
             - 5000:3000

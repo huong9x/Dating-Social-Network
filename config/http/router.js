@@ -19,7 +19,9 @@ router
         ctx.body = {message: signup};
     })   
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
-    .get('/profile', logginRequiredMiddleware, profileController.getProfile)
+    .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
+    .get('/profile', logginRequiredMiddleware, profileController.goProfile)
+    .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
     .get('/notifications', logginRequiredMiddleware)
     .get('/friends', logginRequiredMiddleware)
     .get('/friends/requests', logginRequiredMiddleware)
