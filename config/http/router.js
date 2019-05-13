@@ -21,6 +21,8 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     .get('/profile', logginRequiredMiddleware, profileController.goProfile)
+    .get('/about', logginRequiredMiddleware,profileController.goAbout)
+    .get('/about/:userid', logginRequiredMiddleware,profileController.getAbout)
     .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
     .get('/notifications', logginRequiredMiddleware)
     .get('/friends', logginRequiredMiddleware)
