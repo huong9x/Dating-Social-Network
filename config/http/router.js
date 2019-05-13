@@ -11,7 +11,7 @@ const loginController           = new LoginController();
 const logoutController          = new LogoutController();
 const newsfeedController        = new NewsfeedController();
 const profileController         = new ProfileController();
-const aboutController         = new AboutController();
+const aboutController           = new AboutController();
 
 router
     .get('/login', loginController.getLogin)
@@ -20,6 +20,7 @@ router
     .post('/signup', () => {
         ctx.body = {message: signup};
     })   
+    .get('/', (ctx) => ctx.redirect('/newsfeed'))
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
     
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
