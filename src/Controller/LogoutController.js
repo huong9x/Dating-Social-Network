@@ -1,7 +1,7 @@
-const config = require('../../knexfile');
-const knex   = require('knex')(config); 
-
 class LogoutController {
+    constructor(knex) {
+        this.knex = knex;
+    }
 
     async getLogout(ctx) {
         ctx.authenticator.logout();

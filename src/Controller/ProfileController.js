@@ -1,7 +1,7 @@
-const config = require('../../knexfile');
-const knex   = require('knex')(config); 
-
 class ProfileController {
+    constructor(knex) {
+        this.knex = knex;
+    }
 
     async goProfile(ctx) {
         ctx.redirect('/profile/' + ctx.session.loggedInUserId);

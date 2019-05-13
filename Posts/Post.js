@@ -1,16 +1,15 @@
 
 class Post {
-    constructor(user_id, username, password) {
-        this.user_id  = user_id;
-        this.username = username;
-        this.password = password;
+    constructor(user_id, content, video_id, image_id, post_time) {
+        this.user_id   = user_id;
+        this.content   = content;
+        this.video_id  = video_id;
+        this.image_id  = image_id;
+        this.post_time = post_time;
     }
     
     getUserId() {
         return this.user_id;
-    }
-    getPostId() {
-        return this.post_id;
     }
 }
 
