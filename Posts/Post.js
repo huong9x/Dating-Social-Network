@@ -11,6 +11,9 @@ class Post {
     getUserId() {
         return this.user_id;
     }
+    getContent() {
+        return this.content;
+    }
 }
 
-module.exports = User;
+module.exports = Post;

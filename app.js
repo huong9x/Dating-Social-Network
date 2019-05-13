@@ -10,6 +10,7 @@ const session        = require('koa-session');
 
 const authProvider   = require('./config/auth/Auth.Provider');
 const userProvider   = require('./User/user.provider');
+const postProvider   = require('./Posts/post.provider');
 const hasherProvider = require('./config/hasher/hasherProvider');
 const njProvider     = require('./nunjucks.provider');
 const staticPath     = './config/views';
@@ -25,6 +26,7 @@ app.use(session(app));
 app.use(hasherProvider(10));
 app.use(bodyParser());
 app.use(userProvider(knex));
+app.use(postProvider(knex));
 app.use(authProvider());
 app.use(njProvider());
 app.use(database.connectionProvider(config));
