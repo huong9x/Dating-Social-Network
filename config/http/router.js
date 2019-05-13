@@ -22,7 +22,8 @@ router
     .get('/logout', logoutController.getLogout)
     .post('/signup', () => {
         ctx.body = {message: signup};
-    })   
+    }) 
+    .get('/', (ctx) => ctx.redirect('/newsfeed'))  
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
     
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
