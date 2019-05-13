@@ -5,7 +5,7 @@ const NewsfeedController        = require('../../src/Controller/NewsfeedControll
 const LogoutController          = require('../../src/Controller/LogoutController');
 const ProfileController         = require('../../src/Controller/ProfileController');
 const AboutController           = require('../../src/Controller/AboutController');
-const FriendsController           = require('../../src/Controller/FriendsController');
+const FriendsController         = require('../../src/Controller/FriendsController');
 
 const router                    = new Router();
 const loginController           = new LoginController();
@@ -13,7 +13,7 @@ const logoutController          = new LogoutController();
 const newsfeedController        = new NewsfeedController();
 const profileController         = new ProfileController();
 const aboutController           = new AboutController();
-const friendsController           = new FriendsController();
+const friendsController         = new FriendsController();
 
 
 router
