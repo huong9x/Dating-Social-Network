@@ -13,7 +13,10 @@ class VideoController {
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
-        return await ctx.render('videos.html', { user, main_user });        
+        if(ctx.params.userid == ctx.session.loggedInUserId) {
+            var profile_settings = true;
+        }
+        return await ctx.render('videos.html', { user, main_user, profile_settings });        
     }
 }
 
