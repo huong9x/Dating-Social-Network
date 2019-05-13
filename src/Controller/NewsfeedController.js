@@ -1,7 +1,7 @@
-const config = require('../../knexfile');
-const knex   = require('knex')(config); 
-
 class NewsfeedController {
+    constructor(knex) {
+        this.knex = knex;
+    }
 
     async getNewsfeed(ctx) {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
@@ -9,8 +9,7 @@ class NewsfeedController {
     }
     async postStatus(ctx) {
         const {status} = ctx.request.body;
-        let a =  await ctx.userRepository.addNewStatus(new AddNewStatus(ctx.session.loggedInUserId, status));
-        return ctx.redirect('/newsfeed');
+        return await ctx.postRepository.addNewStatus(new NewStatus(ctx.session.loggedInUserId, status));
     }
 
 }
