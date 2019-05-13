@@ -6,8 +6,8 @@ class PostRepository {
     }
 
     async addNewPost(content) {
-        let post = await this.knex('post').insert([{user_id: user_id}, {content: content}])
-        return new Post(post[0])
+        let post = await this.knex('post').insert([{user_id: 1, content: content}]);
+        // return new Post(1, post[0].content, post[0].video_id, post[0].image_id, post[0].post_time)
     }
 }
 
