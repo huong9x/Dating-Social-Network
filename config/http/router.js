@@ -6,7 +6,8 @@ const LogoutController          = require('../../src/Controller/LogoutController
 const ProfileController         = require('../../src/Controller/ProfileController');
 const AboutController           = require('../../src/Controller/AboutController');
 const FriendsController         = require('../../src/Controller/FriendsController');
-const PhotosController         = require('../../src/Controller/PhotosController');
+const PhotosController          = require('../../src/Controller/PhotosController');
+const VideoController           = require('../../src/Controller/VideoController');
 
 const router                    = new Router();
 const loginController           = new LoginController();
@@ -15,8 +16,8 @@ const newsfeedController        = new NewsfeedController();
 const profileController         = new ProfileController();
 const aboutController           = new AboutController();
 const friendsController         = new FriendsController();
-const photosController         = new PhotosController();
-
+const photosController          = new PhotosController();
+const videoController           = new VideoController();
 
 router
     .get('/login', loginController.getLogin)
@@ -48,7 +49,10 @@ router
     .get('/photos', logginRequiredMiddleware, photosController.goPhotos)
     .get('/photos/:userid', logginRequiredMiddleware, photosController.getPhotos)
     
-    .get('/videos', logginRequiredMiddleware)
+    .get('/videos', logginRequiredMiddleware, videoController.goVideos)
+
+    .get('/videos/:userid', logginRequiredMiddleware, videoController.getVideos)
+
     
     .get('/search/friends:name', logginRequiredMiddleware)
     .get('/search/people:name', logginRequiredMiddleware)
