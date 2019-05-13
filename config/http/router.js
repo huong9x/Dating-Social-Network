@@ -5,13 +5,16 @@ const NewsfeedController        = require('../../src/Controller/NewsfeedControll
 const LogoutController          = require('../../src/Controller/LogoutController');
 const ProfileController         = require('../../src/Controller/ProfileController');
 const AboutController           = require('../../src/Controller/AboutController');
+const FriendsController           = require('../../src/Controller/FriendsController');
 
 const router                    = new Router();
 const loginController           = new LoginController();
 const logoutController          = new LogoutController();
 const newsfeedController        = new NewsfeedController();
 const profileController         = new ProfileController();
-const aboutController         = new AboutController();
+const aboutController           = new AboutController();
+const friendsController           = new FriendsController();
+
 
 router
     .get('/login', loginController.getLogin)
@@ -27,12 +30,13 @@ router
     .get('/profile', logginRequiredMiddleware, profileController.goProfile)
     .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
 
-    .get('/about', logginRequiredMiddleware,aboutController.goAbout)
-    .get('/about/:userid', logginRequiredMiddleware,aboutController.getAbout)
+    .get('/about', logginRequiredMiddleware, aboutController.goAbout)
+    .get('/about/:userid', logginRequiredMiddleware, aboutController.getAbout)
     
     .get('/notifications', logginRequiredMiddleware)
     
-    .get('/friends', logginRequiredMiddleware)
+    .get('/friends', logginRequiredMiddleware, friendsController.goFriends)
+    .get('/friends/:userid', logginRequiredMiddleware, friendsController.getFriends)
     .get('/friends/requests', logginRequiredMiddleware)
     .get('/friends/requests/accept', logginRequiredMiddleware)
     .get('/friends/requests/reject', logginRequiredMiddleware)
