@@ -38,7 +38,6 @@
         </div>
     </div>
     <!-- ... end Fixed Sidebar Left -->
-
     <!-- Header-BP -->
     <header class="header" id="site-header">
         <div class="page-title">
@@ -77,15 +76,15 @@
                                         <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
                                     </div>
                                     <span class="notification-icon">
-                                   <a href="#" class="accept-request">
-                                      <span class="without-text">
-                                         <i class="fas fa-user-plus"></i>
-                                      </span>
+                                <a href="#" class="accept-request">
+                                    <span class="without-text">
+                                        <i class="fas fa-user-plus"></i>
+                                    </span>
                                     </a>
                                     <a href="#" class="accept-request request-del">
                                         <span class="">
-                                         <i class="fa fa-user-times"></i>
-                                      </span>
+                                        <i class="fa fa-user-times"></i>
+                                    </span>
                                     </a>
                                     </span>
                                     <div class="more">
@@ -119,9 +118,9 @@
                                         <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
                                     </div>
                                     <span class="notification-icon">
-                                   <svg class="olymp-comments-post-icon">
-                                      <use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use>
-                                   </svg>
+                                <svg class="olymp-comments-post-icon">
+                                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use>
+                                </svg>
                                 </span>
                                     <div class="more">
                                         <svg class="olymp-three-dots-icon">
@@ -412,7 +411,6 @@
         <!-- ... end  Tab panes -->
 
     </header>
-
     <div class="fixed-sidebar right fixed-sidebar-responsive">
         <div class="fixed-sidebar-right sidebar--small">
             <div class="fixed-sidebar fixed-sidebar-responsive">
@@ -428,6 +426,7 @@
     </div>
     <!-- ... end Responsive Header-BP -->
     <div class="header-spacer"></div>
+    {% block profilecover %} {% endblock %}
     {% block container %} {% endblock %}
     <!-- Window-popup Update Header Photo -->
     <div class="modal fade" id="update-header-photo" tabindex="-1" role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
