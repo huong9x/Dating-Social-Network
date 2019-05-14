@@ -7,10 +7,10 @@ class NewsfeedController {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         ctx.render('newsfeed.html', { main_user });
     }
-    async postStatus(context) {
-        const {status} = context.request.body;
-        let newpost    =  context.postRepository.addNewPost(status);
-        return context.redirect('/newsfeed', newpost);
+    async postStatus(ctx) {
+        const {status} = ctx.request.body;
+        let newpost    = ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
+        return ctx.redirect('/newsfeed', newpost);
     }
 
 }
