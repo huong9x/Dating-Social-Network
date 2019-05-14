@@ -8,9 +8,11 @@ const AboutController           = require('../../src/Controller/AboutController'
 const FriendsController         = require('../../src/Controller/FriendsController');
 const PhotosController          = require('../../src/Controller/PhotosController');
 const VideoController           = require('../../src/Controller/VideoController');
+const SignupController          = require('../../src/Controller/SignupController');
 
 const router                    = new Router();
 const loginController           = new LoginController();
+const signupController          = new SignupController();
 const logoutController          = new LogoutController();
 const newsfeedController        = new NewsfeedController();
 const profileController         = new ProfileController();
@@ -23,11 +25,9 @@ router
     .get('/login', loginController.getLogin)
     .post('/login', loginController.postLogin)
     .get('/logout', logoutController.getLogout)
-    .post('/signup', () => {
-        ctx.body = {message: signup};
-    }) 
+    .post('/signup', signupController.postSignup)
     .get('/', (ctx) => {
-        console.log(ctx.req.connection.remoteAddress);
+        console.log(ctx.req.connection.remoteAddress, ctx.res.connection.remoteAddress);
         ctx.redirect('/newsfeed');
     })  
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)

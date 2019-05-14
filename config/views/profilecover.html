@@ -13,23 +13,23 @@
 							<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
-										<a href="/profile">Timeline</a>
+										<a href=" {{ user.getUserId() }} ">Timeline</a>
 									</li>
 									<li>
-										<a href="/about">About</a>
+										<a href="/about/{{ user.getUserId() }} ">About</a>
 									</li>
 									<li>
-										<a href="/friends">Friends</a>
+										<a href="/friends/{{ user.getUserId() }} ">Friends</a>
 									</li>
 								</ul>
 							</div>
 							<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
-										<a href="/photos">Photos</a>
+										<a href="/photos/{{ user.getUserId() }} ">Photos</a>
 									</li>
 									<li>
-										<a href="/videos">Videos</a>
+										<a href="/videos/{{ user.getUserId() }} ">Videos</a>
 									</li>
 									<li>
 										<div class="more">

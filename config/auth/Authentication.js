@@ -19,14 +19,11 @@ class Authenticator {
         return attemptingUser;
     }
 
-    // async preventDuplicate(username) {
-    //     let DuplicatingUser = await this.userProvider.findByUsername(user);
-
-    //     if (DuplicatingUser) {
-    //         throw new Error('Your username already exists!');
-    //     }
-    //     return DuplicatingUser;
-    // }
+    async register (user) {
+        if(user) {
+            return this.login(user);
+        }
+    }
 
     login(user) {
         this.session.loggedInUserId = user.getUserId();

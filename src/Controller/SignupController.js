@@ -1,22 +1,17 @@
-const config = require('../../knexfile');
-const knex   = require('knex')(config); 
-
 class SignupController {
+    constructor(knex) {
+        this.knex = knex;
+    }
 
     async postSignup(ctx, next) {
-        const {first_name, last_name, email, username, password, birth_date, gender} = ctx.request.body;
-        console.log(first_name, last_name, email, username, password, birth_date, gender);
-        
-        try {
-            let user = await ctx.authenticator.preventDuplicate(username);
-
-            ctx.authenticator.login(user);
-            ctx.redirect('/newsfeed');
-
-        } catch(e) {
-            return ctx.redirect('/login');    
+        const {first_name, last_name, email, birth_date, gender, username, password} = ctx.request.body;
+        if(await ctx.userRepository.findByUsername(username)) {
+            throw new Error('Username "' + username + '" is already taken')
         }
-        
+        let user = await ctx.userRepository.addUser(username, await ctx.hasher.generate(password), first_name, last_name, email, birth_date, gender);
+        console.log(user);
+        await ctx.authenticator.register(user);
+        return ctx.redirect('/profile'); 
     }
 }
 
