@@ -13,7 +13,7 @@ class ProfileController {
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
-        return await ctx.render('profile.html', { user, main_user });        
+        return await ctx.render('profile.html', { ctx, user, main_user });        
     }
 }
 
