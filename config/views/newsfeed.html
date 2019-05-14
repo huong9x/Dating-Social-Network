@@ -10,254 +10,283 @@ News Feed
 
 {% block container %}
 <div class="container">
-      <div class="row">
-          <!-- Main Content -->
-          <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-              <div class="ui-block">
-                  <!-- News Feed Form  -->
-                  <div class="news-feed-form">
-                      <!-- Nav tabs -->
-                      <ul class="nav nav-tabs" role="tablist">
-                          <li class="nav-item">
-                              <a class="nav-link active inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
-                                  <i class="fa fa-list-alt"></i>
-                                  <span>Status</span>
-                              </a>
-                          </li>
-                      </ul>
-                      <!-- Tab panes -->
-                      <div class="tab-content">
-                          <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
-                              <form action="/postStatus" method="POST">
-                                  <div class="author-thumb">
-                                      <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-                                  </div>
-                                  <div class="form-group with-icon label-floating is-empty">
-                                      <label class="control-label">Share what you are thinking here...</label>
-                                      <textarea type =textarea name="status" class="form-control" placeholder=""></textarea>
-                                  </div>
-                                  <div class="add-options-message">
-                                      <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
-                                          <i class="fa fa-camera" data-toggle="modal" data-target="#update-header-photo"></i>
-                                      </a>
-                                      <button class="btn btn-primary btn-md-2">Post Status</button>
-                                  </div>
-                              </form>
-                          </div>
-                          <div class="tab-pane" id="profile-1" role="tabpanel" aria-expanded="true">
-                              <form>
-                                  <div class="author-thumb">
-                                      <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-                                  </div>
-                                  <div class="form-group with-icon label-floating is-empty">
-                                      <label class="control-label">Share what you are thinking here...</label>
-                                      <textarea class="form-control" placeholder=""></textarea>
-                                  </div>
-                                  <div class="add-options-message">
-                                      <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
-                                          <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
-                                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
-                                          </svg>
-                                      </a>
-                                      <button class="btn btn-primary btn-md-2">Post Status</button>
-                                      <button class="btn btn-md-2 btn-border-think btn-transparent c-grey">Preview</button>
-                                  </div>
-                              </form>
-                          </div>
-                          <div class="tab-pane" id="blog" role="tabpanel" aria-expanded="true">
-                              <form>
-                                  <div class="author-thumb">
-                                      <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-                                  </div>
-                                  <div class="form-group with-icon label-floating is-empty">
-                                      <label class="control-label">Share what you are thinking here...</label>
-                                      <textarea class="form-control" placeholder=""></textarea>
-                                  </div>
-                                  <div class="add-options-message">
-                                      <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
-                                          <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
-                                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
-                                          </svg>
-                                      </a>
-                                      <button class="btn btn-primary btn-md-2">Post Status</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- ... end News Feed Form  -->
-              </div>
-              <div id="newsfeed-items-grid">
-                  <div class="ui-block">
-                      <article class="hentry post video">
-                          <div class="post__author author vcard inline-items">
-                              <img src="https://html.crumina.net/html-olympus/img/avatar7-sm.jpg" alt="author">
-                              <div class="author-date">
-                                  <a class="h6 post__author-name fn" href="#">Marina Valentine</a> shared a <a href="#">link</a>
-                                  <div class="post__date">
-                                      <time class="published" datetime="2004-07-24T18:18">
-                                          March 4 at 2:05pm
-                                      </time>
-                                  </div>
-                              </div>
-                              <div class="more">
-                                  <svg class="olymp-three-dots-icon">
-                                      <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                                  </svg>
-                                  <ul class="more-dropdown">
-                                      <li>
-                                          <a href="#">Edit Post</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Delete Post</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Turn Off Notifications</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Select as Featured</a>
-                                      </li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <p>Hey <a href="#">Cindi</a>, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!</p>
-                          <div class="post-video">
-                              <div class="video-thumb">
-                                  <img src="https://html.crumina.net/html-olympus/img/video-youtube1.jpg" alt="photo">
-                                  <a href="https://youtube.com/watch?v=excVFQ2TWig" class="play-video">
-                                      <svg class="olymp-play-icon">
-                                          <use xlink:href="svg-icons/sprites/icons.svg#olymp-play-icon"></use>
-                                      </svg>
-                                  </a>
-                              </div>
-                              <div class="video-content">
-                                  <a href="#" class="h4 title">Iron Maid - ChillGroves</a>
-                                  <p>Lorem ipsum dolor sit amet, consectetur ipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                                  </p>
-                                  <a href="#" class="link-site">YOUTUBE.COM</a>
-                              </div>
-                          </div>
-                          <div class="post-additional-info inline-items">
-                              <a href="#" class="post-add-icon inline-items">
-                                  <i class="fas fa-thumbs-up"></i>
-                                  <span>18</span>
-                              </a>
-                              <ul class="friends-harmonic">
-                                  <li>
-                                      <a href="#">
-                                          <img src="https://html.crumina.net/html-olympus/img/friend-harmonic9.jpg" alt="friend">
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="#">
-                                          <img src="https://html.crumina.net/html-olympus/img/friend-harmonic10.jpg" alt="friend">
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="#">
-                                          <img src="https://html.crumina.net/html-olympus/img/friend-harmonic7.jpg" alt="friend">
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="#">
-                                          <img src="https://html.crumina.net/html-olympus/img/friend-harmonic8.jpg" alt="friend">
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="#">
-                                          <img src="https://html.crumina.net/html-olympus/img/friend-harmonic11.jpg" alt="friend">
-                                      </a>
-                                  </li>
-                              </ul>
-                              <div class="names-people-likes">
-                                  <a href="#">Jenny</a>, <a href="#">Robert</a> and
-                                  <br>18 more liked this
-                              </div>
-                              <div class="comments-shared">
-                                  <a href="#" class="post-add-icon inline-items">
-                                      <i class="fas fa-comments"></i>
-                                      <span>0</span>
-                                  </a>
-                                  <a href="#" class="post-add-icon inline-items">
-                                      <i class="fas fa-share"></i>
-                                      <span>16</span>
-                                  </a>
-                              </div>
-                          </div>
-                      </article>
-                  </div>
-                  <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
-                      <i class="fa fa-chevron-down"></i>
-                  </a>
-          </main>
-          <!-- ... end Main Content -->
-          <!-- Right Sidebar -->
-          <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
-              <div class="ui-block">
-                  <div class="ui-block-title">
-                      <h6 class="title">Friend Requests</h6>
-                      <a href="#" class="more">
-                          <svg class="olymp-three-dots-icon">
-                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                          </svg>
-                      </a>
-                  </div>
-                  <!-- W-Action -->
-                  <ul class="widget w-friend-pages-added notification-list friend-requests">
-                      <li>
-                          <div class="author-thumb">
-                              <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
-                          </div>
-                          <div class="notification-event">
-                              <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-                              <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
-                          </div>
-                          <span class="notification-icon">
-                             <a href="#" class="accept-request">
-                                <span class="without-text">
-                                   <i class="fas fa-user-plus"></i>
-                                </span>
-                          </a>
-                          <a href="#" class="accept-request request-del">
-                              <span class="">
-                                   <i class="fas fa-user-times"></i>
-                                </span>
-                          </a>
-                          </span>
-                          <div class="more">
-                              <svg class="olymp-three-dots-icon">
-                                  <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                              </svg>
-                          </div>
-                      </li>
-                  </ul>
-                  <!-- ... end W-Action -->
-              </div>
-              <div class="ui-block">
-                  <div class="ui-block-title">
-                      <h6 class="title">Notifications</h6>
-                      <a href="#" class="more">
-                          <svg class="olymp-three-dots-icon">
-                              <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                          </svg>
-                      </a>
-                  </div>
-                  <!-- W-Activity-Feed -->
-                  <ul class="widget w-activity-feed notification-list">
-                      <li>
-                          <div class="author-thumb">
-                              <img src="https://html.crumina.net/html-olympus/img/avatar49-sm.jpg" alt="author">
-                          </div>
-                          <div class="notification-event">
-                              <a href="#" class="h6 notification-friend">Marina Polson</a> commented on Jason Mark’s <a href="#" class="notification-link">photo.</a>.
-                              <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">2 mins ago</time></span>
-                          </div>
-                      </li>
-                  </ul>
-                  <!-- .. end W-Activity-Feed -->
-              </div>
-          </aside>
-          <!-- ... end Right Sidebar -->
-          </div>
-      </div>
+    <div class="row">
+        <!-- Main Content -->
+        <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <div class="ui-block">
+                <!-- News Feed Form  -->
+                <div class="news-feed-form">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
+                                <i class="fa fa-list-alt"></i>
+                                <span>Status</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
+                            <form action="/postStatus" method="POST">
+                                <div class="author-thumb">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea type=textarea name="status" class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+
+                                    <div class="options-message">
+                                        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+                                        <style>
+                                            #file{
+                                                display: none;
+                                            }
+                                        </style>
+
+                                        <label for="file" class="input-label">
+                                            <i class="fa fa-camera"></i>
+                                            <span id="label_span"></span>
+                                        </label>
+                                        <input type="file" name="" id="file" multiple accept=".3gp, .avi, .mp4, .wmv, .jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#file').on("change", function(e) {
+                                                    var files = $(this)[0].files;
+
+                                                    if(files.length >= 2) {
+                                                        $("#label_span").text(files.length + " files selected");
+                                                    } else {
+                                                        var filename = e.target.value.split('\\').pop();
+                                                        $("#label_span").text(filename);
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+                                    </div>
+
+                                    <button class="btn btn-primary btn-md-2" type="submit">Post Status</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="profile-1" role="tabpanel" aria-expanded="true">
+                            <form>
+                                <div class="author-thumb">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+                                    <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
+                                        <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+                                        </svg>
+                                    </a>
+                                    <button class="btn btn-primary btn-md-2">Post Status</button>
+                                    <button class="btn btn-md-2 btn-border-think btn-transparent c-grey">Preview</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="blog" role="tabpanel" aria-expanded="true">
+                            <form>
+                                <div class="author-thumb">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+                                    <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
+                                        <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+                                        </svg>
+                                    </a>
+                                    <button class="btn btn-primary btn-md-2">Post Status</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ... end News Feed Form  -->
+            </div>
+            <div id="newsfeed-items-grid">
+                <div class="ui-block">
+                    <article class="hentry post video">
+                        <div class="post__author author vcard inline-items">
+                            <img src="https://html.crumina.net/html-olympus/img/avatar7-sm.jpg" alt="author">
+                            <div class="author-date">
+                                <a class="h6 post__author-name fn" href="#">Marina Valentine</a> shared a <a href="#">link</a>
+                                <div class="post__date">
+                                    <time class="published" datetime="2004-07-24T18:18">
+                                        March 4 at 2:05pm
+                                    </time>
+                                </div>
+                            </div>
+                            <div class="more">
+                                <svg class="olymp-three-dots-icon">
+                                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                                </svg>
+                                <ul class="more-dropdown">
+                                    <li>
+                                        <a href="#">Edit Post</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Delete Post</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Turn Off Notifications</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Select as Featured</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>Hey <a href="#">Cindi</a>, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!</p>
+                        <div class="post-video">
+                            <div class="video-thumb">
+                                <img src="https://html.crumina.net/html-olympus/img/video-youtube1.jpg" alt="photo">
+                                <a href="https://youtube.com/watch?v=excVFQ2TWig" class="play-video">
+                                    <svg class="olymp-play-icon">
+                                        <use xlink:href="svg-icons/sprites/icons.svg#olymp-play-icon"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="video-content">
+                                <a href="#" class="h4 title">Iron Maid - ChillGroves</a>
+                                <p>Lorem ipsum dolor sit amet, consectetur ipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                                </p>
+                                <a href="#" class="link-site">YOUTUBE.COM</a>
+                            </div>
+                        </div>
+                        <div class="post-additional-info inline-items">
+                            <a href="#" class="post-add-icon inline-items">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>18</span>
+                            </a>
+                            <ul class="friends-harmonic">
+                                <li>
+                                    <a href="#">
+                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic9.jpg" alt="friend">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic10.jpg" alt="friend">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic7.jpg" alt="friend">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic8.jpg" alt="friend">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic11.jpg" alt="friend">
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="names-people-likes">
+                                <a href="#">Jenny</a>, <a href="#">Robert</a> and
+                                <br>18 more liked this
+                            </div>
+                            <div class="comments-shared">
+                                <a href="#" class="post-add-icon inline-items">
+                                    <i class="fas fa-comments"></i>
+                                    <span>0</span>
+                                </a>
+                                <a href="#" class="post-add-icon inline-items">
+                                    <i class="fas fa-share"></i>
+                                    <span>16</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+        </main>
+        <!-- ... end Main Content -->
+        <!-- Right Sidebar -->
+        <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+            <div class="ui-block">
+                <div class="ui-block-title">
+                    <h6 class="title">Friend Requests</h6>
+                    <a href="#" class="more">
+                        <svg class="olymp-three-dots-icon">
+                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                        </svg>
+                    </a>
+                </div>
+                <!-- W-Action -->
+                <ul class="widget w-friend-pages-added notification-list friend-requests">
+                    <li>
+                        <div class="author-thumb">
+                            <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
+                        </div>
+                        <div class="notification-event">
+                            <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
+                            <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                        </div>
+                        <span class="notification-icon">
+                            <a href="#" class="accept-request">
+                            <span class="without-text">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="accept-request request-del">
+                            <span class="">
+                                <i class="fas fa-user-times"></i>
+                            </span>
+                        </a>
+                        </span>
+                        <div class="more">
+                            <svg class="olymp-three-dots-icon">
+                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+                <!-- ... end W-Action -->
+            </div>
+            <div class="ui-block">
+                <div class="ui-block-title">
+                    <h6 class="title">Notifications</h6>
+                    <a href="#" class="more">
+                        <svg class="olymp-three-dots-icon">
+                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                        </svg>
+                    </a>
+                </div>
+                <!-- W-Activity-Feed -->
+                <ul class="widget w-activity-feed notification-list">
+                    <li>
+                        <div class="author-thumb">
+                            <img src="https://html.crumina.net/html-olympus/img/avatar49-sm.jpg" alt="author">
+                        </div>
+                        <div class="notification-event">
+                            <a href="#" class="h6 notification-friend">Marina Polson</a> commented on Jason Mark’s <a href="#" class="notification-link">photo.</a>.
+                            <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">2 mins ago</time></span>
+                        </div>
+                    </li>
+                </ul>
+                <!-- .. end W-Activity-Feed -->
+            </div>
+        </aside>
+        <!-- ... end Right Sidebar -->
+        </div>
+    </div>
 {% endblock %}
