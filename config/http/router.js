@@ -9,6 +9,7 @@ const FriendsController         = require('../../src/Controller/FriendsControlle
 const PhotosController          = require('../../src/Controller/PhotosController');
 const VideoController           = require('../../src/Controller/VideoController');
 const SignupController          = require('../../src/Controller/SignupController');
+const PostController            = require('../../src/Controller/PostController')
 
 const router                    = new Router();
 const loginController           = new LoginController();
@@ -19,43 +20,37 @@ const profileController         = new ProfileController();
 const aboutController           = new AboutController();
 const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
-const videoController           = new VideoController();
+const videoController           = new VideoController(); 
+const postController            = new PostController();
 
 router
     .get('/login', loginController.getLogin)
+
     .post('/login', loginController.postLogin)
+
     .get('/logout', logoutController.getLogout)
+
     .post('/signup', signupController.postSignup)
-    .get('/', (ctx) => {
-        console.log(ctx.req.connection.remoteAddress, ctx.res.connection.remoteAddress);
-        ctx.redirect('/newsfeed');
-    })  
+
+    .get('/', (ctx) => ctx.redirect('/newsfeed'))
+     
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
+
+    .get('/post', logginRequiredMiddleware, postController.viewPost)
     
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
-    .get('/profile', logginRequiredMiddleware, profileController.goProfile)
-    .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
+    .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
-    .get('/about', logginRequiredMiddleware, aboutController.goAbout)
-    .get('/about/:userid', logginRequiredMiddleware, aboutController.getAbout)
+    .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     
     .get('/notifications', logginRequiredMiddleware)
     
-    .get('/friends', logginRequiredMiddleware, friendsController.goFriends)
-    .get('/friends/:userid', logginRequiredMiddleware, friendsController.getFriends)
-    .get('/friends/requests', logginRequiredMiddleware)
-    .get('/friends/requests/accept', logginRequiredMiddleware)
-    .get('/friends/requests/reject', logginRequiredMiddleware)
-    .get('/friends/requests', logginRequiredMiddleware)
+    .get('/friends', logginRequiredMiddleware, friendsController.getFriends)
     
-    .get('/photos', logginRequiredMiddleware, photosController.goPhotos)
-    .get('/photos/:userid', logginRequiredMiddleware, photosController.getPhotos)
+    .get('/photos', logginRequiredMiddleware, photosController.getPhotos)
     
-    .get('/videos', logginRequiredMiddleware, videoController.goVideos)
-
-    .get('/videos/:userid', logginRequiredMiddleware, videoController.getVideos)
-
+    .get('/videos', logginRequiredMiddleware, videoController.getVideos)
     
     .get('/search/friends:name', logginRequiredMiddleware)
     .get('/search/people:name', logginRequiredMiddleware)
