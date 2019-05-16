@@ -1,46 +1,61 @@
-const Router                   = require('koa-router');
-const logginRequiredMiddleware = require('../../Middleware/logginRequiredMiddleware');
-const LoginController          = require('../../src/Controller/LoginController');
-const NewsfeedController       = require('../../src/Controller/NewsfeedController');
-const LogoutController         = require('../../src/Controller/LogoutController');
-const ProfileController        = require('../../src/Controller/ProfileController');
-const AboutController          = require('../../src/Controller/AboutController');
+const Router                    = require('koa-router');
+const logginRequiredMiddleware  = require('../../Middleware/logginRequiredMiddleware');
+const LoginController           = require('../../src/Controller/LoginController');
+const NewsfeedController        = require('../../src/Controller/NewsfeedController');
+const LogoutController          = require('../../src/Controller/LogoutController');
+const ProfileController         = require('../../src/Controller/ProfileController');
+const AboutController           = require('../../src/Controller/AboutController');
+const FriendsController         = require('../../src/Controller/FriendsController');
+const PhotosController          = require('../../src/Controller/PhotosController');
+const VideoController           = require('../../src/Controller/VideoController');
+const SignupController          = require('../../src/Controller/SignupController');
+const PostController            = require('../../src/Controller/PostController')
+const SettingsController        = require('../../src/Controller/SettingsController')
 
-const router                   = new Router();
-const loginController          = new LoginController();
-const logoutController         = new LogoutController();
-const newsfeedController       = new NewsfeedController();
-const profileController        = new ProfileController();
-const aboutController          = new AboutController();
+const router                    = new Router();
+const loginController           = new LoginController();
+const signupController          = new SignupController();
+const logoutController          = new LogoutController();
+const newsfeedController        = new NewsfeedController();
+const profileController         = new ProfileController();
+const aboutController           = new AboutController();
+const friendsController         = new FriendsController();
+const photosController          = new PhotosController();
+const videoController           = new VideoController(); 
+const postController            = new PostController();
+const settingsController        = new SettingsController();
 
 router
     .get('/login', loginController.getLogin)
+
     .post('/login', loginController.postLogin)
+
     .get('/logout', logoutController.getLogout)
-    .post('/signup', () => {
-        ctx.body = {message: signup};
-    })   
+
+    .post('/signup', signupController.postSignup)
+
+    .get('/', (ctx) => ctx.redirect('/newsfeed'))
+     
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
+    .get('/post', logginRequiredMiddleware, postController.viewPost)
+    
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
+    
+    .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
-    .get('/profile', logginRequiredMiddleware, profileController.goProfile)
-    .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
-
-    .get('/notifications', logginRequiredMiddleware)
-
-    .get('/friends', logginRequiredMiddleware)
-    .get('/friends/requests', logginRequiredMiddleware)
-    .get('/friends/requests/accept', logginRequiredMiddleware)
-    .get('/friends/requests/reject', logginRequiredMiddleware)
-    .get('/friends/requests', logginRequiredMiddleware)
+    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
-
-    .get('/photos', logginRequiredMiddleware)
-
-    .get('/videos', logginRequiredMiddleware)
-
+    
+    .get('/notifications', logginRequiredMiddleware)
+    
+    .get('/friends', logginRequiredMiddleware, friendsController.getFriends)
+    
+    .get('/photos', logginRequiredMiddleware, photosController.getPhotos)
+    
+    .get('/videos', logginRequiredMiddleware, videoController.getVideos)
+    
     .get('/search/friends:name', logginRequiredMiddleware)
     .get('/search/people:name', logginRequiredMiddleware)
     

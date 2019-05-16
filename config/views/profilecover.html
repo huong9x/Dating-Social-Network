@@ -13,43 +13,35 @@
 							<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
-										<a href="02-ProfilePage.html" class="active">Timeline</a>
+										<a href="/profile?id={{ user.getUserId() }} ">Timeline</a>
 									</li>
 									<li>
-										<a href="05-ProfilePage-About.html">About</a>
+										<a href="/about?id={{ user.getUserId() }} ">About</a>
 									</li>
 									<li>
-										<a href="06-ProfilePage.html">Friends</a>
+										<a href="/friends?id={{ user.getUserId() }} ">Friends</a>
 									</li>
 								</ul>
 							</div>
 							<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
-										<a href="07-ProfilePage-Photos.html">Photos</a>
+										<a href="/photos?id={{ user.getUserId() }} ">Photos</a>
 									</li>
 									<li>
-										<a href="09-ProfilePage-Videos.html">Videos</a>
+										<a href="/videos?id={{ user.getUserId() }} ">Videos</a>
 									</li>
 									<li>
 										<div class="more">
 											<svg class="olymp-three-dots-icon">
 												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
-											<ul class="more-dropdown more-with-triangle">
-												<li>
-													<a href="#">Report Profile</a>
-												</li>
-												<li>
-													<a href="#">Block Profile</a>
-												</li>
-											</ul>
 										</div>
 									</li>
 								</ul>
 							</div>
 						</div>
-
+						{% if ctx.query.id == ctx.session.loggedInUserId %}
 						<div class="control-block-button">
 							<div class="btn btn-control bg-primary more">
 								<i class="fa fa-cog"></i>
@@ -62,18 +54,20 @@
 										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Header Photo</a>
 									</li>
 									<li>
-										<a href="29-YourAccount-AccountSettings.html">Account Settings</a>
+										<a href="/settings">Account Settings</a>
 									</li>
 								</ul>
 							</div>
 						</div>
+						{% endif %}
+
 					</div>
 					<div class="top-header-author">
-						<a href="02-ProfilePage.html" class="author-thumb">
+						<a href="/profile" class="author-thumb">
 							<img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="author">
 						</a>
 						<div class="author-content">
-							<a href="02-ProfilePage.html" class="h4 author-name">{{ user.getPresentationName() }}</a>
+							<a href="#" class="h4 author-name">{{ user.getPresentationName() }}</a>
 							<div class="country">{{ user.getAddress() }}</div>
 						</div>
 					</div>
