@@ -5,6 +5,7 @@ module.exports = {
       user: process.env.MYSQL_USER || 'root',
       password: process.env.MYSQL_PASSWORD || '123',
       database: process.env.MYSQL_DATABASE || 'dating1',
-      charset  : 'utf8'
+      charset  : 'utf8',
+      dateString : true
   }
 };

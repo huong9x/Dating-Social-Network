@@ -10,7 +10,7 @@ class ProfileController {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         let user      = await ctx.userRepository.getUserInfo(ctx.query.id);
         let posts     = await ctx.postRepository.getUserPost(ctx.query.id);
-        console.log(posts);
+        console.log(main_user.getPresentationName());
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
