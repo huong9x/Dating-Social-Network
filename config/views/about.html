@@ -1,0 +1,66 @@
+{% extends 'masterpage.html' %}
+
+{% block title %}
+{{ user.getName() }}'s About
+{% endblock %}
+
+{% block titleheader %}
+About
+{% endblock %}
+
+{% block profilecover %}
+	{% include 'profilecover.html' %}
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div class="col col-xl-12 order-xl-1 col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 col-12">
+            <div class="ui-block">
+                <div class="ui-block-title">
+                    <h6 class="title">Personal Info</h6>
+                    <a href="#" class="more">
+                        <svg class="olymp-three-dots-icon">
+                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="ui-block-content">
+                    <!-- W-Personal-Info -->
+                    <ul class="widget w-personal-info">
+                        <li>
+                            <span class="title">First Name:</span>
+                            <span class="text">{{ main_user.getName()}}</span>
+                        </li>
+                        <li>
+                            <span class="title">Birthday:</span>
+                            <span class="text">{{ main_user.getBirthDate()}}</span>
+                        </li>
+                        <li>
+                            <span class="title">Gender:</span>
+                            <span class="text">{{ main_user.getGender() }}</span>
+                        </li>
+                        <li>
+                            <span class="title">Address:</span>
+                            <span class="text">{{ main_user.getAddress() }}</span>
+                        </li>
+                        <li>
+                            <span class="title">Relationship:</span>
+                            <span class="text">{{ main_user.getRelationship() }}</span>
+                        </li>
+                        <li>
+                            <span class="title">Email:</span>
+                            <a href="#" class="text">{{ main_user.getEmail() }}</a>
+                        </li>
+                        <li>
+                            <span class="title">Phone Number:</span>
+                            <span class="text">{{ main_user.getPhoneNumber() }}</span>
+                        </li>
+                    </ul>
+                    <!-- ... end W-Personal-Info -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
