@@ -198,7 +198,7 @@ Profile
 								<div class="author-date">
 									<a class="h6 post__author-name fn" href="02-ProfilePage.html">{{ user.getPresentationName()}}</a>
 									<div class="post__date">
-										<time class="published" datetime="2017-03-24T18:18">
+										<time class="published" title="{{ post.getRawPostTime() }}">
 											{{ post.getPostTime() }}
 										</time>
 									</div>
@@ -210,16 +210,13 @@ Profile
 									</svg>
 									<ul class="more-dropdown">
 										<li>
-											<a href="#">Edit Post</a>
+											<a href="/post?id={{ post.getPostId() }}&ref_page=edit">Edit Post</a>
 										</li>
 										<li>
-											<a href="#">Delete Post</a>
+											<a href="/post?id={{ post.getPostId() }}&ref_page=del">Delete Post</a>
 										</li>
 										<li>
-											<a href="#">Turn Off Notifications</a>
-										</li>
-										<li>
-											<a href="#">Select as Featured</a>
+											<a href="/post?id={{ post.getPostId() }}&ref_page=notion">Turn Off Notifications</a>
 										</li>
 									</ul>
 								</div>

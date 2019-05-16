@@ -3,17 +3,16 @@ class AboutController {
         this.knex = knex;
     }
 
-    async goAbout(ctx) {
-        return ctx.redirect('/about/' + ctx.session.loggedInUserId);
-    }
-
     async getAbout(ctx) {
+        if(!ctx.query.id) {
+            return ctx.redirect('/about?id=' + ctx.session.loggedInUserId);
+        }
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        let user = await ctx.userRepository.getUserInfo(ctx.params.userid);
+        let user      = await ctx.userRepository.getUserInfo(ctx.query.id);
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
-        return await ctx.render('about.html', { ctx, user, main_user });
+        return await ctx.render('about.html', { ctx, user, main_user });        
     }
 }
 

@@ -3,14 +3,13 @@ class ProfileController {
         this.knex = knex;
     }
 
-    async goProfile(ctx) {
-        return ctx.redirect('/profile/' + ctx.session.loggedInUserId);
-    }
-
     async getProfile(ctx) {
+        if(!ctx.query.id) {
+            return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
+        }
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        let user      = await ctx.userRepository.getUserInfo(ctx.params.userid);
-        let posts     = await ctx.postRepository.getUserPost(ctx.params.userid);
+        let user      = await ctx.userRepository.getUserInfo(ctx.query.id);
+        let posts     = await ctx.postRepository.getUserPost(ctx.query.id);
         console.log(posts);
         if(!user) {
             return ctx.render('404Page.html', { main_user });
