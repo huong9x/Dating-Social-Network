@@ -58,6 +58,7 @@ router
     
     .get('/search/friends:name', logginRequiredMiddleware)
     .get('/search/people:name', logginRequiredMiddleware)
+    
     .get('/mylocation', logginRequiredMiddleware)
     ;
 
