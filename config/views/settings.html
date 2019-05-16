@@ -54,7 +54,7 @@ Settings
 								</div>
 								<div class="form-group label-floating">
 									<label class="control-label">Your Phone Number</label>
-									<input class="form-control" type="number" value="{{ main_user.getPhoneNumber() }}" name="phone_number">
+									<input class="form-control" type="number" value="{{ main_user.getPhoneNumber() }}" name="phone_number" min="1000000000" max="9999999999999">
 								</div>
 								<div class="form-group label-floating is-select">
 									<label class="control-label">Your Gender</label>
