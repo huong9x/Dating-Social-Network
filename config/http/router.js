@@ -39,12 +39,12 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
     .get('/post', logginRequiredMiddleware, postController.viewPost)
-    
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
     .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
+    .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     
