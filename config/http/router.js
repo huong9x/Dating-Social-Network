@@ -10,6 +10,7 @@ const PhotosController          = require('../../src/Controller/PhotosController
 const VideoController           = require('../../src/Controller/VideoController');
 const SignupController          = require('../../src/Controller/SignupController');
 const PostController            = require('../../src/Controller/PostController')
+const SettingsController        = require('../../src/Controller/SettingsController')
 
 const router                    = new Router();
 const loginController           = new LoginController();
@@ -22,6 +23,7 @@ const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
+const settingsController        = new SettingsController();
 
 router
     .get('/login', loginController.getLogin)
@@ -41,6 +43,8 @@ router
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
+
+    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     

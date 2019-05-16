@@ -1,4 +1,4 @@
-const lodash = require('lodash');
+const capitalize = require('capitalize-first-letter');
 class UserInfo {
     constructor(rawUser) {
         this.user_id      = rawUser[0].user_id;
@@ -17,13 +17,19 @@ class UserInfo {
         return this.user_id;
     }
     getName() {
-        return lodash.startCase(this.first_name);
+        return capitalize(this.first_name);
+    }
+    getFirstName() {
+        return this.first_name;
+    }
+    getLastName() {
+        return this.last_name;
     }
     getPresentationName() {
-        return lodash.startCase(this.first_name + ' ' + this.last_name);
+        return capitalize(this.first_name + ' ' + this.last_name);
     }
     getBirthDate() {
-        return this.birth_date;
+        return this.birth_date.toISOString().split("T")[0];
     }
     getGender() {
         return this.gender;
