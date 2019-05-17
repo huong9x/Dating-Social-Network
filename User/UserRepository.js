@@ -36,7 +36,8 @@ class UserRepository {
     }
 
     async addUser(username, password, first_name, last_name, email, birth_date, gender) {
-        return await this.knex('users').insert([{username: username, password: password, first_name: first_name, last_name: last_name, email: email, birth_date: birth_date, gender}]);
+        let user = await this.knex('users').insert([{username: username, password: password, first_name: first_name, last_name: last_name, email: email, birth_date: birth_date, gender}]);
+        return new User(user[0]);
     }
 
     async editUser(user_id, first_name, last_name, email, phone_number, birth_date, gender, address, relationship) {

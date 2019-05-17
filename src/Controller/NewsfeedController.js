@@ -10,9 +10,11 @@ class NewsfeedController {
     async postStatus(ctx) {
         const {status} = ctx.request.body;
         console.log(status);
-        console.log(ctx.upload);
+        await ctx.upload.array('file', 10);
+        // let a = ctx.req.files.map((file) => file.filename);
+        console.log(ctx.req.files);
         // let newpost    = ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
-        return ctx.redirect('/newsfeed', newpost);
+        return ctx.redirect('/newsfeed', true);
     }
 
 }
