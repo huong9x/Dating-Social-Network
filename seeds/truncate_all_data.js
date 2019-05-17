@@ -21,10 +21,7 @@ exports.seed = function(knex, Promise) {
       return knex('location').del();
     })
     .then(() => {
-      return knex('videos').del();
-    })
-    .then(() => {
-      return knex('images').del();
+      return knex('media').del();
     })
     .then(() => {
       return knex('notifications').del();
