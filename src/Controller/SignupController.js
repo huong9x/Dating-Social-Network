@@ -11,7 +11,7 @@ class SignupController {
         let user = await ctx.userRepository.addUser(username, await ctx.hasher.generate(password), first_name, last_name, email, birth_date, gender);
         console.log(user);
         await ctx.authenticator.register(user);
-        return ctx.redirect('/profile'); 
+        return ctx.redirect('/settings');
     }
 }
 

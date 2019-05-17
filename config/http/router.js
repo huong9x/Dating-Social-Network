@@ -11,6 +11,7 @@ const PhotosController          = require('../../src/Controller/PhotosController
 const VideoController           = require('../../src/Controller/VideoController');
 const SignupController          = require('../../src/Controller/SignupController');
 const PostController            = require('../../src/Controller/PostController');
+const SettingsController        = require('../../src/Controller/SettingsController');
 
 const storage = multer.diskStorage({
   //文件保存路径
@@ -27,7 +28,6 @@ const storage = multer.diskStorage({
 //加载配置
 const upload = multer({ storage: storage });
 
-
 const router                    = new Router();
 const loginController           = new LoginController();
 const signupController          = new SignupController();
@@ -39,9 +39,7 @@ const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
-
-
-
+const settingsController        = new SettingsController();
 
 router
     .get('/login', loginController.getLogin)
@@ -82,8 +80,8 @@ router
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
-    // .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
-    // .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
+    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
+    .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     
