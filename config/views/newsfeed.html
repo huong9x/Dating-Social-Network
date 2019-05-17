@@ -28,7 +28,7 @@ News Feed
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
-                            <form action="/postStatus" method="POST">
+                            <form action="/postStatus" method="POST" enctype="multipart/form-data">
                                 <div class="author-thumb">
                                     <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
                                 </div>
@@ -50,7 +50,7 @@ News Feed
                                             <i class="fa fa-camera"></i>
                                             <span id="label_span"></span>
                                         </label>
-                                        <input type="file" name="files" id="file" multiple accept=".3gp, .avi, .mp4, .wmv, .jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                        <input type="file" name="file" id="file" multiple accept=".3gp, .avi, .mp4, .wmv, .jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
 
                                         <script>
                                             $(document).ready(function() {
