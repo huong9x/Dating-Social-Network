@@ -66,17 +66,18 @@ router
           filename: a//返回文件名
       }
     })
-    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 3), async (ctx, next) => {
-        // const {status} = ctx.request.body;
-        // console.log(status);
-        console.log(ctx.req.files);
-        let a = ctx.req.files.map((file) => file.filename);
-        ctx.body = {
-          filename: a//返回文件名
-      }
-        await next();
+    // .post('/postStatus', logginRequiredMiddleware, upload.array('file', 3), async (ctx, next) => {
+    //     // const {status} = ctx.request.body;
+    //     // console.log(status);
+    //     console.log(ctx.req.files);
+    //     let a = ctx.req.files.map((file) => file.filename);
+    //     ctx.body = {
+    //       filename: a//返回文件名
+    //   }
+    //     await next();
 
-    })
+    // })
+    .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
