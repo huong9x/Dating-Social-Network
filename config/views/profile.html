@@ -195,7 +195,7 @@ Profile
 								<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 	
 								<div class="author-date">
-									<a class="h6 post__author-name fn" href="02-ProfilePage.html">{{ user.getPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+									<a class="h6 post__author-name fn" href="#">{{ user.getPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 									<div class="post__date">
 										<time class="published" title="{{ post.getRawPostTime() }}">
 											{{ post.getPostTime() }}
@@ -261,7 +261,7 @@ Profile
 									<br>18 more liked this
 								</div>
 								<div class="comments-shared">
-									<a href="#" class="post-add-icon inline-items">
+									<a href="/post?id={{ post.getPostId() }}&ref_page=view" class="post-add-icon inline-items">
 										<i class="fas fa-comments"></i>
 										<span>0</span>
 									</a>
