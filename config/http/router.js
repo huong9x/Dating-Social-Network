@@ -22,17 +22,9 @@ const profileController         = new ProfileController();
 const aboutController           = new AboutController();
 const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
-<<<<<<< HEAD
 const videoController           = new VideoController();
 const accountController         = new AccountController();
 const changePasswordController  = new ChangePasswordController();
-=======
-const videoController           = new VideoController(); 
-const postController            = new PostController();
-
-
-
->>>>>>> 2eae2ba73f84e14473821e5645483614a016af97
 
 router
     .get('/login', loginController.getLogin)
@@ -47,15 +39,8 @@ router
     
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
-<<<<<<< HEAD
     .get('/profile', logginRequiredMiddleware, profileController.goProfile)
     .get('/profile/:userid', logginRequiredMiddleware, profileController.getProfile)
-=======
-    .get('/profile', logginRequiredMiddleware, profileController.getProfile)
-
-    // .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
-    // .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
->>>>>>> 2eae2ba73f84e14473821e5645483614a016af97
 
     .get('/about', logginRequiredMiddleware, aboutController.goAbout)
     .get('/about/:userid', logginRequiredMiddleware, aboutController.getAbout)
