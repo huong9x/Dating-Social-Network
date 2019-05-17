@@ -22,6 +22,7 @@ const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
+const settingsController        = new SettingsController();
 
 
 
@@ -40,10 +41,12 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
     .get('/post', logginRequiredMiddleware, postController.viewPost)
-    
     .post('/postStatus', logginRequiredMiddleware, newsfeedController.postStatus)
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
+
+    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
+    .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     
@@ -57,6 +60,7 @@ router
     
     .get('/search/friends:name', logginRequiredMiddleware)
     .get('/search/people:name', logginRequiredMiddleware)
+    
     .get('/mylocation', logginRequiredMiddleware)
     ;
 
