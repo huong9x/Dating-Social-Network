@@ -9,7 +9,9 @@ class NewsfeedController {
     }
     async postStatus(ctx) {
         const {status} = ctx.request.body;
-        let newpost    = ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
+        console.log(status);
+        console.log(ctx.upload);
+        // let newpost    = ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
         return ctx.redirect('/newsfeed', newpost);
     }
 

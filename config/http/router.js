@@ -22,7 +22,6 @@ const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
-const settingsController        = new SettingsController();
 
 
 
@@ -45,8 +44,8 @@ router
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
-    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
-    .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
+    // .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
+    // .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
     
