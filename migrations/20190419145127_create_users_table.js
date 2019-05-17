@@ -9,9 +9,9 @@ exports.up = async knex => {
         table.date('birth_date');
         table.string('gender', 10);
         table.string('email');
-        table.string('ralationship', 50);
+        table.string('relationship', 255);
         table.string('user_avatar');
-        table.integer('phone_number', 15);
+        table.string('phone_number', 15);
         table.string('address');
     });
 };

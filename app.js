@@ -13,6 +13,7 @@ const userProvider   = require('./User/user.provider');
 const postProvider   = require('./Posts/post.provider');
 const hasherProvider = require('./config/hasher/hasherProvider');
 const njProvider     = require('./nunjucks.provider');
+const multerProvider = require('./multer.provider');
 const staticPath     = './config/views';
 
 
@@ -28,6 +29,7 @@ app.use(bodyParser());
 app.use(userProvider(knex));
 app.use(postProvider(knex));
 app.use(authProvider());
+app.use(multerProvider());
 app.use(njProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);

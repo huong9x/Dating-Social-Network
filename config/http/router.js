@@ -9,7 +9,7 @@ const FriendsController         = require('../../src/Controller/FriendsControlle
 const PhotosController          = require('../../src/Controller/PhotosController');
 const VideoController           = require('../../src/Controller/VideoController');
 const SignupController          = require('../../src/Controller/SignupController');
-const PostController            = require('../../src/Controller/PostController')
+const PostController            = require('../../src/Controller/PostController');
 
 const router                    = new Router();
 const loginController           = new LoginController();
@@ -22,6 +22,9 @@ const friendsController         = new FriendsController();
 const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
+
+
+
 
 router
     .get('/login', loginController.getLogin)
