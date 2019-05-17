@@ -29,8 +29,8 @@ About
                     <!-- W-Personal-Info -->
                     <ul class="widget w-personal-info">
                         <li>
-                            <span class="title">First Name:</span>
-                            <span class="text">{{ main_user.getName()}}</span>
+                            <span class="title">Full Name:</span>
+                            <span class="text">{{ main_user.getPresentationName()}}</span>
                         </li>
                         <li>
                             <span class="title">Birthday:</span>
@@ -38,7 +38,7 @@ About
                         </li>
                         <li>
                             <span class="title">Gender:</span>
-                            <span class="text">{{ main_user.getGender() }}</span>
+                            <span class="text" style="text-transform: capitalize;">{{ main_user.getGender() }}</span>
                         </li>
                         <li>
                             <span class="title">Address:</span>
@@ -46,7 +46,20 @@ About
                         </li>
                         <li>
                             <span class="title">Relationship:</span>
-                            <span class="text">{{ main_user.getRelationship() }}</span>
+                            <span class="text">
+                                {% if (main_user.getRelationship() == '1') %}Single
+                                {% elseif (main_user.getRelationship() == '2') %}In a relationship
+                                {% elseif (main_user.getRelationship() == '3') %}Engaged
+                                {% elseif (main_user.getRelationship() == '4') %}Married
+                                {% elseif (main_user.getRelationship() == '5') %}In a civil union
+                                {% elseif (main_user.getRelationship() == '6') %}In a domestic partnership
+                                {% elseif (main_user.getRelationship() == '7') %}In an open relationship
+                                {% elseif (main_user.getRelationship() == '8') %}It's complicated
+                                {% elseif (main_user.getRelationship() == '9') %}Separated
+                                {% elseif (main_user.getRelationship() == '10') %}Divorced
+                                {% elseif (main_user.getRelationship() == '11') %}Widowed
+                                {% endif %}
+                            </span>
                         </li>
                         <li>
                             <span class="title">Email:</span>
