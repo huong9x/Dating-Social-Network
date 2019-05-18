@@ -22,7 +22,7 @@ class PostRepository {
     }
     async getUserPost(user_id) {
         let posts = await this.knex.select('*').from('post').where('user_id', user_id).orderBy('post_time', 'desc');
-        return posts.map((post) => {
+        return posts.map(async (post) => {
             let media = await this.knex.select('*').from('media').where('post_id', post.post_id);
             return new Post(post.post_id, post.user_id, post.content, media, post.post_time);
         });
