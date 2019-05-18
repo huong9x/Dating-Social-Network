@@ -89,29 +89,31 @@ Post Detail
 						<button class="btn btn-md-2 btn-primary">Post Comment</button>
 					</form>
 					<!-- ... end Comment Form  -->
+					{% if comments %}
+					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
-							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-					
+							<img src="img/author-page.jpg" alt="author">
+				
 							<div class="author-date">
-								<a class="h6 post__author-name fn" href="#">{{ userComment.getPresentationName()}}  <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+								<a class="h6 post__author-name fn" href="02-ProfilePage.html">James Spiegel</a>
 								<div class="post__date">
 									<time class="published" datetime="2004-07-24T18:18">
 										38 mins ago
 									</time>
 								</div>
 							</div>
-					
-							<a href="#" class="more">
-								<svg class="olymp-three-dots-icon">
-									<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-								</svg>
-							</a>
+				
+							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+				
 						</div>
+				
 						<p>
 							{{ comment.getCommentText() }}
 						</p>
 					</li>
+					{% endfor %}
+					{% endif %}
 				</ul>
 				<!-- end Comments -->
 			</div>
