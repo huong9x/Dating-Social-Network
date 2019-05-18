@@ -4,7 +4,6 @@ exports.up = async knex => {
         table.increments('post_id');
         table.integer('user_id');
         table.string('content');
-        table.integer('media_id');
         table.datetime('post_time');
     });
 };

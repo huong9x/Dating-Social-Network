@@ -11,12 +11,16 @@ class NewsfeedController {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
 
         const {status} = ctx.req.body;
-        let files = ctx.req.files.map((file) => file.filename)
-        console.log(status);
-        console.log(files);
-        // let post = await ctx.userRepository.addNewPost(ctx.session.loggedInUserId, status);
-        // let media = await ctx.mediaRepository.addNewMedia(post.getPostId(), )
-        return ctx.redirect('/newsfeed', main_user);
+
+        let post = await ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
+
+        let data = ctx.req.files.map(file => ({ post_id: post.getPostId(), filename: file.filename}));
+        console.log(ctx.mediaRepository.addMedia);
+
+        let mediaPost = await ctx.mediaRepository.addMedia(data);
+        console.log(mediaPost.getPostId());
+
+        return ctx.redirect('/newsfeed', main_user, mediaPost);
     }
 
 }

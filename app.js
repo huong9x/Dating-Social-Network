@@ -12,6 +12,7 @@ const authProvider   = require('./config/auth/Auth.Provider');
 const userProvider   = require('./User/user.provider');
 const postProvider   = require('./Posts/post.provider');
 const hasherProvider = require('./config/hasher/hasherProvider');
+const mediaProvider  = require('./Media/Media.Provider');
 const njProvider     = require('./nunjucks.provider');
 const staticPath     = './config/views';
 
@@ -30,6 +31,7 @@ app.use(hasherProvider(10));
 app.use(bodyParser());
 app.use(userProvider(knex));
 app.use(postProvider(knex));
+app.use(mediaProvider(knex));
 app.use(authProvider());
 
 
