@@ -8,13 +8,15 @@ class NewsfeedController {
         ctx.render('newsfeed.html', { main_user });
     }
     async postStatus(ctx) {
-        const {status} = ctx.request.body;
+        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+
+        const {status} = ctx.req.body;
+        let files = ctx.req.files.map((file) => file.filename)
         console.log(status);
-        await ctx.upload.array('file', 10);
-        // let a = ctx.req.files.map((file) => file.filename);
-        console.log(ctx.req.files);
-        // let newpost    = ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
-        return ctx.redirect('/newsfeed', true);
+        console.log(files);
+        // let post = await ctx.userRepository.addNewPost(ctx.session.loggedInUserId, status);
+        // let media = await ctx.mediaRepository.addNewMedia(post.getPostId(), )
+        return ctx.redirect('/newsfeed', main_user);
     }
 
 }

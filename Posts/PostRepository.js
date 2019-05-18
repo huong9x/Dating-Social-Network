@@ -2,9 +2,7 @@ const Post = require('./Post');
 const dateTime = require('date-time');
 
 class PostRepository {
-    constructor(knex) {
-        this.knex = knex;
-    }
+
 
     async findPostOwner(post_id, user_id) {
         return await this.knex.select('*').from('post').where({

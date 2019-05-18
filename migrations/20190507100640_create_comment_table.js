@@ -4,6 +4,7 @@ exports.up = async knex => {
         table.increments('comment_id');
         table.integer('user_id');
         table.integer('post_id');
+        table.text('comment_text');
         table.datetime('comment_time');
     });
 };

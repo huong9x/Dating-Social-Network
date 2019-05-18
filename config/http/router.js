@@ -11,7 +11,6 @@ const PhotosController          = require('../../src/Controller/PhotosController
 const VideoController           = require('../../src/Controller/VideoController');
 const SignupController          = require('../../src/Controller/SignupController');
 const PostController            = require('../../src/Controller/PostController');
-
 const storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
@@ -57,28 +56,8 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
     .get('/post', logginRequiredMiddleware, postController.viewPost)
-    .get('/upload', async (ctx, next) => {
-      ctx.render('index.html', true);
-      await next();
-    })
-    .post('/upload', upload.array('file',2), (ctx, next) => {
-      console.log(ctx.req.files);
-      let a = ctx.req.files.map((file) => file.filename);
-      ctx.body = {
-          filename: a//返回文件名
-      }
-    })
-    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 3), async (ctx, next) => {
-        // const {status} = ctx.request.body;
-        // console.log(status);
-        console.log(ctx.req.files);
-        let a = ctx.req.files.map((file) => file.filename);
-        ctx.body = {
-          filename: a//返回文件名
-      }
-        await next();
 
-    })
+    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 10), newsfeedController.postStatus)
     
     .get('/profile', logginRequiredMiddleware, profileController.getProfile)
 
