@@ -29,6 +29,8 @@ class PostController {
         let post      = await ctx.postRepository.findPost(ctx.query.id);
         let user      = await ctx.userRepository.getUserInfo(post.getUserId());
         let comments  = await ctx.commentRepository.findComment(ctx.query.id);
+
+        console.log(comments);
         // let userComment = await ctx.userRepository.getUserInfo(comment.getUserId()); userComment
         // let showCountComment = await ctx.commentRepository.showCountComment(ctx.query.id);
         if(!ctx.query.id) {
