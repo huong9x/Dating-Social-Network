@@ -10,7 +10,7 @@ class CommentRepository {
         let rawComment = await this.knex.select('*').from('commment').where('post_id', post_id);
         console.log(rawComment);
         if (rawComment.length) {
-            return new Post(rawComment[0].comment_id, rawComment[0].user_id, rawComment[0].post_id, rawComment[0].comment_text, rawComment[0].comment_time);
+            return new Comment(rawComment[0].comment_id, rawComment[0].user_id, rawComment[0].post_id, rawComment[0].comment_text, rawComment[0].comment_time);
         }
         return null;
     }
