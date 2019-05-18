@@ -1,12 +1,12 @@
 const { format } = require('timeago.js');
 
 class Comment {
-    constructor(comment_id, user_id, post_id, comment_text, comment_time) {
-        this.comment_id   = comment_id;
-        this.user_id      = user_id;
-        this.post_id      = post_id;
-        this.comment_text = comment_text;
-        this.comment_time = comment_time;
+    constructor(rawComment) {
+        this.comment_id   = rawComment[0].comment_id;
+        this.user_id      = rawComment[0].user_id;
+        this.post_id      = rawComment[0].post_id;
+        this.comment_text = rawComment[0].comment_text;
+        this.comment_time = rawComment[0].comment_time;
     }
 
     getCommentId() {
