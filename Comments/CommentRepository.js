@@ -25,7 +25,8 @@ class CommentRepository {
     // }
     async findComment(post_id) {
         let comments = await this.knex.select('*').from('comment').where('post_id', post_id);
-        return comments.map((comment) => new Comment(comment.comment_id, comment.user_id, comment.post_id, comment.comment_text, comment.comment_time));
+        console.log(comments);
+        return comments.map((comment) => new Comment(comment));
     }
 
     async postComment(user_id, post_id, comment_text) {

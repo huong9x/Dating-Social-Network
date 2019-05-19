@@ -89,6 +89,7 @@ Post Detail
 						<button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
 					</form>
 					<!-- ... end Comment Form  -->
+					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
 							<img src="img/author-page.jpg" alt="author">
@@ -107,9 +108,10 @@ Post Detail
 						</div>
 				
 						<p>
-							{# comments.getCommentText() #}
+							{% comment.getCommentText() %}
 						</p>
 					</li>
+					{% endfor %}
 				</ul>
 				<!-- end Comments -->
 			</div>

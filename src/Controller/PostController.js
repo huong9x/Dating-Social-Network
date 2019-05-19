@@ -3,18 +3,18 @@ class PostController {
         this.knex = knex;
     }
 
-    async editPost(ctx) {
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        if(ctx.query.ref_page == 'edit') {
-            return ctx.render('404Page.html', { main_user });
-        }
-        let content = ctx.request.body;
-        if(!ctx.userRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId)) {
-            return ctx.render('403Page.html', { main_user });
-        }
-        return ctx.userRepository.editPost(ctx.query.id, content);
+    // async editPost(ctx) {
+    //     let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+    //     if(ctx.query.ref_page == 'edit') {
+    //         return ctx.render('404Page.html', { main_user });
+    //     }
+    //     let content = ctx.request.body;
+    //     if(!ctx.userRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId)) {
+    //         return ctx.render('403Page.html', { main_user });
+    //     }
+    //     return ctx.userRepository.editPost(ctx.query.id, content);
 
-    }
+    // }
     // async viewPost(ctx) {
     //     let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
     //     // if(ctx.query.ref_page == 'view') {
@@ -34,8 +34,8 @@ class PostController {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         let post      = await ctx.postRepository.findPost(ctx.query.id);
         let user      = await ctx.userRepository.getUserInfo(post.getUserId());
-        // let comments  = await ctx.commentRepository.findComment(ctx.query.id);
-        return ctx.render('postdetail.html', { post, user, main_user });
+        let comments  = await ctx.commentRepository.findComment(ctx.query.id);
+        return ctx.render('postdetail.html', { post, comments, user, main_user });
     }
 }
 
