@@ -78,19 +78,17 @@ Post Detail
 				<!-- Comments -->
 				<ul class="comments-list">
 					<!-- Comment Form  -->
-					<form class="comment-form inline-items">
+					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 					
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" placeholder=""></textarea>
+								<textarea class="form-control" placeholder="" name="comment_text"></textarea>
 							<span class="material-input"></span></div>
 						</div>
-						<button class="btn btn-md-2 btn-primary">Post Comment</button>
+						<button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
 					</form>
 					<!-- ... end Comment Form  -->
-					{% if comments %}
-					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
 							<img src="img/author-page.jpg" alt="author">
@@ -109,11 +107,9 @@ Post Detail
 						</div>
 				
 						<p>
-							{{ comment.getCommentText() }}
+							{# comments.getCommentText() #}
 						</p>
 					</li>
-					{% endfor %}
-					{% endif %}
 				</ul>
 				<!-- end Comments -->
 			</div>

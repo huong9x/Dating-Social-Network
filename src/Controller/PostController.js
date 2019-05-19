@@ -25,18 +25,17 @@ class PostController {
     //     return ctx.render('post.html', { post, main_user });
     // }
     async viewPost(ctx) {
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        let post      = await ctx.postRepository.findPost(ctx.query.id);
-        let user      = await ctx.userRepository.getUserInfo(post.getUserId());
-        let comments  = await ctx.commentRepository.findComment(ctx.query.id);
-
-        console.log(comments);
+        // let comments  = await ctx.commentRepository.findComment(ctx.query.id);
         // let userComment = await ctx.userRepository.getUserInfo(comment.getUserId()); userComment
         // let showCountComment = await ctx.commentRepository.showCountComment(ctx.query.id);
         if(!ctx.query.id) {
             return ctx.render('404Page.html');
         }
-        return ctx.render('postdetail.html', { post, user, comments, main_user });
+        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+        let post      = await ctx.postRepository.findPost(ctx.query.id);
+        let user      = await ctx.userRepository.getUserInfo(post.getUserId());
+        // let comments  = await ctx.commentRepository.findComment(ctx.query.id);
+        return ctx.render('postdetail.html', { post, user, main_user });
     }
 }
 
