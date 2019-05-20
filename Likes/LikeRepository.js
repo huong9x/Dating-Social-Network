@@ -8,7 +8,7 @@ class LikeRepository {
 
     async likePost(user_id, post_id) {
         let like = await this.knex('likes').insert([{user_id: user_id, post_id: post_id, like_time: dateTime()}]);
-        return new Like(like[0]);
+        return new Like(like);
     }
 }
 
