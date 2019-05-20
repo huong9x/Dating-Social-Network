@@ -12,6 +12,7 @@ class PostRepository {
             post_id: post_id
         });
     }
+    
     async findPost(post_id) {
         let post = await this.knex.select('*').from('post').where('post_id', '=', post_id);
         return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].video_id, post[0].image_id, post[0].post_time);
@@ -27,7 +28,7 @@ class PostRepository {
     async editPost(post_id, content) {
         return await this.knex('post').where('post_id','=', post_id)
                             .update({ content: content })
-    }
+    } 
 }
 
 module.exports = PostRepository;

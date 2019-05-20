@@ -186,21 +186,20 @@ Profile
 			<div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
 				{% if posts %}  
 				<div id="newsfeed-items-grid">
-	
+					{% for post in posts %}
 					<div class="ui-block">
 						<!-- Post -->
-						{% for post in posts %}
 						<article class="hentry post">
 	
 							<div class="post__author author vcard inline-items">
 								<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 	
 								<div class="author-date">
-									<a class="h6 post__author-name fn" href="02-ProfilePage.html">{{ user.getPresentationName()}}</a>
+									<a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ user.getPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 									<div class="post__date">
-										<time class="published" title="{{ post.getRawPostTime() }}">
+										<a href="/post?id={{ post.getPostId() }}" style="color: #9697a1;"><time class="published" title="{{ post.getRawPostTime() }}">
 											{{ post.getPostTime() }}
-										</time>
+										</time></a>
 									</div>
 								</div>
 	
@@ -214,9 +213,6 @@ Profile
 										</li>
 										<li>
 											<a href="/post?id={{ post.getPostId() }}&ref_page=del">Delete Post</a>
-										</li>
-										<li>
-											<a href="/post?id={{ post.getPostId() }}&ref_page=notion">Turn Off Notifications</a>
 										</li>
 									</ul>
 								</div>
@@ -262,9 +258,9 @@ Profile
 									<br>18 more liked this
 								</div>
 								<div class="comments-shared">
-									<a href="#" class="post-add-icon inline-items">
+									<a href="/post?id={{ post.getPostId() }}" class="post-add-icon inline-items">
 										<i class="fas fa-comments"></i>
-										<span>0</span>
+										<span>{{ countComment }}</span>
 									</a>
 									<a href="#" class="post-add-icon inline-items">
 										<i class="fas fa-share"></i>
@@ -273,9 +269,9 @@ Profile
 								</div>
 							</div>
 						</article>
-						{% endfor %} 
 						<!-- .. end Post -->
 					</div>
+					{% endfor %} 
 				</div>
 				{% endif %}
 				<a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">

@@ -1,6 +1,6 @@
 
 exports.up = async knex => {
-    await knex.schema.createTable('like', table => {
+    await knex.schema.createTable('likes', table => {
         table.increments('like_id');
         table.integer('user_id');
         table.integer('post_id');
@@ -9,5 +9,5 @@ exports.up = async knex => {
 };
 
 exports.down = async knex => {
-    await knex.schema.dropTable('like');
+    await knex.schema.dropTable('likes');
 };
