@@ -1,10 +1,9 @@
 const { format } = require('timeago.js');
 class Post {
-    constructor(post_id, user_id, content, media, post_time) {
+    constructor(post_id, user_id, content, post_time) {
         this.post_id   = post_id;
         this.user_id   = user_id;
         this.content   = content;
-        this.media     = media;
         this.post_time = post_time;
     }
     
@@ -16,9 +15,6 @@ class Post {
     }
     getContent() {
         return this.content;
-    }
-    getMedia() {
-        return this.media;
     }
     getPostTime() {
         return format(this.post_time, 'en_US');
