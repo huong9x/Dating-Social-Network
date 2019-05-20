@@ -8,41 +8,38 @@ const static          = require('koa-static');
 const bodyParser      = require('koa-bodyparser');
 const session         = require('koa-session');
 
-const authProvider    = require('./config/auth/Auth.Provider');
 const userProvider    = require('./resources/User/user.provider');
 const postProvider    = require('./resources/Posts/post.provider');
 const likeProvider    = require('./resources/Likes/Like.Provider');
-const mediaProvider   = require('./resources/Media/Media.Provider');
 const commentProvider = require('./resources/Comments/Comment.Provider');
+const mediaProvider   = require('./resources/Media/Media.Provider');
+const friendProvider  = require('./resources/Friend/Friend.Provider');
+
+
+const authProvider    = require('./config/auth/Auth.Provider');
 const hasherProvider  = require('./config/hasher/hasherProvider');
+
 const njProvider      = require('./nunjucks.provider');
 const staticPath      = './config/views';
 
-
-
-
-
-const app            = new Koa();
-app.keys             = ['some-secret-key'];
-
-console.log(path.join( __dirname, staticPath));
-app.use(static(path.join( __dirname, staticPath)));
-
-app.use(session(app));
-app.use(hasherProvider(10));
-app.use(bodyParser());
-app.use(userProvider(knex));
-app.use(postProvider(knex));
-app.use(mediaProvider(knex));
-// app.use(bodyParser().urlencoded());
-// app.use(bodyParser().json());
-app.use(likeProvider(knex));
-app.use(commentProvider(knex));
-app.use(authProvider());
-
+const app             = new Koa();
+app.keys              = ['some-secret-key'];
 
 app.use(njProvider());
+app.use(bodyParser());
+app.use(static(path.join( __dirname, staticPath)));
 app.use(database.connectionProvider(config));
+app.use(authProvider());
+app.use(session(app));
+app.use(hasherProvider(10));
+
+app.use(userProvider(knex));
+app.use(postProvider(knex));
+app.use(likeProvider(knex));
+app.use(commentProvider(knex));
+app.use(mediaProvider(knex));
+app.use(friendProvider(knex));
+
 app.use(routes);
 
 app.listen(process.env.PORT || 5000, () => {
