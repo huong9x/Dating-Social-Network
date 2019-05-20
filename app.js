@@ -8,15 +8,20 @@ const static          = require('koa-static');
 const bodyParser      = require('koa-bodyparser');
 const session         = require('koa-session');
 
+
 const authProvider    = require('./config/auth/Auth.Provider');
 const userProvider    = require('./User/user.provider');
 const postProvider    = require('./Posts/post.provider');
 // const likeProvider    = require('./Like/Like.Provider');
+const mediaProvider  = require('./Media/Media.Provider');
 const commentProvider = require('./Comments/Comment.Provider');
 const hasherProvider  = require('./config/hasher/hasherProvider');
 const njProvider      = require('./nunjucks.provider');
 // const multerProvider = require('./multer.provider');
 const staticPath     = './config/views';
+
+
+
 
 
 const app            = new Koa();
@@ -30,10 +35,13 @@ app.use(hasherProvider(10));
 app.use(bodyParser());
 app.use(userProvider(knex));
 app.use(postProvider(knex));
+app.use(mediaProvider(knex));
+
 // app.use(likeProvider(knex));
 app.use(commentProvider(knex));
 app.use(authProvider());
-// app.use(multerProvider());
+
+
 app.use(njProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);
