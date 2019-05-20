@@ -7,11 +7,12 @@ class PostController {
         if(!ctx.query.id) {
             return ctx.render('404Page.html');
         }
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        let post      = await ctx.postRepository.findPost(ctx.query.id);
-        let user      = await ctx.userRepository.getUserInfo(post.getUserId());
-        let comments  = await ctx.commentRepository.findComment(ctx.query.id);
-        return ctx.render('postdetail.html', { post, comments, user, main_user });
+        let main_user    = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+        let post         = await ctx.postRepository.findPost(ctx.query.id);
+        let user         = await ctx.userRepository.getUserInfo(post.getUserId());
+        let comments     = await ctx.commentRepository.findComment(ctx.query.id);
+        let countComment = comments.length;
+        return ctx.render('postdetail.html', { post, countComment, comments, user, main_user });
     }
 }
 
