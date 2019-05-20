@@ -17,7 +17,6 @@ const mediaProvider  = require('./Media/Media.Provider');
 const commentProvider = require('./Comments/Comment.Provider');
 const hasherProvider  = require('./config/hasher/hasherProvider');
 const njProvider      = require('./nunjucks.provider');
-// const multerProvider = require('./multer.provider');
 const staticPath     = './config/views';
 
 
@@ -36,7 +35,8 @@ app.use(bodyParser());
 app.use(userProvider(knex));
 app.use(postProvider(knex));
 app.use(mediaProvider(knex));
-
+// app.use(bodyParser().urlencoded());
+// app.use(bodyParser().json());
 // app.use(likeProvider(knex));
 app.use(commentProvider(knex));
 app.use(authProvider());
