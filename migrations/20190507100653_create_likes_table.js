@@ -9,5 +9,5 @@ exports.up = async knex => {
 };
 
 exports.down = async knex => {
-    await knex.schema.dropTable('like');
+    await knex.schema.dropTable('likes');
 };

@@ -6,7 +6,7 @@ exports.seed = function(knex, Promise) {
       return knex('users').del();
     })
     .then(() => {
-      return knex('like').del();
+      return knex('likes').del();
     })
     .then(() => {
       return knex('comment').del();

@@ -22,7 +22,6 @@ class NewsfeedController {
 
         return ctx.redirect('/newsfeed', main_user, mediaPost);
     }
-
 }
 
 module.exports = NewsfeedController;
