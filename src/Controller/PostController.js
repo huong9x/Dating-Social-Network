@@ -12,6 +12,10 @@ class PostController {
         let user         = await ctx.userRepository.getUserInfo(post.getUserId());
         let comments     = await ctx.commentRepository.findComment(ctx.query.id);
         let countComment = comments.length;
+        // if( ctx.query.ref_page == 'like') {
+        //     let like = await ctx.
+        //     return ctx.render('postdetail.html', { post, countComment, comments, user, main_user });
+        // }
         return ctx.render('postdetail.html', { post, countComment, comments, user, main_user });
     }
 }

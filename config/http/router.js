@@ -58,6 +58,8 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
     .get('/post', logginRequiredMiddleware, postController.viewPost)
+
+    // .get('/like', logginRequiredMiddleware, likeController.likePost)
     
     .get('/upload', async (ctx, next) => {
       ctx.render('index.html', true);

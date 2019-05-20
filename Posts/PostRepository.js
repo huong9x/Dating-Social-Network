@@ -28,7 +28,7 @@ class PostRepository {
     async editPost(post_id, content) {
         return await this.knex('post').where('post_id','=', post_id)
                             .update({ content: content })
-    }
+    } 
 }
 
 module.exports = PostRepository;
