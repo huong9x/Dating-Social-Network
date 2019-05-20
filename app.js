@@ -9,11 +9,11 @@ const bodyParser      = require('koa-bodyparser');
 const session         = require('koa-session');
 
 const authProvider    = require('./config/auth/Auth.Provider');
-const userProvider    = require('./User/user.provider');
-const postProvider    = require('./Posts/post.provider');
-const likeProvider    = require('./Likes/Like.Provider');
-const mediaProvider   = require('./Media/Media.Provider');
-const commentProvider = require('./Comments/Comment.Provider');
+const userProvider    = require('./resources/User/user.provider');
+const postProvider    = require('./resources/Posts/post.provider');
+const likeProvider    = require('./resources/Likes/Like.Provider');
+const mediaProvider   = require('./resources/Media/Media.Provider');
+const commentProvider = require('./resources/Comments/Comment.Provider');
 const hasherProvider  = require('./config/hasher/hasherProvider');
 const njProvider      = require('./nunjucks.provider');
 const staticPath      = './config/views';

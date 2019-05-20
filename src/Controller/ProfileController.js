@@ -13,7 +13,14 @@ class ProfileController {
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
+
+        if(ctx.query.ref_page == 'add'){
+            
+        }
         return await ctx.render('profile.html', { ctx, user, posts, main_user });        
+    }
+    async friendProfile(ctx) {
+        
     }
 }
 
