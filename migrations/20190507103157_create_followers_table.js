@@ -5,7 +5,6 @@ exports.up = async knex => {
         table.integer('user_id');
         table.integer('friend_id');
         table.string('follower_status')
-
     });
 };
 
