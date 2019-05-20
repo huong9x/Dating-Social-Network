@@ -92,13 +92,13 @@ Post Detail
 					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
-							<img src="img/author-page.jpg" alt="author">
+							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 				
 							<div class="author-date">
-								<a class="h6 post__author-name fn" href="02-ProfilePage.html">James Spiegel</a>
+								<a class="h6 post__author-name fn" href="/profile?id={{ comment.getUserId() }}">{{ comment.getFullName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 								<div class="post__date">
-									<time class="published" datetime="2004-07-24T18:18">
-										38 mins ago
+									<time class="published">
+										{{ comment.getCommentTime() }}
 									</time>
 								</div>
 							</div>
@@ -108,7 +108,7 @@ Post Detail
 						</div>
 				
 						<p>
-							{% comment.getCommentText() %}
+							{{ comment.getCommentText() }}
 						</p>
 					</li>
 					{% endfor %}

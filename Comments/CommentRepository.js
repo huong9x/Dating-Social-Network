@@ -6,27 +6,25 @@ class CommentRepository {
         this.knex = knex;
     }
 
-    // async findComment(post_id) {
-    //     // let rawComment = await this.knex.select('*').from('comment').where('post_id', post_id).orderBy('comment_id', 'desc');
-
-    //     let rawComment = await this.knex.select('*').from('comment').where('post_id', post_id);
-    //     if (rawComment.length) {
-    //         return new Comment(rawComment);
-    //     }
-    //     return null;
-    //}
-
-    // async findComment(post_id) {
-    //     // let rawComment = await this.knex.select('*').from('comment').where('post_id', post_id).orderBy('comment_id', 'desc');
-
-    //     let comments = await this.knex.select('*').from('comment').where('post_id', post_id).orderBy('comment_id', 'desc');
-    //     // return comments.map((comment) => new Comment(comment.comment_id, comment.user_id, comment.post_id, comment.comment_text, comment.comment_time));
-    //     return new Comment(comments);
-    // }
     async findComment(post_id) {
-        let comments = await this.knex.select('*').from('comment').where('post_id', post_id);
-        console.log(comments);
-        return comments.map((comment) => new Comment(comment));
+        
+        let comments = await this.knex.select(
+                                            'first_name',
+                                            'last_name',
+                                            'comment_id',
+                                            'comment.user_id',
+                                            'post_id',
+                                            'comment_text',
+                                            'comment_time'
+                                        )
+                                        .from('comment')
+                                        .leftJoin('users', 'comment.user_id', 'users.user_id')
+                                        .where({
+                                            post_id: post_id
+                                        })
+                                        .orderBy('comment_time', 'desc');
+
+        return comments.map((comment) => { return new Comment(comment)} );
     }
 
     async postComment(user_id, post_id, comment_text) {
