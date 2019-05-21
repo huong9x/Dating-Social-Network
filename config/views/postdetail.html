@@ -19,14 +19,14 @@ Post Detail
 					<div class="post__author author vcard inline-items">
 						<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 						<div class="author-date">
-							<a class="h6 post__author-name fn" href="#">{{ user.getPresentationName()}}  <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+							<a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ user.getPresentationName()}}  <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 							<div class="post__date">
 								<time class="published" title="{{ post.getRawPostTime() }}">
 									{{ post.getPostTime() }}
 								</time>
 							</div>
 						</div>
-			
+						{% if findPostOwner.length %}
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -40,7 +40,7 @@ Post Detail
 								</li>
 							</ul>
 						</div>
-			
+						{% endif %}
 					</div>
 					{% if ctx.query.ref_page != 'editpost' %}
 					<p>
@@ -54,6 +54,7 @@ Post Detail
 								<textarea class="form-control" placeholder="" name="content">{{ post.getContent() }}</textarea>
 							</div>
 						</div>
+						<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
 						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 					</form>
 					{% endif %}
@@ -76,7 +77,7 @@ Post Detail
 			
 							<a href="#" class="post-add-icon inline-items">
 								<svg class="svg-inline--fa fa-share fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="share" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z"></path></svg>
-								<span>24</span>
+								<span>0</span>
 							</a>
 						</div>
 					</div>
@@ -112,21 +113,21 @@ Post Detail
 									</time>
 								</div>
 							</div>
-				
+							{% if comment.getUserId() == ctx.session.loggedInUserId %}
 							<div class="more">
 								<svg class="olymp-three-dots-icon">
 									<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 								</svg>
 								<ul class="more-dropdown">
 									<li>
-										<a href="/post?id={{ post.getPostId() }}&ref_page=editcomment&idcomment={{ comment.getCommentId() }}">Edit Comment</a>
+										<a href="post?id={{ post.getPostId() }}&ref_page=editcomment">Edit Comment</a>
 									</li>
 									<li>
 										<a href="/deleteComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}">Delete Comment</a>
 									</li>
 								</ul>
 							</div>
-				
+							{% endif %}
 						</div>
 				
 						<p>

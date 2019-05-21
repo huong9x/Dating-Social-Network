@@ -69,6 +69,7 @@ router
     .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
     .post('/postComment', logginRequiredMiddleware, commentController.postComment)
+    .post('/editComment', logginRequiredMiddleware, commentController.editComment)
     .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
 
     .get('/about', logginRequiredMiddleware, aboutController.getAbout)
