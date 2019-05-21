@@ -48,12 +48,11 @@ Post Detail
 					</p>
 					{% endif %}
 					{% if ctx.query.ref_page == 'editpost' %}
-					<form class="comment-form inline-items" action="" method="POST" style="border-top:none;">
+					<form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
 						<div class="post__author author vcard inline-items">
-					
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" placeholder="" name="comment_text">{{ post.getContent() }}</textarea>
-								<span class="material-input"></span><span class="material-input"></span></div>
+								<textarea class="form-control" placeholder="" name="content">{{ post.getContent() }}</textarea>
+							</div>
 						</div>
 						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 					</form>

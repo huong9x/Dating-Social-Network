@@ -28,6 +28,12 @@ class PostController {
         return ctx.render('postdetail.html', { post, ctx, countComment, comments, user, main_user, likeExist, countLike });
     }
 
+    async editPost(ctx) {
+        const {content} = ctx.request.body;
+        let editPost = await ctx.postRepository.editPost(ctx.query.id, content);
+        return ctx.redirect('/post?id=' + ctx.query.id, editPost);
+    }
+
     async deletePost(ctx) {
         let deletepost = ctx.postRepository.deletePost(ctx.query.id);
         return ctx.redirect('/newsfeed', deletepost);

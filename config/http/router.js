@@ -57,6 +57,7 @@ router
     .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
 
     .get('/post', logginRequiredMiddleware, postController.viewPost)
+    .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
     .post('/postStatus', logginRequiredMiddleware, upload.array('file', 10), newsfeedController.postStatus)
