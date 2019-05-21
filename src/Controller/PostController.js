@@ -15,7 +15,7 @@ class PostController {
         let likes        = await ctx.likeRepository.findLike(ctx.query.id);
         let countLike    = likes.length;
         let likeExist = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
-        if( ctx.query.ref_page == 'like') {
+        if(ctx.query.ref_page == 'like') {
             if (likeExist == true) { 
                 await ctx.likeRepository.unlikePost(ctx.session.loggedInUserId, ctx.query.id);
                 return ctx.redirect('/post?id=' + ctx.query.id);
@@ -24,7 +24,13 @@ class PostController {
                 return ctx.redirect('/post?id=' + ctx.query.id);
             }
         }
-        return ctx.render('postdetail.html', { post, countComment, comments, user, main_user, likeExist, countLike });
+
+        return ctx.render('postdetail.html', { post, ctx, countComment, comments, user, main_user, likeExist, countLike });
+    }
+
+    async deletePost(ctx) {
+        let deletepost = ctx.postRepository.deletePost(ctx.query.id);
+        return ctx.redirect('/newsfeed', deletepost);
     }
 }
 

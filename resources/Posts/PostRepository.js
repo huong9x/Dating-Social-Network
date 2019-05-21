@@ -32,7 +32,16 @@ class PostRepository {
         return await this.knex('post').where('post_id','=', post_id)
                             .update({ content: content })
 
-    } 
+    }
+    
+    async deletePost(post_id) {
+        let post = await this.knex('post')
+                                    .where(
+                                        'post_id', post_id
+                                    )
+                                    .del();
+        return new Post(post[0]);
+    }
 }
 
 module.exports = PostRepository;

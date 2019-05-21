@@ -23,10 +23,7 @@ class LikeRepository {
 
     async likeExist(user_id, post_id) {
         let like = await this.knex.select('*').from('likes').where({user_id: user_id, post_id: post_id});
-        if (like.length) {
-            return true;
-        }
-        return false;
+        return like.length;
     }
     
     async findLike(post_id) {

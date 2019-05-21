@@ -33,26 +33,31 @@ Post Detail
 							</svg>
 							<ul class="more-dropdown">
 								<li>
-									<a href="#">Edit Post</a>
+									<a href="post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
 								</li>
 								<li>
-									<a href="#">Delete Post</a>
-								</li>
-								<li>
-									<a href="#">Turn Off Notifications</a>
-								</li>
-								<li>
-									<a href="#">Select as Featured</a>
+									<a href="/deletePost?id={{ post.getPostId() }}">Delete Post</a>
 								</li>
 							</ul>
 						</div>
 			
 					</div>
-				
+					{% if ctx.query.ref_page != 'editpost' %}
 					<p>
 						{{ post.getContent() }}
 					</p>
-				
+					{% endif %}
+					{% if ctx.query.ref_page == 'editpost' %}
+					<form class="comment-form inline-items" action="" method="POST" style="border-top:none;">
+						<div class="post__author author vcard inline-items">
+					
+							<div class="form-group with-icon-right is-empty">
+								<textarea class="form-control" placeholder="" name="comment_text">{{ post.getContent() }}</textarea>
+								<span class="material-input"></span><span class="material-input"></span></div>
+						</div>
+						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
+					</form>
+					{% endif %}
 					<div class="post-additional-info inline-items">
 			
 						<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items"
@@ -82,6 +87,7 @@ Post Detail
 				<!-- Comments -->
 				<ul class="comments-list">
 					<!-- Comment Form  -->
+					{% if ctx.query.ref_page != 'editpost' %}
 					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
@@ -93,6 +99,7 @@ Post Detail
 						<button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
 					</form>
 					<!-- ... end Comment Form  -->
+					{% endif %}
 					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
@@ -107,7 +114,19 @@ Post Detail
 								</div>
 							</div>
 				
-							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+							<div class="more">
+								<svg class="olymp-three-dots-icon">
+									<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+								</svg>
+								<ul class="more-dropdown">
+									<li>
+										<a href="/post?id={{ post.getPostId() }}&ref_page=editcomment&idcomment={{ comment.getCommentId() }}">Edit Comment</a>
+									</li>
+									<li>
+										<a href="/deleteComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}">Delete Comment</a>
+									</li>
+								</ul>
+							</div>
 				
 						</div>
 				
