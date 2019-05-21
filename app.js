@@ -25,21 +25,22 @@ const staticPath      = './config/views';
 const app             = new Koa();
 app.keys              = ['some-secret-key'];
 
-app.use(njProvider());
-app.use(bodyParser());
+
 app.use(static(path.join( __dirname, staticPath)));
-app.use(database.connectionProvider(config));
-app.use(authProvider());
+
+
 app.use(session(app));
 app.use(hasherProvider(10));
-
+app.use(bodyParser());
 app.use(userProvider(knex));
 app.use(postProvider(knex));
 app.use(likeProvider(knex));
 app.use(commentProvider(knex));
 app.use(mediaProvider(knex));
 app.use(friendProvider(knex));
-
+app.use(authProvider());
+app.use(njProvider());
+app.use(database.connectionProvider(config));
 app.use(routes);
 
 app.listen(process.env.PORT || 5000, () => {

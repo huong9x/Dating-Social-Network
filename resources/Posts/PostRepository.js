@@ -29,10 +29,20 @@ class PostRepository {
 
     }
     async editPost(post_id, content) {
-        return await this.knex('post').where('post_id','=', post_id)
-                            .update({ content: content })
-
-    } 
+        let post = await this.knex('post')
+                                .where('post_id','=', post_id)
+                                .update({ content: content });
+        return new Post(post[0]);
+    }
+    
+    async deletePost(post_id) {
+        let post = await this.knex('post')
+                                    .where(
+                                        'post_id', post_id
+                                    )
+                                    .del();
+        return new Post(post[0]);
+    }
 }
 
 module.exports = PostRepository;
