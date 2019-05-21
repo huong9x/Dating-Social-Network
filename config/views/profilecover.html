@@ -43,7 +43,7 @@
 						</div>
 						{% if ctx.query.id == ctx.session.loggedInUserId %}
 						<div class="control-block-button">
-							<a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
+							<!-- <a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
 								<i class="fas fa-user-plus"></i>
 							</a>
 
@@ -58,7 +58,7 @@
 										<a href="#" data-toggle="" data-target="">Unfriend</a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 
 							<div class="btn btn-control bg-primary more" style="color: white;">
 								<i class="fa fa-cog"></i>
@@ -68,31 +68,38 @@
 										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Profile Photo</a>
 									</li>
 									<li>
-										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Header Photo</a>
+										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Cover Photo</a>
 									</li>
 								</ul>
 							</div>
+						</div>
+						{% else %}
+						<div class="control-block-button">		
+								<!-- {% if isFriend %}					
+								<a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
+									<i class="fas fa-user-plus"></i>
+								</a>	
+								{% endif %}		 -->
+								<!-- <div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+									<i class="fa fa-paper-plane"></i>
+									<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+										<li>
+											<a href="#" data-toggle="" data-target="">Unfriend</a>
+										</li>
+									</ul>
+								</div> -->
+								{% if isFriend %}
+								<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+									<i class="fa fa-user"></i>
+									<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+										<li>
+											<a href="#" data-toggle="" data-target="">Unfriend</a>
+										</li>
+									</ul>
+								</div>
+								{% endif %}	
 						</div>
 						{% endif %}
-						<div class="control-block-button">
-							<a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
-								<i class="fas fa-user-plus"></i>
-							</a>
-
-							<a href="#" class="btn btn-control bg-blue" title="Friend request">
-								<i class="fa fa-paper-plane"></i>
-							</a>
-
-							<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
-								<i class="fa fa-user"></i>
-								<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-									<li>
-										<a href="#" data-toggle="" data-target="">Unfriend</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-
 					</div>
 					<div class="top-header-author">
 						<a href="/profile" class="author-thumb">
