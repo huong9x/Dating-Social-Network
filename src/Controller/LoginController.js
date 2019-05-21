@@ -13,16 +13,15 @@ class LoginController {
 
     async postLogin(ctx, next) {
         const {username, password} = ctx.request.body;
-        console.log(ctx.request.body.username);
         console.log(username, password);
         
         try {
             let user = await ctx.authenticator.attempt(username, password); 
-
             ctx.authenticator.login(user);
             ctx.redirect('/newsfeed');
 
         } catch(e) {
+            console.log(e);
             return ctx.redirect('/login');    
         }
         

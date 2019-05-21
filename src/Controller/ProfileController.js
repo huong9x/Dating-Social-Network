@@ -4,24 +4,26 @@ class ProfileController {
     }
 
     async getProfile(ctx) {
-        if(!ctx.query.id) {
-            return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
+        let my_id = ctx.session.loggedInUserId;
+        let uid   = ctx.query.id;
+        
+        if(!uid) {
+            return ctx.redirect('/profile?id=' + my_id);
         }
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        let user      = await ctx.userRepository.getUserInfo(ctx.query.id);
-        let posts     = await ctx.postRepository.getUserPost(ctx.query.id);
+
+        let main_user = await ctx.userRepository.getUserInfo(my_id);
+        let user      = await ctx.userRepository.getUserInfo(uid);
+        let posts     = await ctx.postRepository.getUserPost(uid);
+
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
 
-        if(ctx.query.ref_page == 'add'){
-            
-        }
-        return await ctx.render('profile.html', { ctx, user, posts, main_user });        
+        let isFriend = await ctx.friendRepository.isFriend(my_id, uid);
+                
+        return await ctx.render('profile.html', { ctx, user, posts, main_user, isFriend });        
     }
-    async friendProfile(ctx) {
-        
-    }
+
 }
 
 module.exports = ProfileController;
