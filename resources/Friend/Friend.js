@@ -7,6 +7,9 @@ class Friend {
         this.followerName    = rawFriend.first_name + " " + rawFriend.last_name;
     }
 
+    getFollowerId() {
+        return this.follower_id;
+    }
     getUserId() {
         return this.user_id;
     }
