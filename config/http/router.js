@@ -77,12 +77,17 @@ router
     .get('/notifications', logginRequiredMiddleware)
     
     .get('/friends', logginRequiredMiddleware, friendsController.getFriends)
+
+    .get('/friend', logginRequiredMiddleware, friendsController.getFriendRequest)
     
     .get('/photos', logginRequiredMiddleware, photosController.getPhotos)
     
     .get('/videos', logginRequiredMiddleware, videoController.getVideos)
     
     .get('/search/friends:name', logginRequiredMiddleware)
+
+    .get('/404page', logginRequiredMiddleware, aboutController.getNullPage)
+    
     .get('/search/people:name', logginRequiredMiddleware)
     
     .get('/mylocation', logginRequiredMiddleware)

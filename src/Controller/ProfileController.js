@@ -18,10 +18,13 @@ class ProfileController {
         if(!user) {
             return ctx.render('404Page.html', { main_user });
         }
-
-        let isFriend = await ctx.friendRepository.isFriend(my_id, uid);
-                
-        return await ctx.render('profile.html', { ctx, user, posts, main_user, isFriend });        
+        try {
+        let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
+        return ctx.render('profile.html', { ctx, user, posts, main_user , isFriend });                    
+        } catch (error) {
+            console.log(error);
+            return ctx.render('profile.html', { ctx, user, posts, main_user });                    
+        }    
     }
 
 }

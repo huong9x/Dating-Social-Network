@@ -43,23 +43,6 @@
 						</div>
 						{% if ctx.query.id == ctx.session.loggedInUserId %}
 						<div class="control-block-button">
-							<!-- <a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
-								<i class="fas fa-user-plus"></i>
-							</a>
-
-							<a href="#" class="btn btn-control bg-blue" title="Friend request">
-								<i class="fa fa-paper-plane"></i>
-							</a>
-
-							<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
-								<i class="fa fa-user"></i>
-								<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-									<li>
-										<a href="#" data-toggle="" data-target="">Unfriend</a>
-									</li>
-								</ul>
-							</div> -->
-
 							<div class="btn btn-control bg-primary more" style="color: white;">
 								<i class="fa fa-cog"></i>
 
@@ -74,30 +57,32 @@
 							</div>
 						</div>
 						{% else %}
-						<div class="control-block-button">		
-								<!-- {% if isFriend %}					
-								<a href="profile?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
+						<div class="control-block-button">
+								{% if isFriend %}
+									{% if isFriend.getFollowerStatus() == 'friend' %}
+									<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+										<i class="fa fa-user"></i>
+										<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+											<li>
+												<a href="friend?id={{ user.getUserId() }}&ref_page=unfriend" data-toggle="" data-target="">Unfriend</a>
+											</li>
+										</ul>
+									</div>
+									{% elseif isFriend.getFollowerStatus() == 'pending' %}
+										<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+												<i class="fa fa-paper-plane"></i>
+												<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+													<li>
+														<a href="friend?id={{ user.getUserId() }}&ref_page=cancel" data-toggle="" data-target="">Cancel Friend Request</a>
+													</li>
+												</ul>
+											</div>
+									{% endif %}
+								{% else %}		
+								<a href="friend?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
 									<i class="fas fa-user-plus"></i>
 								</a>	
-								{% endif %}		 -->
-								<!-- <div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
-									<i class="fa fa-paper-plane"></i>
-									<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-										<li>
-											<a href="#" data-toggle="" data-target="">Unfriend</a>
-										</li>
-									</ul>
-								</div> -->
-								{% if isFriend %}
-								<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
-									<i class="fa fa-user"></i>
-									<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-										<li>
-											<a href="#" data-toggle="" data-target="">Unfriend</a>
-										</li>
-									</ul>
-								</div>
-								{% endif %}	
+								{% endif %}										
 						</div>
 						{% endif %}
 					</div>

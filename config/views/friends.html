@@ -17,6 +17,7 @@ Friends
 
 <div class="container">
 	<div class="row">
+		{% for friend in friends %}
 		<div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
 			<div class="ui-block">
 				
@@ -48,7 +49,7 @@ Friends
 								<img src="https://html.crumina.net/html-olympus/img/avatar1.jpg" alt="author">
 							</div>
 							<div class="author-content">
-								<a href="https://html.crumina.net/html-olympus/06-ProfilePage.html#" class="h5 author-name">Nicholas Grissom</a>
+								<a href="profile?id={{ friend.getFriendId() }}" class="h5 author-name">{{ friend.getFollowerName() }}</a>
 								<div class="country">San Francisco, CA</div>
 							</div>
 						</div>
@@ -134,20 +135,10 @@ Friends
 					</div>
 				</div>
 				
-				<!-- ... end Friend Item -->			</div>
+				<!-- ... end Friend Item -->
+			</div>
 		</div>
-		
-		<div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
-			
-		</div>
-		
-
-		
-		<div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
-			
-		</div>
-		
-		
+		{% endfor%}		
 	</div>
 </div>
 
