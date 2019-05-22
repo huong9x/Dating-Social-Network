@@ -7,11 +7,12 @@ class CommentRepository {
     }
 
     async findCommentOwner(user_id, post_id, comment_id) {
-        return await this.knex.select('*').from('comment').where({
+        let comment = await this.knex.select('*').from('comment').where({
             user_id: user_id,
             post_id: post_id,
             comment_id: comment_id
         });
+        return new Comment(comment);
     }
 
     async findComment(post_id) {
@@ -45,16 +46,14 @@ class CommentRepository {
         return new Comment(comment[0]);
     }
 
-    async editComment(user_id, post_id, comment_id, comment_text) {
+    async editComment(user_id, comment_id, comment_text) {
         let comment = await this.knex('comment')
-                                    .update([{
-                                        post_id: post_id,
-                                        comment_text: comment_text
-                                    }])
+                                    .update('comment_text', comment_text)
                                     .where({
-                                        comment_id: comment_id
+                                        comment_id: comment_id,
+                                        user_id: user_id
                                     });
-        return new Comment(comment[0]);
+        return new Comment(comment);
     }
 
     async deleteComment(comment_id) {

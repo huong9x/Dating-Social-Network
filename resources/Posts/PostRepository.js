@@ -14,7 +14,10 @@ class PostRepository {
     }
     
     async findPost(post_id) {
-        let post = await this.knex.select('*').from('post').where('post_id', '=', post_id);
+        let post = await this.knex.select('*').from('post').where('post_id', '=', post_id);        
+        if (!post.length) {
+            throw new Error("Post do not exist");
+        }
         return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].post_time);
     }
     async addNewPost(user_id, content) {

@@ -87,8 +87,8 @@ Post Detail
 				<!-- Comments -->
 				<ul class="comments-list">
 					<!-- Comment Form  -->
-                    {% if ctx.query.ref_page != 'editpost' %}
-					{% if ctx.query.ref_page != 'editcomment' %}                    
+					{% if ctx.query.ref_page != 'editpost'%}
+					{% if ctx.session.loggedInUserId == comment.getUserId() %}
 					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
@@ -131,12 +131,13 @@ Post Detail
 							</div>
 							{% endif %}
 						</div>
-                        {% if (ctx.query.idcomment != comment.getCommentId()) %}
+						{% if ctx.query.idcomment != comment.getCommentId() %}
 						<p>
 							{{ comment.getCommentText() }}
-                        </p>
-                        {% endif %} 
-                        {% if (ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId == comment.getUserId()) %}
+						</p>
+						{% endif %}
+						{% if ctx.query.ref_page == 'editcomment' and ctx.query.idcomment == comment.getCommentId() %}
+						{% if ctx.session.loggedInUserId == comment.getUserId() %}
 						<form class="comment-form inline-items" action="/editComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}" method="POST" style="border-top:none;">
 							<div class="post__author author vcard inline-items">
 								<div class="form-group with-icon-right is-empty">
@@ -146,6 +147,7 @@ Post Detail
 							<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
 							<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 						</form>
+						{% endif %}
 						{% endif %}
 					</li>
 					{% endfor %}
