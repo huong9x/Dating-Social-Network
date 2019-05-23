@@ -7,10 +7,11 @@ class PostRepository {
     }
 
     async findPostOwner(post_id, user_id) {
-        return await this.knex.select('*').from('post').where({
+        let findPostOwner = await this.knex.select('*').from('post').where({
             user_id: user_id,
             post_id: post_id
         });
+        return new Post(findPostOwner);
     }
     
     async findPost(post_id) {
@@ -31,9 +32,12 @@ class PostRepository {
         });
 
     }
-    async editPost(post_id, content) {
+    async editPost(user_id, post_id, content) {
         let post = await this.knex('post')
-                                .where('post_id','=', post_id)
+                                .where({
+                                    post_id: post_id,
+                                    user_id: user_id,
+                                })
                                 .update({ content: content });
         return new Post(post[0]);
     }

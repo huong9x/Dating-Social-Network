@@ -26,7 +26,7 @@ Post Detail
 								</time>
 							</div>
 						</div>
-						{% if findPostOwner.length %}
+						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) %}
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -42,12 +42,12 @@ Post Detail
 						</div>
 						{% endif %}
 					</div>
-					{% if ctx.query.ref_page != 'editpost' %}
+					{% if (ctx.query.ref_page != 'editpost') or ((ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId != post.getUserId())) %}
 					<p>
 						{{ post.getContent() }}
 					</p>
 					{% endif %}
-					{% if ctx.query.ref_page == 'editpost' %}
+					{% if (ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId == post.getUserId()) %}
 					<form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
 						<div class="post__author author vcard inline-items">
 							<div class="form-group with-icon-right is-empty">
@@ -131,7 +131,7 @@ Post Detail
 							</div>
 							{% endif %}
 						</div>
-                        {% if (ctx.query.idcomment != comment.getCommentId()) %}
+                        {% if (ctx.query.idcomment != comment.getCommentId()) or ((ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId()))%}
 						<p>
 							{{ comment.getCommentText() }}
                         </p>
