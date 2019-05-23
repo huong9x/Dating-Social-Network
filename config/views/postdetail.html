@@ -51,7 +51,7 @@ Post Detail
 					<form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
 						<div class="post__author author vcard inline-items">
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" placeholder="" name="content">{{ post.getContent() }}</textarea>
+								<textarea class="form-control" required placeholder="" name="content">{{ post.getContent() }}</textarea>
 							</div>
 						</div>
 						<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
@@ -94,7 +94,7 @@ Post Detail
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 					
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" placeholder="" name="comment_text"></textarea>
+								<textarea class="form-control" required name="comment_text"></textarea>
 							<span class="material-input"></span></div>
 						</div>
 						<button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
@@ -140,7 +140,7 @@ Post Detail
 						<form class="comment-form inline-items" action="/editComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}" method="POST" style="border-top:none;">
 							<div class="post__author author vcard inline-items">
 								<div class="form-group with-icon-right is-empty">
-									<textarea class="form-control" placeholder="" name="comment_text">{{ comment.getCommentText() }}</textarea>
+									<textarea class="form-control" required name="comment_text">{{ comment.getCommentText() }}</textarea>
 								<span class="material-input"></span></div>
 							</div>
 							<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>

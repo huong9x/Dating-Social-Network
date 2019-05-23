@@ -11,10 +11,10 @@ class CommentController {
     }
     
     async editComment(ctx) {
+        const {comment_text} = ctx.request.body;
         let main_user        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         let editComment      = await ctx.commentRepository.editComment(ctx.session.loggedInUserId, ctx.query.idcomment, comment_text);
-        const {comment_text} = ctx.request.body;
-        return ctx.redirect('/post?id=' + ctx.query.id, {main_user, editComment, findCommentOwner});
+        return ctx.redirect('/post?id=' + ctx.query.id, {main_user, editComment});
     }
 
     async deleteComment(ctx) {
