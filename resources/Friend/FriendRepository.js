@@ -5,13 +5,24 @@ class FriendRepository {
         this.knex = knex;
     }
 
-    async addFriend(user_id, friend_id) {
-        let requestFriend = await this.knex('followers').insert([{ user_id: user_id, friend_id: friend_id, follower_status: 'pending'}]);
-        console.log(requestFriend);
+    async sendFriendRequest(user_id, friend_id) {
+        let requestFriend = await this.knex('followers').insert([{ user_id: user_id, friend_id: friend_id, follower_status: 'pending'},
+                                                                 { user_id: friend_id, friend_id: user_id, follower_status: 'waiting'}]);
         return new Friend(requestFriend);
     }
+    async addFriend(user_id, friend_id) {
+        let friend = await this.knex('followers').where(function() {
+                                                    this.where({ user_id: user_id, friend_id:friend_id})
+                                                        .orWhere({ user_id: friend_id, friend_id: user_id })
+                                                        })
+                                                .update('follower_status', 'friend');
+        return new Friend(friend);
+    }
     async unFriend(user_id, friend_id) {
-        let notFriend = await this.knex('followers').where({ user_id: user_id, friend_id: friend_id }).del();
+        let notFriend = await this.knex('followers').where(function() {
+                this.where({ user_id: user_id, friend_id:friend_id})
+                .orWhere({ user_id: friend_id, friend_id: user_id })
+                }).del();
         return notFriend.length;
     }
     async listFriend(user_id) {

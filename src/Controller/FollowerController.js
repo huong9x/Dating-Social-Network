@@ -1,7 +1,4 @@
 class FollowerController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async getFollowerRequest(ctx) {
         let my_id = ctx.session.loggedInUserId;

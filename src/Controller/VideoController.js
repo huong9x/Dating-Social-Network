@@ -1,18 +1,14 @@
 class VideoController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async getVideos(ctx) {
         if(!ctx.query.id) {
-            return ctx.redirect('/videos?id=' + ctx.session.loggedInUserId);
+            return ctx.redirect('/404page');
         }
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         let user      = await ctx.userRepository.getUserInfo(ctx.query.id);
         if(!user) {
-            return ctx.render('404Page.html', { main_user });
+            return ctx.redirect('/404page');
         }
-        return await ctx.render('videos.html', { ctx, user, main_user });        
+        return await ctx.render('videos.html', { ctx, user, ctx });        
     }
 }
 

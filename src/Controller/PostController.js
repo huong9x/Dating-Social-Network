@@ -1,11 +1,7 @@
 class PostController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async viewPost(ctx) {
-        let main_user         = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        
+        let main_user         = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);        
         try {
             let post             = await ctx.postRepository.findPost(ctx.query.id);
             let user             = await ctx.userRepository.getUserInfo(post.getUserId());
@@ -29,7 +25,6 @@ class PostController {
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 }
             }
-
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
                 return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, main_user, likeExist, countLike });            

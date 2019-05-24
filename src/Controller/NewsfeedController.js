@@ -1,14 +1,9 @@
 class NewsfeedController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async getNewsfeed(ctx) {
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-        ctx.render('newsfeed.html', { main_user });
+        ctx.render('newsfeed.html', { ctx });
     }
     async postStatus(ctx) {
-        let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
         const {status} = ctx.req.body;
 
         let post = await ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
@@ -17,7 +12,7 @@ class NewsfeedController {
 
         let mediaPost = await ctx.mediaRepository.addMedia(data);
 
-        return ctx.redirect('/newsfeed', main_user, mediaPost);
+        return ctx.redirect('/newsfeed');
     }
 }
 
