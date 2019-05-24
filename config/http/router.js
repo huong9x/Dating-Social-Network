@@ -73,18 +73,7 @@ router
     .post('/editComment', logginRequiredMiddleware, commentController.editComment)
     .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
 
-    .get('/about', logginRequiredMiddleware, topPanelProfile, async (ctx) => {
-        if(!ctx.query.id) {
-            return ctx.redirect('/404page');
-        }
-        let user = await ctx.userRepository.getUserInfo(ctx.query.id);
-        if(!user) {
-            return ctx.redirect('/404page');
-        }
-        console.log(ctx.render);
-        return ctx.render('about.html', { user, ctx });
-
-    })
+    .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
