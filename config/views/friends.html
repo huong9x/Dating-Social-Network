@@ -14,15 +14,25 @@ Friends
 
 {% block container %}
 <!-- Friends -->
+<div class="container">
+	<div class="row">
+		<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="ui-block responsive-flex">
+				<div class="ui-block-title">
+					<div class="h6 title">{{ user.getName() }}’s Friends</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="container">
 	<div class="row">
+		{% if friends.length %}
 		{% for friend in friends %}
 		<div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
 			<div class="ui-block">
-				
 				<!-- Friend Item -->
-				
 				<div class="friend-item">
 					<div class="friend-header-thumb">
 						<img src="https://html.crumina.net/html-olympus/img/friend1.jpg" alt="friend">
@@ -138,7 +148,14 @@ Friends
 				<!-- ... end Friend Item -->
 			</div>
 		</div>
-		{% endfor%}		
+		{% endfor %}
+		{% else %}
+		<div class="col col-xl-12 col-lg-6 col-md-6 col-sm-6 col-6">
+			<div class="ui-block">
+				<h4 style="text-align:center; padding: 10%;">{{ user.getName() }} have no friends.</h4>
+			</div>
+		</div>
+		{% endif %}
 	</div>
 </div>
 
