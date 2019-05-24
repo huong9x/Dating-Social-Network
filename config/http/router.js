@@ -74,6 +74,7 @@ router
     .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
 
     .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
+
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
