@@ -1,7 +1,4 @@
 class LoginController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async getLogin(ctx) {
         if (ctx.authenticator.check()) {

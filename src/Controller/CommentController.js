@@ -1,7 +1,4 @@
 class CommentController {
-    constructor(knex) {
-        this.knex = knex;
-    }
 
     async postComment(ctx) {
         let main_user = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);

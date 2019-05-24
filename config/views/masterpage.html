@@ -147,7 +147,7 @@
                                 </div>
                                 <ul class="account-settings">
                                     <li>
-                                        <a href="/profile">
+                                        <a href="/profile?id={{ ctx.profile.getUserId() }}">
                                             <i class="fa fa-user"></i>
                                             <span>Profile</span>
                                         </a>
@@ -168,9 +168,9 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/profile" class="author-name fn">
+                    <a href="/profile?id={{ ctx.profile.getUserId() }}" class="author-name fn">
                         <div class="author-title">
-                            {{ main_user.getName() }}
+                            {{ ctx.profile.getName() }}
                             <svg class="olymp-dropdown-arrow-icon">
                                 <use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
                             </svg>
@@ -421,7 +421,7 @@
         <div class="fixed-sidebar-right sidebar--small">
             <div class="fixed-sidebar fixed-sidebar-responsive">
                 <div class="fixed-sidebar-left sidebar--small">
-                    <a href="/profile" class="logo" style="background-color: #38a9ff;">
+                    <a href="/profile?id={{ ctx.profile.getUserId() }}" class="logo" style="background-color: #38a9ff;">
                         <div class="img-wrap">
                             <img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="Dating Social Network" style="border-radius: 50%;">
                         </div>
@@ -448,10 +448,12 @@
                 </div>
                 <div class="modal-body">
                     <a href="#" class="upload-photo-item">
-                        <i class="fa fa-upload"></i>
+                        <i class="fa fa-upload">                            
+                        </i>
                         <h6>Upload Photo</h6>
                         <span>Browse your computer.</span>
                     </a>
+                    <button class="btn btn-md-2 btn-border-think btn-transparent c-grey" type="submit">Upload</button>
                 </div>
             </div>
         </div>

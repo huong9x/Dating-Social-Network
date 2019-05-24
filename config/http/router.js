@@ -1,6 +1,7 @@
 const Router                    = require('koa-router');
 const multer                    = require('koa-multer');
 const logginRequiredMiddleware  = require('../Middleware/logginRequiredMiddleware');
+const topPanelProfile           = require('../Middleware/topPanelProfile');
 const LoginController           = require('../../src/Controller/LoginController');
 const NewsfeedController        = require('../../src/Controller/NewsfeedController');
 const LogoutController          = require('../../src/Controller/LogoutController');
@@ -54,17 +55,17 @@ router
 
     .get('/', (ctx) => ctx.redirect('/newsfeed'))
      
-    .get('/newsfeed', logginRequiredMiddleware, newsfeedController.getNewsfeed)
+    .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, newsfeedController.getNewsfeed)
 
-    .get('/post', logginRequiredMiddleware, postController.viewPost)
+    .get('/post', logginRequiredMiddleware, topPanelProfile, postController.viewPost)
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
     .post('/postStatus', logginRequiredMiddleware, upload.array('file', 10), newsfeedController.postStatus)
 
-    .get('/profile', logginRequiredMiddleware, profileController.getProfile)
+    .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
 
-    .get('/settings', logginRequiredMiddleware, settingsController.getSettings)
+    .get('/settings', logginRequiredMiddleware, topPanelProfile, settingsController.getSettings)
 
     .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
 
@@ -72,21 +73,32 @@ router
     .post('/editComment', logginRequiredMiddleware, commentController.editComment)
     .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
 
-    .get('/about', logginRequiredMiddleware, aboutController.getAbout)
-    
-    .get('/notifications', logginRequiredMiddleware)
-    
-    .get('/friends', logginRequiredMiddleware, friendsController.getFriends)
+    .get('/about', logginRequiredMiddleware, topPanelProfile, async (ctx) => {
+        if(!ctx.query.id) {
+            return ctx.redirect('/404page');
+        }
+        let user = await ctx.userRepository.getUserInfo(ctx.query.id);
+        if(!user) {
+            return ctx.redirect('/404page');
+        }
+        console.log(ctx.render);
+        return ctx.render('about.html', { user, ctx });
 
-    .get('/friend', logginRequiredMiddleware, friendsController.getFriendRequest)
+    })
     
-    .get('/photos', logginRequiredMiddleware, photosController.getPhotos)
+    .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
-    .get('/videos', logginRequiredMiddleware, videoController.getVideos)
+    .get('/friends', logginRequiredMiddleware, topPanelProfile, friendsController.getFriends)
+
+    .get('/friend', logginRequiredMiddleware, topPanelProfile, friendsController.getFriendRequest)
+    
+    .get('/photos', logginRequiredMiddleware, topPanelProfile, photosController.getPhotos)
+    
+    .get('/videos', logginRequiredMiddleware, topPanelProfile, videoController.getVideos)
     
     .get('/search/friends:name', logginRequiredMiddleware)
 
-    .get('/404page', logginRequiredMiddleware, aboutController.getNullPage)
+    .get('/404page', logginRequiredMiddleware, topPanelProfile, aboutController.getNullPage)
     
     .get('/search/people:name', logginRequiredMiddleware)
     

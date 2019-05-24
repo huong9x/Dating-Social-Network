@@ -64,7 +64,7 @@
 										<i class="fa fa-user"></i>
 										<ul class="more-dropdown more-with-triangle triangle-bottom-right">
 											<li>
-												<a href="friend?id={{ user.getUserId() }}&ref_page=unfriend" data-toggle="" data-target="">Unfriend</a>
+												<a href="friend?id={{ user.getUserId() }}&ref_page=cancel" data-toggle="" data-target="">Unfriend</a>
 											</li>
 										</ul>
 									</div>
@@ -77,9 +77,21 @@
 													</li>
 												</ul>
 											</div>
+										{% elseif isFriend.getFollowerStatus() == 'waiting' %}
+										<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+											<i class="fa fa-paper-plane"></i>
+											<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+												<li>
+													<a href="friend?id={{ user.getUserId() }}&ref_page=cancel" data-toggle="" data-target="">Cancel Friend Request</a>
+												</li>
+												<li>
+													<a href="friend?id={{ user.getUserId() }}&ref_page=friendAccept" data-toggle="" data-target="">Accept Friend Request</a>
+												</li>
+											</ul>
+										</div>
 									{% endif %}
 								{% else %}		
-								<a href="friend?id={{ user.getUserId() }}&ref_page=add" class="btn btn-control bg-blue" title="Add Friend">
+								<a href="friend?id={{ user.getUserId() }}&ref_page=friendRequest" class="btn btn-control bg-blue" title="Add Friend">
 									<i class="fas fa-user-plus"></i>
 								</a>	
 								{% endif %}										
