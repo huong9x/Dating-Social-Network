@@ -58,7 +58,7 @@
             <div class="control-block">
                 <div class="control-icon more has-items">
                     <i class="fa fa-user"></i>
-                    <div class="label-avatar bg-blue">6</div>
+                    <div class="label-avatar bg-blue">{{ ctx.listFriendRequests.length }}</div>
                     <div class="more-dropdown more-with-triangle triangle-top-center">
                         <div class="ui-block-title ui-block-title-small">
                             <h6 class="title">Friend Requests</h6>
@@ -67,21 +67,22 @@
                         </div>
                         <div class="mCustomScrollbar" data-mcs-theme="dark">
                             <ul class="notification-list friend-requests">
+                                {% for friendRequest in ctx.listFriendRequests %}
                                 <li>
                                     <div class="author-thumb">
                                         <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
                                     </div>
                                     <div class="notification-event">
-                                        <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-                                        <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                                        <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                        <span class="chat-message-item">Mutual Friend: We're working on it</span>
                                     </div>
                                     <span class="notification-icon">
-                                <a href="#" class="accept-request">
+                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
                                     <span class="without-text">
                                         <i class="fas fa-user-plus"></i>
                                     </span>
                                     </a>
-                                    <a href="#" class="accept-request request-del">
+                                    <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
                                         <span class="">
                                         <i class="fa fa-user-times"></i>
                                     </span>
@@ -93,9 +94,10 @@
                                         </svg>
                                     </div>
                                 </li>
+                                {% endfor %}
                             </ul>
                         </div>
-                        <a href="#" class="view-all bg-blue">Check all your Events</a>
+                        <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
                     </div>
                 </div>
                 <div class="control-icon more has-items">
@@ -200,7 +202,7 @@
                     <a class="nav-link" data-toggle="tab" href="#request" role="tab">
                         <div class="control-icon has-items">
                             <i class="fa fa-user"></i>
-                            <div class="label-avatar bg-blue">6</div>
+                            <div class="label-avatar bg-blue">{{ ctx.listFriendRequests.length }}</div>
                         </div>
                     </a>
                 </li>
@@ -237,23 +239,24 @@
                         <a href="#">Find Friends</a>
                         <a href="#">Settings</a>
                     </div>
-                    <ul class="notification-list friend-requests">
+                    <ul class="notification-list friend-requests">                        
+                        {% for friendRequest in ctx.listFriendRequests %}
                         <li>
                             <div class="author-thumb">
                                 <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
                             </div>
                             <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-                                <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                                <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                <span class="chat-message-item">Mutual Friend: plz wait </span>
                             </div>
                             <span class="notification-icon">
-                                <a href="#" class="accept-request">
+                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
                                     <span class="without-text">
                                         <i class="fas fa-user-plus"></i>
                                     </span>
                                 </a>
 
-                                <a href="#" class="accept-request request-del">
+                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
                                     <span class="">
                                         <i class="fas fa-user-times"></i>
                                     </span>
@@ -266,8 +269,9 @@
                                 </svg>
                             </div>
                         </li>
+                        {% endfor %}
                     </ul>
-                    <a href="#" class="view-all bg-blue">Check all your Events</a>
+                    <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Request</a>
                 </div>
             </div>
 

@@ -36,6 +36,18 @@ class FriendRepository {
                                     );
         return listFriend.map((friend) => new Friend(friend));
     }
+    async listFriendRequests(user_id) {
+        let listFriendRequests = await this.knex
+                                    .select('first_name', 'last_name', 'followers.user_id', 'friend_id', 'follower_status', 'follower_id')
+                                    .from('users')
+                                    .join('followers', {'followers.friend_id': 'users.user_id'})
+                                    .where({
+                                        'followers.user_id' : user_id,
+                                        follower_status: 'waiting' }                                   
+                                    );
+        return listFriendRequests.map((friend) => new Friend(friend));
+
+    }
     async isFriend(user_id, friend_id) {
         let friend = await this.knex
                                 .select('*')

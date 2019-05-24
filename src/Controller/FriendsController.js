@@ -9,7 +9,7 @@ class FriendsController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-        return ctx.render('friends.html', { ctx, user, ctx, friends });        
+        return ctx.render('friends.html', { ctx, user, friends });        
     }
     async getFriendRequest(ctx) {
         let my_id = ctx.session.loggedInUserId;
@@ -32,7 +32,6 @@ class FriendsController {
             return ctx.redirect('/profile?id=' + uid);
         }
         if(ref == 'requests') {
-
             return ctx.render('friendrequests.html', { ctx });
         }
 

@@ -30,44 +30,44 @@ About
                     <ul class="widget w-personal-info">
                         <li>
                             <span class="title">Full Name:</span>
-                            <span class="text">{{ ctx.profile.getPresentationName()}}</span>
+                            <span class="text">{{ user.getPresentationName()}}</span>
                         </li>
                         <li>
                             <span class="title">Birthday:</span>
-                            <span class="text">{{ ctx.profile.getBirthDate()}}</span>
+                            <span class="text">{{ user.getBirthDate()}}</span>
                         </li>
                         <li>
                             <span class="title">Gender:</span>
-                            <span class="text" style="text-transform: capitalize;">{{ ctx.profile.getGender() }}</span>
+                            <span class="text" style="text-transform: capitalize;">{{ user.getGender() }}</span>
                         </li>
                         <li>
                             <span class="title">Address:</span>
-                            <span class="text">{{ ctx.profile.getAddress() }}</span>
+                            <span class="text">{{ user.getAddress() }}</span>
                         </li>
                         <li>
                             <span class="title">Relationship:</span>
                             <span class="text">
-                                {% if (ctx.profile.getRelationship() == '1') %}Single
-                                {% elseif (ctx.profile.getRelationship() == '2') %}In a relationship
-                                {% elseif (ctx.profile.getRelationship() == '3') %}Engaged
-                                {% elseif (ctx.profile.getRelationship() == '4') %}Married
-                                {% elseif (ctx.profile.getRelationship() == '5') %}In a civil union
-                                {% elseif (ctx.profile.getRelationship() == '6') %}In a domestic partnership
-                                {% elseif (ctx.profile.getRelationship() == '7') %}In an open relationship
-                                {% elseif (ctx.profile.getRelationship() == '8') %}It's complicated
-                                {% elseif (ctx.profile.getRelationship() == '9') %}Separated
-                                {% elseif (ctx.profile.getRelationship() == '10') %}Divorced
-                                {% elseif (ctx.profile.getRelationship() == '11') %}Widowed
+                                {% if (user.getRelationship() == '1') %}Single
+                                {% elseif (user.getRelationship() == '2') %}In a relationship
+                                {% elseif (user.getRelationship() == '3') %}Engaged
+                                {% elseif (user.getRelationship() == '4') %}Married
+                                {% elseif (user.getRelationship() == '5') %}In a civil union
+                                {% elseif (user.getRelationship() == '6') %}In a domestic partnership
+                                {% elseif (user.getRelationship() == '7') %}In an open relationship
+                                {% elseif (user.getRelationship() == '8') %}It's complicated
+                                {% elseif (user.getRelationship() == '9') %}Separated
+                                {% elseif (user.getRelationship() == '10') %}Divorced
+                                {% elseif (user.getRelationship() == '11') %}Widowed
                                 {% endif %}
                             </span>
                         </li>
                         <li>
                             <span class="title">Email:</span>
-                            <a href="#" class="text">{{ ctx.profile.getEmail() }}</a>
+                            <a href="#" class="text">{{ user.getEmail() }}</a>
                         </li>
                         <li>
                             <span class="title">Phone Number:</span>
-                            <span class="text">{{ ctx.profile.getPhoneNumber() }}</span>
+                            <span class="text">{{ user.getPhoneNumber() }}</span>
                         </li>
                     </ul>
                     <!-- ... end W-Personal-Info -->
