@@ -26,7 +26,7 @@ Post Detail
 								</time>
 							</div>
 						</div>
-						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) %}
+						{% if findPostOwner.length %}
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -42,16 +42,16 @@ Post Detail
 						</div>
 						{% endif %}
 					</div>
-					{% if (ctx.query.ref_page != 'editpost') or ((ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId != post.getUserId())) %}
+					{% if ctx.query.ref_page != 'editpost' %}
 					<p>
 						{{ post.getContent() }}
 					</p>
 					{% endif %}
-					{% if (ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId == post.getUserId()) %}
+					{% if ctx.query.ref_page == 'editpost' %}
 					<form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
 						<div class="post__author author vcard inline-items">
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" required placeholder="" name="content">{{ post.getContent() }}</textarea>
+								<textarea class="form-control" placeholder="" name="content">{{ post.getContent() }}</textarea>
 							</div>
 						</div>
 						<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
@@ -87,14 +87,14 @@ Post Detail
 				<!-- Comments -->
 				<ul class="comments-list">
 					<!-- Comment Form  -->
-                    {% if ctx.query.ref_page != 'editpost' %}
-					{% if ctx.query.ref_page != 'editcomment' %}                    
+					{% if ctx.query.ref_page != 'editpost'%}
+					{% if ctx.session.loggedInUserId == comment.getUserId() %}
 					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 					
 							<div class="form-group with-icon-right is-empty">
-								<textarea class="form-control" required name="comment_text"></textarea>
+								<textarea class="form-control" placeholder="" name="comment_text"></textarea>
 							<span class="material-input"></span></div>
 						</div>
 						<button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
@@ -131,21 +131,23 @@ Post Detail
 							</div>
 							{% endif %}
 						</div>
-                        {% if (ctx.query.idcomment != comment.getCommentId()) or ((ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId()))%}
+						{% if ctx.query.idcomment != comment.getCommentId() %}
 						<p>
 							{{ comment.getCommentText() }}
-                        </p>
-                        {% endif %} 
-                        {% if (ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId == comment.getUserId()) %}
+						</p>
+						{% endif %}
+						{% if ctx.query.ref_page == 'editcomment' and ctx.query.idcomment == comment.getCommentId() %}
+						{% if ctx.session.loggedInUserId == comment.getUserId() %}
 						<form class="comment-form inline-items" action="/editComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}" method="POST" style="border-top:none;">
 							<div class="post__author author vcard inline-items">
 								<div class="form-group with-icon-right is-empty">
-									<textarea class="form-control" required name="comment_text">{{ comment.getCommentText() }}</textarea>
+									<textarea class="form-control" placeholder="" name="comment_text">{{ comment.getCommentText() }}</textarea>
 								<span class="material-input"></span></div>
 							</div>
 							<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
 							<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 						</form>
+						{% endif %}
 						{% endif %}
 					</li>
 					{% endfor %}
