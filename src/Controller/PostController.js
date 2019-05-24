@@ -1,7 +1,6 @@
 class PostController {
 
     async viewPost(ctx) {
-        let main_user         = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);        
         try {
             let post             = await ctx.postRepository.findPost(ctx.query.id);
             let user             = await ctx.userRepository.getUserInfo(post.getUserId());
@@ -13,7 +12,7 @@ class PostController {
             let countComment     = comments.length;
 
             if(!ctx.query.id) {
-                return ctx.render('404Page.html', {main_user});
+                return ctx.redirect('/404page');
             }
 
             if(ctx.query.ref_page == 'like') {
@@ -27,14 +26,14 @@ class PostController {
             }
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
-                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, main_user, likeExist, countLike });            
+                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, likeExist, countLike });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, main_user, likeExist, countLike });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, likeExist, countLike });
             }
         }
         catch(e) {
             console.log(e);
-            return ctx.render('404Page.html', {main_user});
+            return ctx.redirect('/404page');
         }
     }
 
