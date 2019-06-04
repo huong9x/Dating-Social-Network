@@ -14,8 +14,20 @@ Post Detail
         <div class="col col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12"></div>
         <div class="col col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="ui-block">
-				<!-- Post -->				
+				{% if ctx.query.ref_page == 'share' %}
 				<article class="hentry post">
+				<div class="post__author author vcard inline-items">
+					<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+					<div class="author-date">
+						<a class="h6 post__author-name fn" href="/profile?id={{ ctx.session.loggedInUserId }}">{{ userShare.getPresentationName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+					</div>
+				</div>
+				
+				<div class="form-group with-icon-right">
+				<textarea class="form-control" required="" name=""></textarea>
+				{% endif %}
+			
+				<article class="hentry post" {% if ctx.query.ref_page == 'share' %}style="border-bottom:none;"{% endif %}>
 					<div class="post__author author vcard inline-items">
 						<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 						<div class="author-date">
@@ -58,8 +70,8 @@ Post Detail
 						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 					</form>
 					{% endif %}
+					{% if ctx.query.ref_page != 'share' %}
 					<div class="post-additional-info inline-items">
-			
 						<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items"
 						{% if likeExist %}
 							style="color:red;"
@@ -75,20 +87,27 @@ Post Detail
 								<span>{{ countComment }}</span>
 							</a>
 			
-							<a href="#" class="post-add-icon inline-items">
+							<a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
 								<svg class="svg-inline--fa fa-share fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="share" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z"></path></svg>
 								<span>0</span>
 							</a>
 						</div>
 					</div>
+					{% endif %}
 				</article>
-				<!-- .. end Post -->
 
-				<!-- Comments -->
+				{% if ctx.query.ref_page == 'share' %}
+				<div style="position: relative; padding-bottom: 25px;">
+				<button class="btn btn-md-2 btn-primary" style="position: absolute; right: 0%;" type="submit">Post Share</button>
+				</div>
+				</div>
+				</article>
+				{% endif %}
+				
+				{% if ctx.query.ref_page != 'share' %}
 				<ul class="comments-list">
 					<!-- Comment Form  -->
-                    {% if ctx.query.ref_page != 'editpost' %}
-					{% if ctx.query.ref_page != 'editcomment' %}                    
+                    {% if (ctx.query.ref_page != 'editpost') and (ctx.query.ref_page != 'editcomment') %}
 					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
 							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
@@ -101,7 +120,7 @@ Post Detail
 					</form>
 					<!-- ... end Comment Form  -->
 					{% endif %}
-					{% endif %}
+					{% if ctx.query.ref_page != 'share' %}
 					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
@@ -149,8 +168,9 @@ Post Detail
 						{% endif %}
 					</li>
 					{% endfor %}
+					{% endif %}
 				</ul>
-				<!-- end Comments -->
+				{% endif %}
 			</div>
 		</div>
 		<!-- ... end Main Content Post Versions -->
