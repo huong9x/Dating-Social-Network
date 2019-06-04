@@ -16,10 +16,10 @@ class ProfileController {
         }
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
-        return ctx.render('profile.html', { ctx, user, posts, ctx , isFriend });                    
+        return ctx.render('profile.html', { ctx, user, posts , isFriend });                    
         } catch (error) {
             console.log(error);
-            return ctx.render('profile.html', { ctx, user, posts, ctx });                    
+            return ctx.render('profile.html', { ctx, user, posts });                    
         }    
     }
 

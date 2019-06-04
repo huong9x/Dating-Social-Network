@@ -131,11 +131,11 @@ Post Detail
 							</div>
 							{% endif %}
 						</div>
-                        {% if (ctx.query.idcomment != comment.getCommentId()) or ((ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId()))%}
+						{% if (ctx.query.ref_page != 'editcomment') or ((ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment != comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId())) %}
 						<p>
 							{{ comment.getCommentText() }}
                         </p>
-                        {% endif %} 
+                        {% endif %}
                         {% if (ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId == comment.getUserId()) %}
 						<form class="comment-form inline-items" action="/editComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}" method="POST" style="border-top:none;">
 							<div class="post__author author vcard inline-items">

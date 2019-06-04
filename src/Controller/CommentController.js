@@ -2,7 +2,7 @@ class CommentController {
 
     async postComment(ctx) {
         const {comment_text} = ctx.request.body;
-        let newcomment       =  ctx.commentRepository.postComment(ctx.profile.getUserId(), ctx.query.id, comment_text);
+        let newcomment       =  ctx.commentRepository.postComment(ctx.session.loggedInUserId, ctx.query.id, comment_text);
         return ctx.redirect('/post?id=' + ctx.query.id, newcomment);
     }
     

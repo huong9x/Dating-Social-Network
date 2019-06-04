@@ -47,6 +47,18 @@ class FriendRepository {
         return new Friend(friend[0]);
     }
 
+    async findRequestFollowers(user_id) {
+        let findRequestFollowers = await this.knex
+                                        .select('first_name', 'last_name', 'follower_id', 'followers.user_id', 'friend_id', 'follower_status')
+                                        .from('followers')
+                                        .join('users', {'users.user_id' : 'followers.friend_id'})
+                                        .where({
+                                            'followers.user_id' : user_id,
+                                            follower_status : 'waiting'
+                                        });
+            return listFriend.map((friend) => new Friend(friend));
+    }
+
 }
 
 module.exports = FriendRepository;
