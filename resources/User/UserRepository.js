@@ -54,6 +54,11 @@ class UserRepository {
                                     relationship: relationship
                                 });
     }
+    async changeUserPassword(user_id, password) {
+        return await this.knex('users')
+                            .where('user_id', user_id)
+                            .update('password', password);
+    }
 }
 
 module.exports = UserRepository;

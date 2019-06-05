@@ -29,6 +29,25 @@ class ProfileController {
     async updateProfileCover(ctx) {
 
     }
+    async getChangePassword(ctx) {
+        return ctx.render('changepassword.html', { ctx });
+    }
+    async postChangePassword(ctx) {
+        const {oldpassword, newpassword, confirmpassword} = ctx.request.body;
+        console.log(ctx.request.body);
+        console.log(ctx.profile.getUserPassword());
+        if (!await ctx.hasher.check(oldpassword, ctx.profile.getUserPassword())) {
+            console.log('Your Old Passowrd did not match your current');
+            return new Error('Your Old Passowrd did not match your current');
+        }
+        if (newpassword != confirmpassword) {
+            console.log('Confirm new password error');
+            return new Error('Confirm new password error');
+        }
+        await ctx.userRepository.changeUserPassword(ctx.session.loggedInUserId, await ctx.hasher.generate(newpassword));
+        return ctx.redirect('/newsfeed');
+
+    }
 
 }
 
