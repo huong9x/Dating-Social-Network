@@ -4,6 +4,7 @@ class PostController {
         try {
             let post             = await ctx.postRepository.findPost(ctx.query.id);
             let user             = await ctx.userRepository.getUserInfo(post.getUserId());
+            let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
             let likes            = await ctx.likeRepository.findLike(ctx.query.id);
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
@@ -26,9 +27,9 @@ class PostController {
             }
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
-                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, likeExist, countLike });            
+                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, likeExist, countLike, userShare });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, likeExist, countLike });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, likeExist, countLike, userShare });
             }
         }
         catch(e) {

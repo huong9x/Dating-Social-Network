@@ -34,8 +34,6 @@ class FriendsController {
         if(ref == 'requests') {
             return ctx.render('friendrequests.html', { ctx });
         }
-
-
         
     }
 }
