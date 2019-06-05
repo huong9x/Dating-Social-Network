@@ -97,6 +97,10 @@ router
     .get('/search/people:name', logginRequiredMiddleware)
     
     .get('/mylocation', logginRequiredMiddleware)
+
+    .get('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.getChangePassword)
+
+    .post('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.postChangePassword)
     ;
 
 module.exports = router.routes();

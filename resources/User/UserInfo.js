@@ -11,10 +11,14 @@ class UserInfo {
         this.user_avatar  = rawUser[0].user_avatar;
         this.phone_number = rawUser[0].phone_number;
         this.address      = rawUser[0].address;
+        this.password     = rawUser[0].password;
     }
 
     getUserId() {
         return this.user_id;
+    }
+    getUserPassword() {
+        return this.password;
     }
     getName() {
         return capitalize(this.first_name);
