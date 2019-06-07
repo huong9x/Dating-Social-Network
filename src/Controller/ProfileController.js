@@ -10,6 +10,8 @@ class ProfileController {
 
         let user  = await ctx.userRepository.getUserInfo(uid);
         let posts = await ctx.postRepository.getUserPost(uid);
+        console.log(posts[0]);
+        // let fullPosts = posts.map()
 
         if(!user) {
             return ctx.redirect('/404page');
@@ -30,7 +32,7 @@ class ProfileController {
 
     }
     async getChangePassword(ctx) {
-        return ctx.render('changepassword.html', { ctx });
+        return ctx.render('changepass.html', { ctx });
     }
     async postChangePassword(ctx) {
         const {oldpassword, newpassword, confirmpassword} = ctx.request.body;
@@ -45,7 +47,7 @@ class ProfileController {
             return new Error('Confirm new password error');
         }
         await ctx.userRepository.changeUserPassword(ctx.session.loggedInUserId, await ctx.hasher.generate(newpassword));
-        return ctx.redirect('/newsfeed');
+        return ctx.redirect('/');
 
     }
 
