@@ -13,6 +13,7 @@ const VideoController           = require('../../src/Controller/VideoController'
 const SignupController          = require('../../src/Controller/SignupController');
 const PostController            = require('../../src/Controller/PostController');
 const CommentController         = require('../../src/Controller/CommentController');
+const ShareController           = require('../../src/Controller/ShareController');
 const SettingsController        = require('../../src/Controller/SettingsController');
 
 const storage                   = multer.diskStorage({
@@ -41,6 +42,7 @@ const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
 const commentController         = new CommentController();
+const shareController           = new ShareController();
 const settingsController        = new SettingsController();
 
 
@@ -76,6 +78,8 @@ router
     .post('/postComment', logginRequiredMiddleware, commentController.postComment)
     .post('/editComment', logginRequiredMiddleware, commentController.editComment)
     .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
+
+    .post('/postShare', logginRequiredMiddleware, shareController.postShare)
 
     .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
 

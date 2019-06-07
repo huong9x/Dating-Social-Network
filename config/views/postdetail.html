@@ -23,8 +23,8 @@ Post Detail
 					</div>
 				</div>
 				
-				<div class="form-group with-icon-right">
-				<textarea class="form-control" required="" name=""></textarea>
+				<form class="form-group with-icon-right" action="/postShare?postid={{ ctx.query.id }}" method="POST">
+					<textarea class="form-control" required name="content"></textarea>
 				{% endif %}
 			
 				<article class="hentry post" {% if ctx.query.ref_page == 'share' %}style="border-bottom:none;"{% endif %}>
@@ -38,7 +38,7 @@ Post Detail
 								</time>
 							</div>
 						</div>
-						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) %}
+						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) and (ctx.query.ref_page != 'share') %}
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -89,7 +89,7 @@ Post Detail
 			
 							<a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
 								<svg class="svg-inline--fa fa-share fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="share" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z"></path></svg>
-								<span>0</span>
+								<span>{{ countShare }}</span>
 							</a>
 						</div>
 					</div>
@@ -97,9 +97,9 @@ Post Detail
 				</article>
 
 				{% if ctx.query.ref_page == 'share' %}
-				<div style="position: relative; padding-bottom: 25px;">
-				<button class="btn btn-md-2 btn-primary" style="position: absolute; right: 0%;" type="submit">Post Share</button>
-				</div>
+					<div style="position: relative; padding-bottom: 25px;">
+						<button class="btn btn-md-2 btn-primary" style="position: absolute; right: 0%;" type="submit">Post Share</button>
+					</div>
 				</div>
 				</article>
 				{% endif %}

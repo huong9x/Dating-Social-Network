@@ -6,11 +6,13 @@ class PostController {
             let user             = await ctx.userRepository.getUserInfo(post.getUserId());
             let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
+            let shares           = await ctx.shareRepository.findShare(ctx.query.id);
             let likes            = await ctx.likeRepository.findLike(ctx.query.id);
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
             let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId);            
             let countLike        = likes.length;
             let countComment     = comments.length;
+            let countShare       = shares.length;
 
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
@@ -27,9 +29,9 @@ class PostController {
             }
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
-                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, likeExist, countLike, userShare });            
+                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, countComment, comments, user, likeExist, countLike, userShare, countShare });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, likeExist, countLike, userShare });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, countComment, comments, user, likeExist, countLike, userShare, countShare });
             }
         }
         catch(e) {
