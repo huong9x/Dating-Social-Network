@@ -1,5 +1,6 @@
-const Post      = require('./Post');
-const dateTime  = require('date-time');
+const Post     = require('./Post');
+// const Like     = require('../Likes/Like');
+const dateTime = require('date-time');
 
 class PostRepository {
     constructor(knex) {
@@ -28,9 +29,14 @@ class PostRepository {
     async getUserPost(user_id) {
         let posts = await this.knex.select('*').from('post').where('user_id', user_id).orderBy('post_time', 'desc');
         return posts.map((post) => {
-            return new Post(post.post_id, post.user_id, post.content,post.post_time);
+            return new Post(post.post_id, post.user_id, post.content, post.post_time);
         });
 
+    }
+    async getPostLikes(post_id) {
+        let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
+        console.log(likes.length);
+        return likes.length;
     }
     async editPost(user_id, post_id, content) {
         let post = await this.knex('post')

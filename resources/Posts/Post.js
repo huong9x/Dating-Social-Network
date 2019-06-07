@@ -1,10 +1,10 @@
 const { format } = require('timeago.js');
 class Post {
     constructor(post_id, user_id, content, post_time) {
-        this.post_id   = post_id;
-        this.user_id   = user_id;
-        this.content   = content;
-        this.post_time = post_time;
+        this.post_id    = post_id;
+        this.user_id    = user_id;
+        this.content    = content;
+        this.post_time  = post_time;
     }
     
     getUserId() {
@@ -21,6 +21,12 @@ class Post {
     }
     getRawPostTime() {
         return this.post_time;
+    }
+    async getPostLikes() {
+        let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
+    }
+    getPostCmts() {
+        return this.post_cmts;
     }
 }
 
