@@ -8,10 +8,8 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user  = await ctx.userRepository.getUserInfo(uid);
+        let user  = await ctx.userRepository.searchUser(new ctx.SearchByUserId(uid));
         let posts = await ctx.postRepository.getUserPost(uid);
-        console.log(posts[0]);
-        // let fullPosts = posts.map()
 
         if(!user) {
             return ctx.redirect('/404page');
@@ -25,7 +23,7 @@ class ProfileController {
         }    
     }
     async updateProfileAvatar(ctx) {
-        // let my_id = ctx.session.loggedInUserId;
+        console.log(ctx.req.file);
 
     }
     async updateProfileCover(ctx) {

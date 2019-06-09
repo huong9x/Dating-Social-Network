@@ -3,8 +3,8 @@ class PostController {
     async viewPost(ctx) {
         try {
             let post             = await ctx.postRepository.findPost(ctx.query.id);
-            let user             = await ctx.userRepository.getUserInfo(post.getUserId());
-            let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+            let user             = await ctx.userRepository.searchUser(new ctx.SearchUserById(post.getUserId()));
+            let userShare        = await ctx.userRepository.searchUser(new ctx.SearchUserById(ctx.session.loggedInUserId));
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
             let shares           = await ctx.shareRepository.findShare(ctx.query.id);
             let likes            = await ctx.likeRepository.findLike(ctx.query.id);

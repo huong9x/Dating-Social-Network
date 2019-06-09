@@ -450,14 +450,14 @@
                     <div class="modal-header">
                         <h6 class="title">Update Profile Avatar</h6>
                     </div>
-                    <form action="/updateProfileAvatar" method="POST">
+                    <form action="/updateProfileAvatar" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <label for="upload-cover" class="upload-photo-item" style="cursor: pointer; color: red;">
                                 <i class="fa fa-upload"></i>
                                 <h6>Upload Photo</h6>
                                 <span>Browse your computer.</span>
                             </label>
-                            <input type="file" name="cover" id="upload-cover" style="display:none;">
+                            <input type="file" name="file" id="upload-cover" style="display:none;">
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <button class="btn btn-md-2 btn-border-think btn-transparent c-grey" style="color: white; background-color: #ff5e3a;" type="submit">Upload</button>
                             </div>

@@ -1,3 +1,6 @@
+const SearchByUsername = require('../../resources/User/SearchByUsername');
+const SearchByUserId   = require('../../resources/User/SearchByUserId');
+
 class Authenticator {
     constructor(userProvider, hasher, session) {
         this.userProvider = userProvider;
@@ -6,13 +9,13 @@ class Authenticator {
     }
 
     async attempt(username, password) {
-        let attemptingUser = await this.userProvider.findByUsername(username);
+        let attemptingUser = await this.userProvider.searchUser(new SearchByUsername(username));
 
         if (!attemptingUser) {
             throw new Error('Wrong User Name');
         }
 
-        if (!await this.hasher.check(password, attemptingUser.getPassword())) {
+        if (!await this.hasher.check(password, attemptingUser.getUserPassword())) {
             throw new Error('wrong Password');
         }
 
@@ -45,7 +48,7 @@ class Authenticator {
         if (!this.session.loggedInUserId) {
             throw new Error('User has not logged in yet');
         }
-        return await this.userProvider.getByUserId(this.session.loggedInUserId);
+        return await this.userProvider.searchUser(new SearchByUserId(this.session.loggedInUserId));
     }
 }
 

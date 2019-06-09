@@ -67,7 +67,7 @@ router
 
     .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
 
-    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileAvatar)
+    .post('/updateProfileAvatar', logginRequiredMiddleware, upload.single('file'), profileController.updateProfileAvatar)
 
     .post('/updateProfileCover', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileCover)
 

@@ -1,3 +1,4 @@
+const UpdateUserInfor = require('../../resources/User/UpdateUserInfor');
 class SettingsController {
 
     async getSettings(ctx) {
@@ -5,7 +6,7 @@ class SettingsController {
     }
     async postEditSettings(ctx) {
         const {first_name, last_name, email, phone_number, birth_date, gender, address, relationship} = ctx.request.body;
-        await ctx.userRepository.editUser(ctx.session.loggedInUserId, first_name, last_name, email, phone_number, birth_date, gender, address, relationship);
+        await ctx.userRepository.editUser(ctx.session.loggedInUserId, new UpdateUserInfor(first_name, last_name, email, phone_number, birth_date, gender, address, relationship));
         return ctx.redirect('/settings');
     }
 }
