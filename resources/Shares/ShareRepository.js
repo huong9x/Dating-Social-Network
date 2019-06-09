@@ -16,16 +16,6 @@ class ShareRepository {
                                     }]);
         return new Share(share[0]);
     }
-
-    async findShare(post_id) {
-        let shares = await this.knex.select('*')
-                                        .from('share')
-                                        .where({
-                                            post_id: post_id
-                                        });
-
-        return shares.map((share) => { return new Share(share)});
-    }
 }
 
 module.exports = ShareRepository;

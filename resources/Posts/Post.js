@@ -34,12 +34,12 @@ class Post {
     getRawPostTime() {
         return this.post_time;
     }
-    async getPostLikes() {
-        let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
-    }
-    getPostCmts() {
-        return this.post_cmts;
-    }
+    // async getPostLikes() {
+    //     let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
+    // }
+    // getPostCmts() {
+    //     return this.post_cmts;
+    // }
 }
 
 module.exports = Post;

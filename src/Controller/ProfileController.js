@@ -8,10 +8,10 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user  = await ctx.userRepository.getUserInfo(uid);
-        let posts = await ctx.postRepository.getUserPost(uid);
-        console.log(posts[0]);
-        // let fullPosts = posts.map()
+        let user      = await ctx.userRepository.getUserInfo(uid);
+        let posts     = await ctx.postRepository.getUserPost(uid);
+        
+        console.log(posts.map((post) => post.post_id));
 
         if(!user) {
             return ctx.redirect('/404page');

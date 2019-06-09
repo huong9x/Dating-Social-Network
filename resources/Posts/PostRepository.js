@@ -19,7 +19,7 @@ class PostRepository {
         if (!post.length) {
             throw new Error("Post do not exist");
         }
-        return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].post_time);
+        return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_time);
     }
     
     async addNewPost(user_id, content) {
@@ -34,10 +34,26 @@ class PostRepository {
         });
     }
 
-    async getPostLikes(post_id) {
-        let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
-        console.log(likes.length);
-        return likes.length;
+    async updateLikeCount(post_id, like_count) {
+        let post = await this.knex('post')
+                                    .where({
+                                        post_id    : post_id
+                                    })
+                                    .update({
+                                        like_count : like_count
+                                    });
+        return post;
+    }
+
+    async updateCommentCount(post_id, comment_count) {
+        let post = await this.knex('post')
+                                    .where({
+                                        post_id       : post_id
+                                    })
+                                    .update({
+                                        comment_count : comment_count
+                                    });
+        return post;
     }
 
     async editPost(user_id, post_id, content) {

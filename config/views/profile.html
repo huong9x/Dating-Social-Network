@@ -221,7 +221,7 @@ Profile
 							<p>{{ post.getContent() }}
 							</p>
 							<div class="post-additional-info inline-items">
-								<a href="#" class="post-add-icon inline-items">
+								<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
 									<i class="fas fa-thumbs-up"></i>
 									<span>{{ post.getLikeCount() }}</span>
 								</a>
@@ -230,7 +230,7 @@ Profile
 										<i class="fas fa-comments"></i>
 										<span>{{ post.getCommentCount() }}</span>
 									</a>
-									<a href="#" class="post-add-icon inline-items">
+									<a href="post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
 										<i class="fas fa-share"></i>
 										<span>{{ post.getShareCount() }}</span>
 									</a>
