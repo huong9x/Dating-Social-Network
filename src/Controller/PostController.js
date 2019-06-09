@@ -29,7 +29,7 @@ class PostController {
             }
 
             if(ctx.query.ref_page == 'share') {
-                // return ctx.render('postshare.html');
+                return ctx.render('postshare.html', { ctx, post, user, userShare });
             }
 
             if (ctx.query.idcomment) {

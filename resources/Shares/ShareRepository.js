@@ -6,13 +6,16 @@ class ShareRepository {
         this.knex = knex;
     }
     
-    async postShare(user_id, post_id, content) {
-        let share = await this.knex('share')
+    async postShare(user_id, content, post_share_id) {
+        let share = await this.knex('post')
                                     .insert([{
-                                        user_id: user_id,
-                                        post_id: post_id,
-                                        content: content,
-                                        share_time: dateTime()
+                                        user_id       : user_id,
+                                        content       : content,
+                                        like_count    : 0,
+                                        comment_count : 0,
+                                        share_count   : 0,
+                                        post_share_id : post_share_id,
+                                        post_time     : dateTime()
                                     }]);
         return new Share(share[0]);
     }

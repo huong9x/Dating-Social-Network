@@ -56,6 +56,17 @@ class PostRepository {
         return post;
     }
 
+    async updateShareCount(post_id, share_count) {
+        let post = await this.knex('post')
+                                    .where({
+                                        post_id       : post_id
+                                    })
+                                    .update({
+                                        share_count : share_count
+                                    });
+        return post;
+    }
+
     async editPost(user_id, post_id, content) {
         let post = await this.knex('post')
                                 .where({
