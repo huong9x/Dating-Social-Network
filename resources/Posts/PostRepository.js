@@ -37,6 +37,15 @@ class PostRepository {
         });
     }
 
+    async findShare(user_id) {
+        let posts = await this.knex.select('*')
+                                            .from('post')
+                                            .where('user_id', user_id);
+        return posts.map((post) => {
+            return new Post(post.post_id, post.user_id, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
+        });
+    }
+
     async updateLikeCount(post_id, like_count) {
         let post = await this.knex('post')
                                     .where({
@@ -90,7 +99,7 @@ class PostRepository {
     }
 
     async postShare(user_id, content, post_share_id) {
-        let share = await this.knex('post')
+        let post = await this.knex('post')
                                     .insert([{
                                         user_id       : user_id,
                                         content       : content,
@@ -100,9 +109,8 @@ class PostRepository {
                                         post_share_id : post_share_id,
                                         post_time     : dateTime()
                                     }]);
-        return new Share(share[0]);
+        return new Post(post[0]);
     }
 }
 
 module.exports = PostRepository;
-

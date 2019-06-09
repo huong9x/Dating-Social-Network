@@ -219,28 +219,31 @@ Profile
 							<p>
 								{{ post.getContent() }}
 							</p>
-							
-							{% if post.getPostShareId() != null %}
-							<article class="hentry post">
-								<div class="post__author author vcard inline-items">
-									<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-							
-									<div class="author-date">
-										<a class="h6 post__author-name fn" href="/profile?id=1">test <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
-										<div class="post__date">
-											<a href="/post?id=6" style="color: #9697a1;">
-												<time class="published" title="">
-													test
-												</time>
-											</a>
-										</div>
-									</div>
-								</div>
-								<p>
-									test
-								</p>
-							</article>
-							{% endif %}
+							{% if post.getPostShareId() %}
+								{% for findshare in findshares %}
+									{% if post.getPostShareId() == findshare.getPostId() %}
+										<article class="hentry post">
+											<div class="post__author author vcard inline-items">
+												<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+										
+												<div class="author-date">
+													<a class="h6 post__author-name fn" href="/profile?id={{ findshare.getUserId() }}">Share <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+													<div class="post__date">
+														<a href="/post?id=6" style="color: #9697a1;">
+															<time class="published" title="">
+																{{ findshare.getPostTime() }}
+															</time>
+														</a>
+													</div>
+												</div>
+											</div>
+											<p>
+												{{ findshare.getContent() }}
+											</p>
+										</article>
+									{% endif%}
+								{% endfor %}
+							{% endif%}
 
 							<div class="post-additional-info inline-items">
 								<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
