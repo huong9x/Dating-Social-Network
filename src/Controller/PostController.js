@@ -27,6 +27,11 @@ class PostController {
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 }
             }
+
+            if(ctx.query.ref_page == 'share') {
+                // return ctx.render('postshare.html');
+            }
+
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
                 return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, userShare });            

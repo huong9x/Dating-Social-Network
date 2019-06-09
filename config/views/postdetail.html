@@ -14,20 +14,8 @@ Post Detail
         <div class="col col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12"></div>
         <div class="col col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="ui-block">
-				{% if ctx.query.ref_page == 'share' %}
-				<article class="hentry post">
-				<div class="post__author author vcard inline-items">
-					<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
-					<div class="author-date">
-						<a class="h6 post__author-name fn" href="/profile?id={{ ctx.session.loggedInUserId }}">{{ userShare.getPresentationName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
-					</div>
-				</div>
-				
-				<form class="form-group with-icon-right" action="/postShare?postid={{ ctx.query.id }}" method="POST">
-					<textarea class="form-control" required name="content"></textarea>
-				{% endif %}
 			
-				<article class="hentry post" {% if ctx.query.ref_page == 'share' %}style="border-bottom:none;"{% endif %}>
+				<article class="hentry post" >
 					<div class="post__author author vcard inline-items">
 						<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 						<div class="author-date">
@@ -38,7 +26,7 @@ Post Detail
 								</time>
 							</div>
 						</div>
-						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) and (ctx.query.ref_page != 'share') %}
+						{% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) %}
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -70,7 +58,7 @@ Post Detail
 						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
 					</form>
 					{% endif %}
-					{% if ctx.query.ref_page != 'share' %}
+					
 					<div class="post-additional-info inline-items">
 						<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items"
 						{% if likeExist %}
@@ -93,18 +81,9 @@ Post Detail
 							</a>
 						</div>
 					</div>
-					{% endif %}
+					
 				</article>
-
-				{% if ctx.query.ref_page == 'share' %}
-					<div style="position: relative; padding-bottom: 25px;">
-						<button class="btn btn-md-2 btn-primary" style="position: absolute; right: 0%;" type="submit">Post Share</button>
-					</div>
-				</div>
-				</article>
-				{% endif %}
 				
-				{% if ctx.query.ref_page != 'share' %}
 				<ul class="comments-list">
 					<!-- Comment Form  -->
                     {% if (ctx.query.ref_page != 'editpost') and (ctx.query.ref_page != 'editcomment') %}
@@ -120,7 +99,6 @@ Post Detail
 					</form>
 					<!-- ... end Comment Form  -->
 					{% endif %}
-					{% if ctx.query.ref_page != 'share' %}
 					{% for comment in comments %}
 					<li class="comment-item">
 						<div class="post__author author vcard inline-items">
@@ -168,9 +146,7 @@ Post Detail
 						{% endif %}
 					</li>
 					{% endfor %}
-					{% endif %}
 				</ul>
-				{% endif %}
 			</div>
 		</div>
 		<!-- ... end Main Content Post Versions -->
