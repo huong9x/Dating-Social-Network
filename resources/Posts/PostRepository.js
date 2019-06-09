@@ -28,9 +28,12 @@ class PostRepository {
     }
     
     async getUserPost(user_id) {
-        let posts = await this.knex.select('*').from('post').where('user_id', user_id).orderBy('post_time', 'desc');
+        let posts = await this.knex.select('*')
+                                            .from('post')
+                                            .where('user_id', user_id)
+                                            .orderBy('post_time', 'desc');
         return posts.map((post) => {
-            return new Post(post.post_id, post.user_id, post.content, post.like_count, post.comment_count, post.share_count, post.post_time);
+            return new Post(post.post_id, post.user_id, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
     }
 
@@ -84,6 +87,20 @@ class PostRepository {
                                     )
                                     .del();
         return new Post(post[0]);
+    }
+
+    async postShare(user_id, content, post_share_id) {
+        let share = await this.knex('post')
+                                    .insert([{
+                                        user_id       : user_id,
+                                        content       : content,
+                                        like_count    : 0,
+                                        comment_count : 0,
+                                        share_count   : 0,
+                                        post_share_id : post_share_id,
+                                        post_time     : dateTime()
+                                    }]);
+        return new Share(share[0]);
     }
 }
 

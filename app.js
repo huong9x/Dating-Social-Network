@@ -12,7 +12,6 @@ const userProvider    = require('./resources/User/user.provider');
 const postProvider    = require('./resources/Posts/post.provider');
 const likeProvider    = require('./resources/Likes/Like.Provider');
 const commentProvider = require('./resources/Comments/Comment.Provider');
-const shareProvider   = require('./resources/Shares/Share.Provider');
 const mediaProvider   = require('./resources/Media/Media.Provider');
 const friendProvider  = require('./resources/Friend/Friend.Provider');
 
@@ -37,7 +36,6 @@ app.use(userProvider(knex));
 app.use(postProvider(knex));
 app.use(likeProvider(knex));
 app.use(commentProvider(knex));
-app.use(shareProvider(knex));
 app.use(mediaProvider(knex));
 app.use(friendProvider(knex));
 app.use(authProvider());

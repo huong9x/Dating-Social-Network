@@ -8,17 +8,15 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user      = await ctx.userRepository.getUserInfo(uid);
-        let posts     = await ctx.postRepository.getUserPost(uid);
-        
-        console.log(posts.map((post) => post.post_id));
+        let user       = await ctx.userRepository.getUserInfo(uid);
+        let posts      = await ctx.postRepository.getUserPost(uid);
 
         if(!user) {
             return ctx.redirect('/404page');
         }
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
-        return ctx.render('profile.html', { ctx, user, posts , isFriend });                    
+        return ctx.render('profile.html', { ctx, user, posts, isFriend });                    
         } catch (error) {
             console.log(error);
             return ctx.render('profile.html', { ctx, user, posts });                    
