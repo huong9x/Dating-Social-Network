@@ -1,10 +1,7 @@
 class NewsfeedController {
 
     async getNewsfeed(ctx) {
-
-        let findRequestFollowers = ctx.friendRepository.findRequestFollowers(ctx.session.loggedInUserId);
-        console.log(findRequestFollowers);
-        ctx.render('newsfeed.html', { ctx, findRequestFollowers });
+        ctx.render('newsfeed.html', { ctx });
     }
     
     async postStatus(ctx) {
