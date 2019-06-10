@@ -58,47 +58,47 @@
             <div class="control-block">
                 <div class="control-icon more has-items">
                     <i class="fa fa-user"></i>
-                    <div class="label-avatar bg-blue">{{ ctx.listFriendRequests.length }}</div>
-                    <div class="more-dropdown more-with-triangle triangle-top-center">
-                        <div class="ui-block-title ui-block-title-small">
-                            <h6 class="title">Friend Requests</h6>
-                            <a href="#">Find Friends</a>
-                            <a href="#">Settings</a>
+                    {% if ctx.listFriendRequests.length == 0 %}
+                    {% else %}
+                        <div class="label-avatar bg-blue">   
+                            {{ ctx.listFriendRequests.length }}
                         </div>
-                        <div class="mCustomScrollbar" data-mcs-theme="dark">
-                            <ul class="notification-list friend-requests">
-                                {% for friendRequest in ctx.listFriendRequests %}
-                                <li>
-                                    <div class="author-thumb">
-                                        <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
-                                    </div>
-                                    <div class="notification-event">
-                                        <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
-                                        <span class="chat-message-item">Mutual Friend: We're working on it</span>
-                                    </div>
-                                    <span class="notification-icon">
-                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
-                                    <span class="without-text">
-                                        <i class="fas fa-user-plus"></i>
-                                    </span>
-                                    </a>
-                                    <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
-                                        <span class="">
-                                        <i class="fa fa-user-times"></i>
-                                    </span>
-                                    </a>
-                                    </span>
-                                    <div class="more">
-                                        <svg class="olymp-three-dots-icon">
-                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                                        </svg>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                        <div class="more-dropdown more-with-triangle triangle-top-center">
+                            <div class="ui-block-title ui-block-title-small">
+                                <h6 class="title">Friend Requests</h6>
+                                <a href="#">Find Friends</a>
+                                <a href="#">Settings</a>
+                            </div>
+                            <div class="mCustomScrollbar" data-mcs-theme="dark">
+                                <ul class="notification-list friend-requests">
+                                    {% for friendRequest in ctx.listFriendRequests %}
+                                    <li>
+                                        <div class="author-thumb">
+                                            <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
+                                        </div>
+                                        <div class="notification-event">
+                                            <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                            <span class="chat-message-item">Mutual Friend: We're working on it</span>
+                                        </div>
+                                        <span class="notification-icon">
+                                    <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                        <span class="without-text">
+                                            <i class="fas fa-user-plus"></i>
+                                        </span>
+                                        </a>
+                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                            <span class="">
+                                            <i class="fa fa-user-times"></i>
+                                        </span>
+                                        </a>
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
                         </div>
-                        <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
-                    </div>
+                    {% endif %}
                 </div>
                 <div class="control-icon more has-items">
                     <i class="fa fa-bell"></i>
@@ -202,11 +202,13 @@
                     <a class="nav-link" data-toggle="tab" href="#request" role="tab">
                         <div class="control-icon has-items">
                             <i class="fa fa-user"></i>
+                            {% if ctx.listFriendRequests.length == 0 %}
+                            {% else %}
                             <div class="label-avatar bg-blue">{{ ctx.listFriendRequests.length }}</div>
+                            {% endif %}
                         </div>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#notification" role="tab">
                         <div class="control-icon has-items">
@@ -230,7 +232,8 @@
         </div>
         <!-- Tab panes -->
         <div class="tab-content tab-content-responsive">
-
+            {% if ctx.listFriendRequests.length == 0 %}
+            {% else %}
             <div class="tab-pane " id="request" role="tabpanel">
 
                 <div class="mCustomScrollbar" data-mcs-theme="dark">
@@ -246,7 +249,7 @@
                                 <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
                             </div>
                             <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
                                 <span class="chat-message-item">Mutual Friend: plz wait </span>
                             </div>
                             <span class="notification-icon">
@@ -262,18 +265,13 @@
                                     </span>
                                 </a>
                             </span>
-
-                            <div class="more">
-                                <svg class="olymp-three-dots-icon">
-                                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                                </svg>
-                            </div>
                         </li>
                         {% endfor %}
                     </ul>
                     <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Request</a>
                 </div>
             </div>
+            {% endif %}
 
             <div class="tab-pane " id="chat" role="tabpanel">
 
