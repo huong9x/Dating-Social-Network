@@ -8,7 +8,7 @@ class PostController {
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
             let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId);            
-
+            let findshares       = await ctx.postRepository.findShare();
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
             }
@@ -34,9 +34,9 @@ class PostController {
 
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
-                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, userShare });            
+                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, userShare, findshares });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, userShare });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, userShare, findshares });
             }
         }
         catch(e) {

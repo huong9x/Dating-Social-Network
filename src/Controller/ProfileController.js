@@ -10,7 +10,7 @@ class ProfileController {
 
         let user       = await ctx.userRepository.getUserInfo(uid);
         let posts      = await ctx.postRepository.getUserPost(uid);
-        let findshares = await ctx.postRepository.getUserPost(uid);
+        let findshares = await ctx.postRepository.findShare();
 
         if(!user) {
             return ctx.redirect('/404page');
