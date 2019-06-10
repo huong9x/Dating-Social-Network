@@ -222,14 +222,11 @@ News Feed
         <!-- ... end Main Content -->
         <!-- Right Sidebar -->
         <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+            {% if ctx.listFriendRequests.length == 0 %}
+            {% else %}
             <div class="ui-block">
                 <div class="ui-block-title">
                     <h6 class="title">Friend Requests</h6>
-                    <a href="#" class="more">
-                        <svg class="olymp-three-dots-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                        </svg>
-                    </a>
                 </div>
                 <!-- W-Action -->
                 <ul class="widget w-friend-pages-added notification-list friend-requests">
@@ -240,40 +237,29 @@ News Feed
                         </div>
                         <div class="notification-event">
                             <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
-                            <span class="chat-message-item">Mutual Friend: We're working on it</span>
+                            <span class="chat-message-item">Mutual Friend</span>
                         </div>
                         <span class="notification-icon">
-                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept"
-                            class="accept-request">
-                            <span class="without-text">
-                                <i class="fas fa-user-plus"></i>
-                            </span>
-                        </a>
-                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel"
-                        class="accept-request request-del">
-                            <span class="">
-                                <i class="fas fa-user-times"></i>
-                            </span>
-                        </a>
+                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                <span class="without-text">
+                                    <i class="fas fa-user-plus"></i>
+                                </span>
+                            </a>
+                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                <span class="">
+                                    <i class="fas fa-user-times"></i>
+                                </span>
+                            </a>
                         </span>
-                        <div class="more">
-                            <svg class="olymp-three-dots-icon">
-                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                            </svg>
-                        </div>
                     </li>
                     {% endfor %}
                 </ul>
                 <!-- ... end W-Action -->
             </div>
+            {% endif %}
             <div class="ui-block">
                 <div class="ui-block-title">
                     <h6 class="title">Notifications</h6>
-                    <a href="#" class="more">
-                        <svg class="olymp-three-dots-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                        </svg>
-                    </a>
                 </div>
                 <!-- W-Activity-Feed -->
                 <ul class="widget w-activity-feed notification-list">
