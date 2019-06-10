@@ -15,5 +15,4 @@ class AboutController {
     }
 }
 
-
 module.exports = AboutController;
