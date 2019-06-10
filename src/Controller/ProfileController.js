@@ -8,20 +8,19 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user  = await ctx.userRepository.getUserInfo(uid);
-        let posts = await ctx.postRepository.getUserPost(uid);
-        console.log(posts[0]);
-        // let fullPosts = posts.map()
+        let user       = await ctx.userRepository.getUserInfo(uid);
+        let posts      = await ctx.postRepository.getUserPost(uid);
+        let findshares = await ctx.postRepository.findShare();
 
         if(!user) {
             return ctx.redirect('/404page');
         }
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
-        return ctx.render('profile.html', { ctx, user, posts , isFriend });                    
+        return ctx.render('profile.html', { ctx, user, posts, findshares, isFriend });                    
         } catch (error) {
             console.log(error);
-            return ctx.render('profile.html', { ctx, user, posts });                    
+            return ctx.render('profile.html', { ctx, user, posts, findshares });                    
         }    
     }
     async updateProfileAvatar(ctx) {

@@ -190,7 +190,6 @@ Profile
 					<div class="ui-block">
 						<!-- Post -->
 						<article class="hentry post">
-	
 							<div class="post__author author vcard inline-items">
 								<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 	
@@ -209,62 +208,56 @@ Profile
 									</svg>
 									<ul class="more-dropdown">
 										<li>
-											<a href="/post?id={{ post.getPostId() }}&ref_page=edit">Edit Post</a>
+											<a href="/post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
 										</li>
 										<li>
-											<a href="/post?id={{ post.getPostId() }}&ref_page=del">Delete Post</a>
+											<a href="/deletePost?id={{ post.getPostId() }}">Delete Post</a>
 										</li>
 									</ul>
 								</div>
-	
 							</div>
-	
-							<p>{{ post.getContent() }}
+							<p>
+								{{ post.getContent() }}
 							</p>
+							{% if post.getPostShareId() %}
+								{% for findshare in findshares %}
+									{% if post.getPostShareId() == findshare.getPostId() %}
+										<article class="hentry post">
+											<div class="post__author author vcard inline-items">
+												<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+										
+												<div class="author-date">
+													<a class="h6 post__author-name fn" href="/profile?id={{ findshare.getUserId() }}">Share <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+													<div class="post__date">
+														<a href="/post?id=6" style="color: #9697a1;">
+															<time class="published" title="">
+																{{ findshare.getPostTime() }}
+															</time>
+														</a>
+													</div>
+												</div>
+											</div>
+											<p>
+												{{ findshare.getContent() }}
+											</p>
+										</article>
+									{% endif%}
+								{% endfor %}
+							{% endif%}
+
 							<div class="post-additional-info inline-items">
-								<a href="#" class="post-add-icon inline-items">
+								<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
 									<i class="fas fa-thumbs-up"></i>
-									<span>{{ post.getPostId() }}</span>
+									<span>{{ post.getLikeCount() }}</span>
 								</a>
-								<ul class="friends-harmonic">
-									<li>
-										<a href="#">
-											<img src="https://html.crumina.net/html-olympus/img/friend-harmonic9.jpg" alt="friend">
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="https://html.crumina.net/html-olympus/img/friend-harmonic10.jpg" alt="friend">
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="https://html.crumina.net/html-olympus/img/friend-harmonic7.jpg" alt="friend">
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="https://html.crumina.net/html-olympus/img/friend-harmonic8.jpg" alt="friend">
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="https://html.crumina.net/html-olympus/img/friend-harmonic11.jpg" alt="friend">
-										</a>
-									</li>
-								</ul>
-								<div class="names-people-likes">
-									<a href="#">Jenny</a>, <a href="#">Robert</a> and
-									<br>18 more liked this
-								</div>
 								<div class="comments-shared">
 									<a href="/post?id={{ post.getPostId() }}" class="post-add-icon inline-items">
 										<i class="fas fa-comments"></i>
-										<span>{{ countComment }}</span>
+										<span>{{ post.getCommentCount() }}</span>
 									</a>
-									<a href="#" class="post-add-icon inline-items">
+									<a href="post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
 										<i class="fas fa-share"></i>
-										<span>16</span>
+										<span>{{ post.getShareCount() }}</span>
 									</a>
 								</div>
 							</div>

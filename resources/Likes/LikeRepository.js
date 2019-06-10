@@ -6,6 +6,19 @@ class LikeRepository {
         this.knex = knex;
     }
 
+    async checkUserLike (user_id, post_id) {
+        let like = await this.knex.select('*')
+                                    .from('likes')
+                                    .where({
+                                        user_id: user_id,
+                                        post_id: post_id
+                                    });
+        if (like.length) {
+            return true;
+        }
+        return false;
+    }
+
     async likePost(user_id, post_id) {
         let like = await this.knex('likes').insert([{user_id: user_id, post_id: post_id, like_time: dateTime()}]);
         return new Like(like);
@@ -24,11 +37,6 @@ class LikeRepository {
     async likeExist(user_id, post_id) {
         let like = await this.knex.select('*').from('likes').where({user_id: user_id, post_id: post_id});
         return like.length;
-    }
-    
-    async findLike(post_id) {
-        let likes = await this.knex.select('*').from('likes').where('post_id', post_id);
-        return likes.map((like) => new Like(like));
     }
 }
 
