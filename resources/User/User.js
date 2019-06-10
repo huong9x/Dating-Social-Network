@@ -5,6 +5,7 @@ class User {
         this.username = username;
         this.password = password;
     }
+    
     getPassword() {
         return this.password;
     }
