@@ -255,7 +255,15 @@ Profile
 										<i class="fas fa-comments"></i>
 										<span>{{ post.getCommentCount() }}</span>
 									</a>
-									<a href="post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
+									{% if post.getPostShareId() %}
+										{% for findshare in findshares %}
+											{% if post.getPostShareId() == findshare.getPostId() %}
+											<a href="/post?id={{ findshare.getPostId() }}&ref_page=share" class="post-add-icon inline-items">	
+											{% endif %}
+										{% endfor %}
+										{% else %}
+										<a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
+									{% endif %}
 										<i class="fas fa-share"></i>
 										<span>{{ post.getShareCount() }}</span>
 									</a>

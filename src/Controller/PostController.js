@@ -3,6 +3,10 @@ class PostController {
     async viewPost(ctx) {
         try {
             let post             = await ctx.postRepository.findPost(ctx.query.id);
+            console.log(post.getPostShareId());
+            let originalPost     = await ctx.postRepository.findPost(post.getPostShareId());
+            let userShare2       = await ctx.userRepository.getUserInfo(originalPost.getUserId());
+
             let user             = await ctx.userRepository.getUserInfo(post.getUserId());
             let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
@@ -36,7 +40,7 @@ class PostController {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
                 return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, userShare, findshares });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, userShare, findshares });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, userShare, findshares, userShare2, originalPost });
             }
         }
         catch(e) {
