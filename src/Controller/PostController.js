@@ -34,9 +34,9 @@ class PostController {
 
             if (ctx.query.idcomment) {
                 let findCommentOwner = await ctx.commentRepository.findCommentOwner(ctx.session.loggedInUserId, ctx.query.idcomment);
-                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, userShare, findshares });            
+                return ctx.render('postdetail.html', { post, findPostOwner, findCommentOwner, ctx, comments, user, likeExist, findshares });            
             } else {            
-                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, userShare, findshares });
+                return ctx.render('postdetail.html', { post, findPostOwner, ctx, comments, user, likeExist, findshares});
             }
         }
         catch(e) {
