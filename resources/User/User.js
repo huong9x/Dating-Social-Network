@@ -4,8 +4,7 @@ class User {
         this.user_id  = user_id;
         this.username = username;
         this.password = password;
-    }
-    
+    }    
     getPassword() {
         return this.password;
     }
