@@ -438,34 +438,53 @@
     <div class="header-spacer"></div>
     {% block profilecover %} {% endblock %}
     {% block container %} {% endblock %}
+    <style>
+        #upload-avatar, #upload-cover {
+            display: none;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <!-- Update-profile-avatar -->
     <div class="modal fade" id="update-profile-avatar" tabindex="-1" role="dialog" aria-labelledby="update-profile-avatar" aria-hidden="true">
-            <div class="modal-dialog window-popup update-header-photo" role="document">
-                <div class="modal-content">
-                    <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
-                        <svg class="olymp-close-icon">
-                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use>
-                        </svg>
-                    </a>
-                    <div class="modal-header">
-                        <h6 class="title">Update Profile Avatar</h6>
-                    </div>
-                    <form action="/updateProfileAvatar" method="POST">
-                        <div class="modal-body">
-                            <label for="upload-cover" class="upload-photo-item" style="cursor: pointer; color: red;">
-                                <i class="fa fa-upload"></i>
-                                <h6>Upload Photo</h6>
-                                <span>Browse your computer.</span>
-                            </label>
-                            <input type="file" name="cover" id="upload-cover" style="display:none;">
-                            <div style="display: flex; align-items: center; justify-content: center;">
-                                <button class="btn btn-md-2 btn-border-think btn-transparent c-grey" style="color: white; background-color: #ff5e3a;" type="submit">Upload</button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="modal-dialog window-popup update-header-photo" role="document">
+            <div class="modal-content">
+                <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+                    <svg class="olymp-close-icon">
+                        <use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use>
+                    </svg>
+                </a>
+                <div class="modal-header">
+                    <h6 class="title">Update Profile Avatar</h6>
                 </div>
+                <form action="/updateProfileAvatar" method="POST">
+                    <div class="modal-body">
+                        <label for="upload-avatar" class="upload-photo-item" style="cursor: pointer; color: red;">
+                            <i class="fa fa-upload"></i>
+                            <h6>Upload Photo</h6>
+                            <span id="span_upload_avatar" style="color: #4ec71c;">Browse your computer</span>
+                        </label>
+                        <input type="file" name="user_avatar" id="upload-avatar">
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <button class="btn btn-md-2 btn-border-think btn-transparent c-grey" style="color: white; background-color: #ff5e3a;" type="submit">Upload</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#upload-avatar').on("change", function(e) {
+                var files = $(this)[0].files;
+                if(files.length >= 2) {
+                    $("#span_upload_avatar").text(files.length + " files selected");
+                } else {
+                    var filename = e.target.value.split('\\').pop();
+                    $("#span_upload_avatar").text("Selected: " + filename);
+                }
+            });
+        });
+    </script>
     <!-- end Update-profile-avatar -->
     <!-- Update-profile-cover -->
     <div class="modal fade" id="update-profile-cover" tabindex="-1" role="dialog" aria-labelledby="update-profile-cover" aria-hidden="true">
@@ -484,9 +503,9 @@
                         <label for="upload-cover" class="upload-photo-item" style="cursor: pointer; color: red;">
                             <i class="fa fa-upload"></i>
                             <h6>Upload Photo</h6>
-                            <span>Browse your computer.</span>
+                            <span id="span_upload_cover" style="color: #4ec71c;">Browse your computer</span>
                         </label>
-                        <input type="file" name="cover" id="upload-cover" style="display:none;">
+                        <input type="file" name="user-cover" id="upload-cover">
                         <div style="display: flex; align-items: center; justify-content: center;">
                             <button class="btn btn-md-2 btn-border-think btn-transparent c-grey" style="color: white; background-color: #ff5e3a;" type="submit">Upload</button>
                         </div>
@@ -495,6 +514,19 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#upload-cover').on("change", function(e) {
+                var files = $(this)[0].files;
+                if(files.length >= 2) {
+                    $("#span_upload_cover").text(files.length + " files selected");
+                } else {
+                    var filename = e.target.value.split('\\').pop();
+                    $("#span_upload_cover").text("Selected: " + filename);
+                }
+            });
+        });
+    </script>
     <!-- end Update-profile-cover -->
     <a class="back-to-top" href="#">
         <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">

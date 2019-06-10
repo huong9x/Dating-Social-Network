@@ -15,7 +15,7 @@ class PostController {
 
             if(ctx.query.ref_page == 'like') {
                 let like_count_tmp = await ctx.postRepository.findPost(ctx.query.id);
-                if (likeExist == true) {
+                if (likeExist) {
                     let like_count = like_count_tmp.getLikeCount() - 1;
                     await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
                     await ctx.likeRepository.unlikePost(ctx.session.loggedInUserId, ctx.query.id);
