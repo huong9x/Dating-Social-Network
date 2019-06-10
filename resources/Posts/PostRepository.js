@@ -23,7 +23,7 @@ class PostRepository {
     }
     
     async findPost(post_id) {
-        let post = await this.knex.select('*').from('post').where('post_id', '=', post_id);        
+        let post = await this.knex.select('*').from('post').where('post_id', '=', post_id);
         if (!post.length) {
             throw new Error("Post do not exist");
         }

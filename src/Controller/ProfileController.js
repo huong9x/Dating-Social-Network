@@ -18,8 +18,8 @@ class ProfileController {
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
         return ctx.render('profile.html', { ctx, user, posts, findshares, isFriend });                    
-        } catch (error) {
-            console.log(error);
+        } catch (e) {
+            console.log(e.message);
             return ctx.render('profile.html', { ctx, user, posts, findshares });                    
         }    
     }
