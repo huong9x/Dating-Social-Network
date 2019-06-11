@@ -1,4 +1,5 @@
 const Post     = require('./Post');
+const Share    = require('./Share');
 const dateTime = require('date-time');
 
 class PostRepository {
@@ -27,6 +28,14 @@ class PostRepository {
         if (!post.length) {
             throw new Error("Post do not exist");
         }
+        if(post[0].post_share_id) {
+            let originalPost = await this.knex
+                                    .select('first_name', 'last_name', 'post_id', 'post.user_id', 'content', 'like_count', 'comment_count', 'share_count', 'post_share_id', 'post_time')
+                                    .from('post')
+                                    .join('users', {'users.user_id': 'post.user_id'})
+                                    .where('post_id', '=', post[0].post_share_id);
+            return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+        }
         return new Post(post[0].post_id, post[0].user_id, post[0].content, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time);
     }
     
@@ -40,9 +49,18 @@ class PostRepository {
                                             .from('post')
                                             .where('user_id', user_id)
                                             .orderBy('post_time', 'desc');
-        return posts.map((post) => {
+        let result =  posts.map(async (post) => {
+            if(post.post_share_id) {
+                let originalPost = await this.knex
+                                                .select('first_name', 'last_name', 'post_id', 'post.user_id', 'content', 'post_time')
+                                                .from('post')
+                                                .join('users', {'users.user_id': 'post.user_id'})
+                                                .where('post_id', '=', post.post_share_id);
+                return new Post(post.post_id, post.user_id, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+            }
             return new Post(post.post_id, post.user_id, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
+        return Promise.all(result);
     }
 
     async findShare() {

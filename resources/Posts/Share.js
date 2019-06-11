@@ -1,20 +1,18 @@
 const { format } = require('timeago.js');
-class Post {
-    constructor(post_id, user_id, content, like_count, comment_count, share_count, post_share_id, post_time, post_id_o, post_time_o, content_o, first_name_o, last_name_o, user_id_o) {
+class Share {
+    constructor(post_id, user_id, content, like_count, comment_count, share_count, post_time, post_id_o, post_time_o, content_o, first_name_o, last_name_o) {
         this.post_id       = post_id;
         this.user_id       = user_id;
         this.content       = content;
         this.like_count    = like_count;
         this.comment_count = comment_count;
         this.share_count   = share_count;
-        this.post_share_id = post_share_id;
         this.post_time     = post_time;
         this.post_id_o     = post_id_o;
         this.post_time_o   = post_time_o;
         this.content_o     = content_o;
         this.first_name_o  = first_name_o;
         this.last_name_o   = last_name_o;
-        this.user_id_o     = user_id_o;
     }
     
     getUserId() {
@@ -35,9 +33,6 @@ class Post {
     getShareCount() {
         return this.share_count;
     }
-    getPostShareId() {
-        return this.post_share_id;
-    }
     getPostTime() {
         return format(this.post_time, 'en_US');
     }
@@ -45,7 +40,7 @@ class Post {
         return this.post_time;
     }
     getOriginalPostName() {
-        return this.first_name_o + ' ' + this.last_name_o;
+        return this.first_name_o + this.last_name_o;
     }
     getOriginalPostId() {
         return this.post_id_o;
@@ -56,10 +51,7 @@ class Post {
     getOriginalPostTime() {
         return format(this.post_time_o, 'en_US');
     }
-    getOriginalPostUserId() {
-        return this.user_id_o;
-    }
     
 }
 
-module.exports = Post;
+module.exports = Share;
