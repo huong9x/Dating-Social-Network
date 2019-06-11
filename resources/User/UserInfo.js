@@ -1,17 +1,18 @@
 const capitalize = require('capitalize-first-letter');
 class UserInfo {
     constructor(rawUser) {
-        this.user_id      = rawUser[0].user_id;
-        this.first_name   = rawUser[0].first_name;
-        this.last_name    = rawUser[0].last_name;
-        this.birth_date   = rawUser[0].birth_date;
-        this.gender       = rawUser[0].gender;
-        this.email        = rawUser[0].email;
-        this.relationship = rawUser[0].relationship;
-        this.user_avatar  = rawUser[0].user_avatar;
-        this.phone_number = rawUser[0].phone_number;
-        this.address      = rawUser[0].address;
-        this.password     = rawUser[0].password;
+        this.user_id         = rawUser.user_id;
+        this.first_name      = rawUser.first_name;
+        this.last_name       = rawUser.last_name;
+        this.birth_date      = rawUser.birth_date;
+        this.gender          = rawUser.gender;
+        this.email           = rawUser.email;
+        this.relationship    = rawUser.relationship;
+        this.user_avatar     = rawUser.user_avatar;
+        this.phone_number    = rawUser.phone_number;
+        this.address         = rawUser.address;
+        this.password        = rawUser.password;
+        this.follower_status = rawUser.follower_status;
     }
 
     getUserId() {
@@ -52,6 +53,9 @@ class UserInfo {
     }
     getAddress() {
         return this.address;
+    }
+    getFollowerStatus() {
+        return this.follower_status;
     }
 }
 

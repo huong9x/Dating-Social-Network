@@ -15,6 +15,7 @@ class UserRepository {
 
         return null;
     }
+    
     async getByUserId(user_id) {
         let rawUser = await this.knex.select('*').from('users').where('user_id', user_id);
 
@@ -29,7 +30,7 @@ class UserRepository {
         let rawUser = await this.knex.select('*').from('users').where('user_id', user_id);
 
         if(rawUser.length) {
-            return new UserInfo(rawUser);
+            return new UserInfo(rawUser[0]);
         } 
 
         return null;
@@ -54,11 +55,33 @@ class UserRepository {
                                     relationship: relationship
                                 });
     }
+    
     async changeUserPassword(user_id, password) {
         return await this.knex('users')
                             .where('user_id', user_id)
                             .update('password', password);
     }
+
+    async searchUser(name) {
+        let users = await this.knex.select('*')
+                                    .from('users')
+                                    .where('first_name', 'like', '%' + name + '%')
+                                    .orWhere('last_name', 'like', '%' + name + '%');
+        return users.map((user) => new UserInfo(user));
+    }
+
+    // async searchUser(user_id, name) {
+    //     let users = await this.knex.select(
+    //                                 'first_name',
+    //                                 'last_name',
+    //                                 'friend_id',
+    //                                 'follower_status')
+    //                                 .from('followers')
+    //                                 .leftJoin('users', 'users.user_id', 'followers.friend_id')
+    //                                 .where('followers.user_id', '=', user_id, 'and', 'first_name', 'like', '%' + name + '%')
+    //                                 .orWhere('followers.user_id', '=', user_id, 'and', 'last_name', 'like', '%' + name + '%');
+    //     return users.map((user) => new UserInfo(user));
+    // }
 }
 
 module.exports = UserRepository;
