@@ -1,6 +1,6 @@
 class ProfileController {
 
-    async getProfile(ctx) {
+    async getProfile2(ctx) {
         let my_id = ctx.session.loggedInUserId;
         let uid   = ctx.query.id;
         
@@ -20,9 +20,19 @@ class ProfileController {
         return ctx.render('profile.html', { ctx, user, posts, findshares, isFriend });                    
         } catch (e) {
             console.log(e.message);
-            return ctx.render('profile.html', { ctx, user, posts, findshares });                    
+            await ctx.render('profile.html', { ctx, user, posts, findshares });                    
         }    
     }
+    async getProfile(ctx) {
+        let posts     = await ctx.postRepository.getUserPost(ctx.query.id);
+
+        let user       = await ctx.userRepository.getUserInfo(ctx.query.id);
+        // console.log(posts2[0].getPostId());
+        // let posts = posts2;
+        // let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id);            
+        return ctx.render('profile.html', { ctx, user, posts, isFriend: false });   
+    }
+
     async updateProfileAvatar(ctx) {
         // let my_id = ctx.session.loggedInUserId;
 

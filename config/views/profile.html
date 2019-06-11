@@ -220,29 +220,25 @@ Profile
 								{{ post.getContent() }}
 							</p>
 							{% if post.getPostShareId() %}
-								{% for findshare in findshares %}
-									{% if post.getPostShareId() == findshare.getPostId() %}
 										<article class="hentry post">
 											<div class="post__author author vcard inline-items">
 												<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
 										
 												<div class="author-date">
-													<a class="h6 post__author-name fn" href="/profile?id={{ findshare.getUserId() }}">Share <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+													<a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}"> {{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 													<div class="post__date">
-														<a href="/post?id=6" style="color: #9697a1;">
+														<a href="/post?id={{ post.getOriginalPostId() }}" style="color: #9697a1;">
 															<time class="published" title="">
-																{{ findshare.getPostTime() }}
+																{{ post.getOriginalPostTime() }}
 															</time>
 														</a>
 													</div>
 												</div>
 											</div>
 											<p>
-												{{ findshare.getContent() }}
+												{{ post.getOriginalPostContent() }}
 											</p>
 										</article>
-									{% endif%}
-								{% endfor %}
 							{% endif%}
 
 							<div class="post-additional-info inline-items">
@@ -255,15 +251,11 @@ Profile
 										<i class="fas fa-comments"></i>
 										<span>{{ post.getCommentCount() }}</span>
 									</a>
-									<!-- {% if post.getPostShareId() %}
-										{% for findshare in findshares %}
-											{% if post.getPostShareId() == findshare.getPostId() %}
-											<a href="/post?id={{ findshare.getPostId() }}&ref_page=share" class="post-add-icon inline-items">	
-											{% endif %}
-										{% endfor %}
+									{% if post.getPostShareId() %}
+										<a href="/post?id={{ post.getOriginalPostId() }}&ref_page=share" class="post-add-icon inline-items">
 										{% else %}
 										<a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
-									{% endif %} -->
+									{% endif %}
 										<i class="fas fa-share"></i>
 										<span>{{ post.getShareCount() }}</span>
 									</a>
