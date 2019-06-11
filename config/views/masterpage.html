@@ -44,17 +44,17 @@
             <h6>{% block titleheader %}{% endblock %}</h6>
         </div>
         <div class="header-content-wrapper">
-            <form class="search-bar w-search notification-list friend-requests">
+            <form action="/search" method="POST" class="search-bar w-search notification-list friend-requests">
                 <div class="form-group with-button">
-                    <input class="form-control js-user-search" placeholder="Search here people or pages..." type="text">
-                    <button>
+                    <input type="text" name="search" placeholder="Search here people or pages...">
+                    <button type="submit">
                         <svg class="olymp-magnifying-glass-icon">
                             <use xlink:href="svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
                         </svg>
                     </button>
                 </div>
             </form>
-            <a href="#" class="link-find-friend">Find Friends</a>
+            <a href="/searchnearby" class="link-find-friend">Search Nearby</a>
             <div class="control-block">
                 <div class="control-icon more has-items">
                     <i class="fa fa-user"></i>
@@ -388,8 +388,8 @@
                                 <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
                             </div>
                             <span class="notification-icon">
-                                                <svg class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
-                                            </span>
+                                <svg class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </span>
 
                             <div class="more">
                                 <svg class="olymp-three-dots-icon">
@@ -408,9 +408,14 @@
             </div>
 
             <div class="tab-pane" id="search" role="tabpanel">
-                <form class="search-bar w-search notification-list friend-requests">
+                <form action="/search" method="POST" class="search-bar w-search notification-list friend-requests">
                     <div class="form-group with-button">
-                        <input class="form-control js-user-search" placeholder="Search here people or pages..." type="text">
+                        <input type="text" name="search" placeholder="Search here people or pages...">
+                        <button type="submit">
+                            <svg class="olymp-magnifying-glass-icon">
+                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
+                            </svg>
+                        </button>
                     </div>
                 </form>
             </div>
