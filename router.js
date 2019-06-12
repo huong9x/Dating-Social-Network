@@ -19,7 +19,7 @@ const SettingsController        = require('../../src/Controller/SettingsControll
 const storage                   = multer.diskStorage({
 
                                     destination: function (req, file, cb) {
-                                        cb(null, 'uploads/')
+                                        cb(null, './config/views/uploadedFiles/')
                                     },
 
                                     filename: function (req, file, cb) {
@@ -67,7 +67,7 @@ router
 
     .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
 
-    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileAvatar)
+    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('avatar'), profileController.updateProfileAvatar)
 
     .post('/updateProfileCover', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileCover)
 

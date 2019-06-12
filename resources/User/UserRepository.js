@@ -61,6 +61,16 @@ class UserRepository {
                             .where('user_id', user_id)
                             .update('password', password);
     }
+    async changeUserAvatar(user_id, user_avatar) {
+        return await this.knex('users')
+                            .where('user_id', user_id)
+                            .update('user_avatar', user_avatar);
+    }
+    async changeUserCover(user_id, user_cover) {
+        return await this.knex('users')
+                            .where('user_id', user_id)
+                            .update('user_cover', user_cover);
+    }
 
     async reportUser(user_id, content) {
         return await this.knex('reports').insert({
@@ -75,19 +85,6 @@ class UserRepository {
                                     .whereRaw('concat (first_name,  \' \', last_name) like ?', ['%' + name + '%']);
         return users.map((user) => new UserInfo(user));
     }
-
-    // async searchUser(user_id, name) {
-    //     let users = await this.knex.select(
-    //                                 'first_name',
-    //                                 'last_name',
-    //                                 'friend_id',
-    //                                 'follower_status')
-    //                                 .from('followers')
-    //                                 .leftJoin('users', 'users.user_id', 'followers.friend_id')
-    //                                 .where('followers.user_id', '=', user_id, 'and', 'first_name', 'like', '%' + name + '%')
-    //                                 .orWhere('followers.user_id', '=', user_id, 'and', 'last_name', 'like', '%' + name + '%');
-    //     return users.map((user) => new UserInfo(user));
-    // }
 }
 
 module.exports = UserRepository;

@@ -1,11 +1,11 @@
-const Koa             = require('koa');
-const database        = require('./config/database/database');
-const config          = require('./knexfile');
-const knex            = require('knex')(config); 
-const routes          = require('./config/http/router');
-const path            = require('path');
-const static          = require('koa-static');
-const bodyParser      = require('koa-bodyparser');
+const Koa                  = require('koa');
+const database             = require('./config/database/database');
+const config               = require('./knexfile');
+const knex                 = require('knex')(config); 
+const routes               = require('./router');
+const path                 = require('path');
+const static               = require('koa-static');
+const bodyParser           = require('koa-bodyparser');
 const session              = require('koa-session');
 
 const userProvider         = require('./resources/User/user.provider');
@@ -42,6 +42,7 @@ app.use(mediaProvider(knex));
 app.use(friendProvider(knex));
 app.use(authProvider());
 app.use(njProvider());
+// app.use(multerProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);
 

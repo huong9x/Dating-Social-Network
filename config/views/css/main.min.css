@@ -13957,7 +13957,7 @@ ol ol li {
 .author-thumb img {
     border-radius: 100%;
     overflow: hidden;
-    max-width: unset
+    max-width: 100%;
 }
 
 .author-thumb .icon-status {

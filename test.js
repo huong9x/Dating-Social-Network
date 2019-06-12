@@ -1,16 +1,14 @@
-const publicIp = require('public-ip');
-const iplocation = require("iplocation").default;
-
+import HaversineGeolocation from 'haversine-geolocation';
 
  
-(async () => {
-    iplocation(await publicIp.v4())
-    .then((res) => {
-        console.log(res);
-    })
-    .catch(err => {
-        console.log(err);
+HaversineGeolocation.isGeolocationAvailable()
+    .then(data => {
+        const currentPoint = {
+            latitude: data.coords.latitude,
+            longitude: data.coords.longitude,
+            accuracy: data.coords.accuracy
+        };
+        console.log(currentPoint);
     });
-})();
 
 

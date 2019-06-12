@@ -1,6 +1,6 @@
 class ProfileController {
 
-    async getProfile2(ctx) {
+    async getProfile(ctx) {
         let my_id = ctx.session.loggedInUserId;
         let uid   = ctx.query.id;
         
@@ -8,38 +8,30 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user       = await ctx.userRepository.getUserInfo(uid);
-        let posts      = await ctx.postRepository.getUserPost(uid);
-        let findshares = await ctx.postRepository.findShare();
-
+        let user  = await ctx.userRepository.getUserInfo(uid);
+        let posts = await ctx.postRepository.getUserPost(uid);
+        
         if(!user) {
             return ctx.redirect('/404page');
         }
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
-        return ctx.render('profile.html', { ctx, user, posts, findshares, isFriend });                    
+        return ctx.render('profile.html', { ctx, user, posts, isFriend });                    
         } catch (e) {
             console.log(e.message);
-            await ctx.render('profile.html', { ctx, user, posts, findshares });                    
+            await ctx.render('profile.html', { ctx, user, posts });                    
         }    
-    }
-    async getProfile(ctx) {
-        let posts     = await ctx.postRepository.getUserPost(ctx.query.id);
-
-        let user       = await ctx.userRepository.getUserInfo(ctx.query.id);
-        // console.log(posts2[0].getPostId());
-        // let posts = posts2;
-        // let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id);            
-        return ctx.render('profile.html', { ctx, user, posts, isFriend: false });   
     }
 
     async updateProfileAvatar(ctx) {
-        // let my_id = ctx.session.loggedInUserId;
+        await ctx.userRepository.changeUserAvatar(ctx.session.loggedInUserId, ctx.req.file.filename);
+        return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
 
     }
 
     async updateProfileCover(ctx) {
-
+        await ctx.userRepository.changeUserCover(ctx.session.loggedInUserId, ctx.req.file.filename);
+        return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
     }
 
     async getChangePassword(ctx) {
