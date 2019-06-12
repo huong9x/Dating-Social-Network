@@ -133,7 +133,7 @@ News Feed
                                             </time></a>
                                         </div>
                                     </div>
-        
+                                    {% if post.getUserId() == ctx.profile.getUserId() %}
                                     <div class="more">
                                         <svg class="olymp-three-dots-icon">
                                             <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -147,6 +147,7 @@ News Feed
                                             </li>
                                         </ul>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <p>
                                     {{ post.getContent() }}

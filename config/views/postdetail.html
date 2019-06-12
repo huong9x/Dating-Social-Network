@@ -49,7 +49,17 @@ Post Detail
 						{{ post.getContent() }}
 					</p>
 					{% endif %}
-
+					{% if (ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId == post.getUserId()) %}
+					<form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
+						<div class="post__author author vcard inline-items">
+							<div class="form-group with-icon-right is-empty">
+								<textarea class="form-control" required placeholder="" name="content">{{ post.getContent() }}</textarea>
+							</div>
+						</div>
+						<button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
+						<button class="btn btn-md-2 btn-primary" type="submit">Save</button>
+					</form>
+					{% endif %}
 					{% if post.getPostShareId() %}
 								<article class="hentry post">
 									<div class="post__author author vcard inline-items">
