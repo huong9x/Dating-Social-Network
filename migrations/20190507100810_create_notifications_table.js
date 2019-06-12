@@ -6,8 +6,9 @@ exports.up = async knex => {
         table.integer('post_id');
         table.integer('like_id');
         table.integer('comment_id');
-        table.integer('share_id');
-        table.integer('friend_ids');
+        table.integer('post_share_id');
+        table.integer('friend_id');
+        table.datetime('notification_time');
     });
 };
 

@@ -11,6 +11,7 @@ class FriendsController {
         }
         return ctx.render('friends.html', { ctx, user, friends });        
     }
+
     async getFriendRequest(ctx) {
         let my_id = ctx.session.loggedInUserId;
         let uid   = ctx.query.id;
@@ -33,8 +34,7 @@ class FriendsController {
         }
         if(ref == 'requests') {
             return ctx.render('friendrequests.html', { ctx });
-        }
-        
+        }   
     }
 }
 

@@ -28,13 +28,16 @@ class ProfileController {
         return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
 
     }
+
     async updateProfileCover(ctx) {
         await ctx.userRepository.changeUserCover(ctx.session.loggedInUserId, ctx.req.file.filename);
         return ctx.redirect('/profile?id=' + ctx.session.loggedInUserId);
     }
+
     async getChangePassword(ctx) {
         return ctx.render('changepass.html', { ctx });
     }
+
     async postChangePassword(ctx) {
         const {oldpassword, newpassword, confirmpassword} = ctx.request.body;
         console.log(ctx.request.body);
@@ -49,7 +52,21 @@ class ProfileController {
         }
         await ctx.userRepository.changeUserPassword(ctx.session.loggedInUserId, await ctx.hasher.generate(newpassword));
         return ctx.redirect('/');
+    }
 
+    async reportUser(ctx) {
+        const {content} = ctx.request.body;
+        let reportUser  = await ctx.userRepository.reportUser(ctx.query.id, content);
+        return ctx.redirect('/profile?id=' + ctx.query.id, reportUser);
+    }
+
+    async searchUser(ctx) {
+        let users = await ctx.userRepository.searchUser(ctx.query.user);
+        return ctx.render('searchpage.html', { ctx, users });
+    }
+
+    async searchNearBy(ctx) {
+        return ctx.render('searchnearby.html', { ctx });
     }
 
 }

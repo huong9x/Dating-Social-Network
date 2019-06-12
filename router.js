@@ -1,19 +1,21 @@
 const Router                    = require('koa-router');
 const multer                    = require('koa-multer');
-const logginRequiredMiddleware  = require('./config/Middleware/logginRequiredMiddleware');
-const topPanelProfile           = require('./config/Middleware/topPanelProfile');
-const LoginController           = require('./src/Controller/LoginController');
-const NewsfeedController        = require('./src/Controller/NewsfeedController');
-const LogoutController          = require('./src/Controller/LogoutController');
-const ProfileController         = require('./src/Controller/ProfileController');
-const AboutController           = require('./src/Controller/AboutController');
-const FriendsController         = require('./src/Controller/FriendsController');
-const PhotosController          = require('./src/Controller/PhotosController');
-const VideoController           = require('./src/Controller/VideoController');
-const SignupController          = require('./src/Controller/SignupController');
-const PostController            = require('./src/Controller/PostController');
-const CommentController         = require('./src/Controller/CommentController');
-const SettingsController        = require('./src/Controller/SettingsController');
+const logginRequiredMiddleware  = require('../Middleware/logginRequiredMiddleware');
+const topPanelProfile           = require('../Middleware/topPanelProfile');
+const LoginController           = require('../../src/Controller/LoginController');
+const NewsfeedController        = require('../../src/Controller/NewsfeedController');
+const LogoutController          = require('../../src/Controller/LogoutController');
+const ProfileController         = require('../../src/Controller/ProfileController');
+const AboutController           = require('../../src/Controller/AboutController');
+const FriendsController         = require('../../src/Controller/FriendsController');
+const PhotosController          = require('../../src/Controller/PhotosController');
+const VideoController           = require('../../src/Controller/VideoController');
+const SignupController          = require('../../src/Controller/SignupController');
+const PostController            = require('../../src/Controller/PostController');
+const CommentController         = require('../../src/Controller/CommentController');
+const NotificationController    = require('../../src/Controller/NotificationController');
+const SettingsController        = require('../../src/Controller/SettingsController');
+
 const storage                   = multer.diskStorage({
 
                                     destination: function (req, file, cb) {
@@ -40,6 +42,7 @@ const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
 const commentController         = new CommentController();
+const notificationController    = new NotificationController();
 const settingsController        = new SettingsController();
 
 
@@ -79,7 +82,6 @@ router
     .post('/postShare', logginRequiredMiddleware, postController.postShare)
 
     .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
-
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
@@ -90,18 +92,19 @@ router
     .get('/photos', logginRequiredMiddleware, topPanelProfile, photosController.getPhotos)
     
     .get('/videos', logginRequiredMiddleware, topPanelProfile, videoController.getVideos)
-    
-    .get('/search/friends:name', logginRequiredMiddleware)
 
     .get('/404page', logginRequiredMiddleware, topPanelProfile, aboutController.getNullPage)
     
-    .get('/search/people:name', logginRequiredMiddleware)
-    
-    .get('/mylocation', logginRequiredMiddleware)
-
     .get('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.getChangePassword)
 
     .post('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.postChangePassword)
+    
+    .get('/search', logginRequiredMiddleware, topPanelProfile, profileController.searchUser)
+    .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
+
+    .post('/report', logginRequiredMiddleware, profileController.reportUser)
+
+    .get('/notifications', logginRequiredMiddleware, topPanelProfile, notificationController.getNotifications)
     ;
 
 module.exports = router.routes();
