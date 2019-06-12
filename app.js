@@ -2,7 +2,7 @@ const Koa             = require('koa');
 const database        = require('./config/database/database');
 const config          = require('./knexfile');
 const knex            = require('knex')(config); 
-const routes          = require('./config/http/router');
+const routes          = require('./router');
 const path            = require('path');
 const static          = require('koa-static');
 const bodyParser      = require('koa-bodyparser');
@@ -20,6 +20,7 @@ const authProvider    = require('./config/auth/Auth.Provider');
 const hasherProvider  = require('./config/hasher/hasherProvider');
 
 const njProvider      = require('./nunjucks.provider');
+// const multerProvider  = require('./config/multer/multer.provider');
 const staticPath      = './config/views';
 
 const app             = new Koa();
@@ -40,6 +41,7 @@ app.use(mediaProvider(knex));
 app.use(friendProvider(knex));
 app.use(authProvider());
 app.use(njProvider());
+// app.use(multerProvider());
 app.use(database.connectionProvider(config));
 app.use(routes);
 

@@ -6,7 +6,13 @@
 			<div class="ui-block">
 				<div class="top-header">
 					<div class="top-header-thumb">
-						<img src="https://html.crumina.net/html-olympus/img/top-header1.jpg" alt="nature">
+						<div style="							
+							background-size: cover;
+							width: 100%;
+							height: 423px;
+							background: url('{{ user.getUserCover() }}') no-repeat;
+							background-position: center;
+						" alt="nature"></div>
 					</div>
 					<div class="profile-section">
 						<div class="row">
@@ -99,8 +105,12 @@
 						{% endif %}
 					</div>
 					<div class="top-header-author">
-						<a href="/profile" class="author-thumb">
-							<img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="author">
+						<a href="/profile?id={{ user.getUserId()}}" class="author-thumb">
+							{% if user.getExistAvatar() %}
+							<div style="background: url('{{ user.getUserAvatar() }}') no-repeat; width: 100%; height: 132px; background-size: cover; background-position: center;" alt="author"></div>
+							{% else %}
+							<div style="background: url('{{ user.getDefaultAvatar() }}') no-repeat; width: 100%; height: 132px; background-size: cover; background-position: center;" alt="author"></div>
+							{% endif %}
 						</a>
 						<div class="author-content">
 							<a href="#" class="h4 author-name">{{ user.getPresentationName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 25px; height: auto; padding-bottom: 2%;"></a>

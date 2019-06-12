@@ -12,6 +12,8 @@ class UserInfo {
         this.phone_number = rawUser[0].phone_number;
         this.address      = rawUser[0].address;
         this.password     = rawUser[0].password;
+        this.user_avatar  = rawUser[0].user_avatar;
+        this.user_cover   = rawUser[0].user_cover;
     }
 
     getUserId() {
@@ -45,13 +47,22 @@ class UserInfo {
         return this.relationship;
     }
     getUserAvatar() {
-        return this.user_avatar;
+        return '/uploadedFiles/' + this.user_avatar;        
+    }
+    getUserCover() {
+        return '/uploadedFiles/' + this.user_cover;
     }
     getPhoneNumber() {
         return this.phone_number;
     }
     getAddress() {
         return this.address;
+    }
+    getExistAvatar() {
+        return this.user_avatar;
+    }
+    getDefaultAvatar() {
+        return 'img/default-user.png';
     }
 }
 

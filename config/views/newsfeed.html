@@ -116,108 +116,92 @@ News Feed
                 </div>
                 <!-- ... end News Feed Form  -->
             </div>
-            <div id="newsfeed-items-grid">
-                <div class="ui-block">
-                    <article class="hentry post video">
-                        <div class="post__author author vcard inline-items">
-                            <img src="https://html.crumina.net/html-olympus/img/avatar7-sm.jpg" alt="author">
-                            <div class="author-date">
-                                <a class="h6 post__author-name fn" href="#">Marina Valentine</a> shared a <a href="#">link</a>
-                                <div class="post__date">
-                                    <time class="published" datetime="2004-07-24T18:18">
-                                        March 4 at 2:05pm
-                                    </time>
+                    {% if posts %}  
+                    <div id="newsfeed-items-grid">
+                        {% for post in posts %}
+                        <div class="ui-block">
+                            <!-- Post -->
+                            <article class="hentry post">
+                                <div class="post__author author vcard inline-items">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+        
+                                    <div class="author-date">
+                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ post.getUserPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                        <div class="post__date">
+                                            <a href="/post?id={{ post.getPostId() }}" style="color: #9697a1;"><time class="published" title="{{ post.getRawPostTime() }}">
+                                                {{ post.getPostTime() }}
+                                            </time></a>
+                                        </div>
+                                    </div>
+        
+                                    <div class="more">
+                                        <svg class="olymp-three-dots-icon">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                                        </svg>
+                                        <ul class="more-dropdown">
+                                            <li>
+                                                <a href="/post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
+                                            </li>
+                                            <li>
+                                                <a href="/deletePost?id={{ post.getPostId() }}">Delete Post</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="more">
-                                <svg class="olymp-three-dots-icon">
-                                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-                                </svg>
-                                <ul class="more-dropdown">
-                                    <li>
-                                        <a href="#">Edit Post</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Delete Post</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Turn Off Notifications</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Select as Featured</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p>Hey <a href="#">Cindi</a>, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!</p>
-                        <div class="post-video">
-                            <div class="video-thumb">
-                                <img src="https://html.crumina.net/html-olympus/img/video-youtube1.jpg" alt="photo">
-                                <a href="https://youtube.com/watch?v=excVFQ2TWig" class="play-video">
-                                    <svg class="olymp-play-icon">
-                                        <use xlink:href="svg-icons/sprites/icons.svg#olymp-play-icon"></use>
-                                    </svg>
-                                </a>
-                            </div>
-                            <div class="video-content">
-                                <a href="#" class="h4 title">Iron Maid - ChillGroves</a>
-                                <p>Lorem ipsum dolor sit amet, consectetur ipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                                <p>
+                                    {{ post.getContent() }}
                                 </p>
-                                <a href="#" class="link-site">YOUTUBE.COM</a>
-                            </div>
+                                {% if post.getPostShareId() %}
+                                            <article class="hentry post">
+                                                <div class="post__author author vcard inline-items">
+                                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                            
+                                                    <div class="author-date">
+                                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}"> {{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                                        <div class="post__date">
+                                                            <a href="/post?id={{ post.getOriginalPostId() }}" style="color: #9697a1;">
+                                                                <time class="published" title="">
+                                                                    {{ post.getOriginalPostTime() }}
+                                                                </time>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    {{ post.getOriginalPostContent() }}
+                                                </p>
+                                            </article>
+                                {% endif%}
+    
+                                <div class="post-additional-info inline-items">
+                                    <a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
+                                        <i class="fas fa-thumbs-up"></i>
+                                        <span>{{ post.getLikeCount() }}</span>
+                                    </a>
+                                    <div class="comments-shared">
+                                        <a href="/post?id={{ post.getPostId() }}" class="post-add-icon inline-items">
+                                            <i class="fas fa-comments"></i>
+                                            <span>{{ post.getCommentCount() }}</span>
+                                        </a>
+                                        {% if post.getPostShareId() %}
+                                            <a href="/post?id={{ post.getOriginalPostId() }}&ref_page=share" class="post-add-icon inline-items">
+                                            {% else %}
+                                            <a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
+                                        {% endif %}
+                                            <i class="fas fa-share"></i>
+                                            <span>{{ post.getShareCount() }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- .. end Post -->
                         </div>
-                        <div class="post-additional-info inline-items">
-                            <a href="#" class="post-add-icon inline-items">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>18</span>
-                            </a>
-                            <ul class="friends-harmonic">
-                                <li>
-                                    <a href="#">
-                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic9.jpg" alt="friend">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic10.jpg" alt="friend">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic7.jpg" alt="friend">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic8.jpg" alt="friend">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://html.crumina.net/html-olympus/img/friend-harmonic11.jpg" alt="friend">
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="names-people-likes">
-                                <a href="#">Jenny</a>, <a href="#">Robert</a> and
-                                <br>18 more liked this
-                            </div>
-                            <div class="comments-shared">
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fas fa-comments"></i>
-                                    <span>0</span>
-                                </a>
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fas fa-share"></i>
-                                    <span>16</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
-                    <i class="fa fa-chevron-down"></i>
-                </a>
+                        {% endfor %} 
+                    </div>
+                    {% endif %}
+                    <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
         </main>
         <!-- ... end Main Content -->
         <!-- Right Sidebar -->

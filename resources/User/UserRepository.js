@@ -59,6 +59,16 @@ class UserRepository {
                             .where('user_id', user_id)
                             .update('password', password);
     }
+    async changeUserAvatar(user_id, user_avatar) {
+        return await this.knex('users')
+                            .where('user_id', user_id)
+                            .update('user_avatar', user_avatar);
+    }
+    async changeUserCover(user_id, user_cover) {
+        return await this.knex('users')
+                            .where('user_id', user_id)
+                            .update('user_cover', user_cover);
+    }
 }
 
 module.exports = UserRepository;

@@ -1,24 +1,23 @@
 const Router                    = require('koa-router');
 const multer                    = require('koa-multer');
-const logginRequiredMiddleware  = require('../Middleware/logginRequiredMiddleware');
-const topPanelProfile           = require('../Middleware/topPanelProfile');
-const LoginController           = require('../../src/Controller/LoginController');
-const NewsfeedController        = require('../../src/Controller/NewsfeedController');
-const LogoutController          = require('../../src/Controller/LogoutController');
-const ProfileController         = require('../../src/Controller/ProfileController');
-const AboutController           = require('../../src/Controller/AboutController');
-const FriendsController         = require('../../src/Controller/FriendsController');
-const PhotosController          = require('../../src/Controller/PhotosController');
-const VideoController           = require('../../src/Controller/VideoController');
-const SignupController          = require('../../src/Controller/SignupController');
-const PostController            = require('../../src/Controller/PostController');
-const CommentController         = require('../../src/Controller/CommentController');
-const SettingsController        = require('../../src/Controller/SettingsController');
-
+const logginRequiredMiddleware  = require('./config/Middleware/logginRequiredMiddleware');
+const topPanelProfile           = require('./config/Middleware/topPanelProfile');
+const LoginController           = require('./src/Controller/LoginController');
+const NewsfeedController        = require('./src/Controller/NewsfeedController');
+const LogoutController          = require('./src/Controller/LogoutController');
+const ProfileController         = require('./src/Controller/ProfileController');
+const AboutController           = require('./src/Controller/AboutController');
+const FriendsController         = require('./src/Controller/FriendsController');
+const PhotosController          = require('./src/Controller/PhotosController');
+const VideoController           = require('./src/Controller/VideoController');
+const SignupController          = require('./src/Controller/SignupController');
+const PostController            = require('./src/Controller/PostController');
+const CommentController         = require('./src/Controller/CommentController');
+const SettingsController        = require('./src/Controller/SettingsController');
 const storage                   = multer.diskStorage({
 
                                     destination: function (req, file, cb) {
-                                        cb(null, 'uploads/')
+                                        cb(null, './config/views/uploadedFiles/')
                                     },
 
                                     filename: function (req, file, cb) {
@@ -65,7 +64,7 @@ router
 
     .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
 
-    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileAvatar)
+    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('avatar'), profileController.updateProfileAvatar)
 
     .post('/updateProfileCover', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileCover)
 
