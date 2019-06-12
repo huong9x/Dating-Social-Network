@@ -13,6 +13,7 @@ const VideoController           = require('../../src/Controller/VideoController'
 const SignupController          = require('../../src/Controller/SignupController');
 const PostController            = require('../../src/Controller/PostController');
 const CommentController         = require('../../src/Controller/CommentController');
+const NotificationController    = require('../../src/Controller/NotificationController');
 const SettingsController        = require('../../src/Controller/SettingsController');
 
 const storage                   = multer.diskStorage({
@@ -41,6 +42,7 @@ const photosController          = new PhotosController();
 const videoController           = new VideoController(); 
 const postController            = new PostController();
 const commentController         = new CommentController();
+const notificationController    = new NotificationController();
 const settingsController        = new SettingsController();
 
 
@@ -100,6 +102,9 @@ router
     .get('/search', logginRequiredMiddleware, topPanelProfile, profileController.searchUser)
     .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
 
+    .post('/report', logginRequiredMiddleware, profileController.reportUser)
+
+    .get('/notifications', logginRequiredMiddleware, topPanelProfile, notificationController.getNotifications)
     ;
 
 module.exports = router.routes();
