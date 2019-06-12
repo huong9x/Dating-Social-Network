@@ -65,8 +65,7 @@ class UserRepository {
     async searchUser(name) {
         let users = await this.knex.select('*')
                                     .from('users')
-                                    .where('first_name', 'like', '%' + name + '%')
-                                    .orWhere('last_name', 'like', '%' + name + '%');
+                                    .whereRaw('concat (first_name,  \' \', last_name) like ?', ['%' + name + '%']);
         return users.map((user) => new UserInfo(user));
     }
 
