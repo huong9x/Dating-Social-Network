@@ -20,7 +20,8 @@ class PostController {
                     await ctx.likeRepository.unlikePost(ctx.session.loggedInUserId, ctx.query.id);
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 } else {
-                    let like_count = like_count_tmp.getLikeCount() + 1;
+                    let like_count       = like_count_tmp.getLikeCount() + 1;
+                    await ctx.notificationRepository.likeNotification(ctx.session.loggedInUserId, ctx.query.id);
                     await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
                     await ctx.likeRepository.likePost(ctx.session.loggedInUserId, ctx.query.id);
                     return ctx.redirect('/post?id=' + ctx.query.id);

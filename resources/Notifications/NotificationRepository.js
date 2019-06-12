@@ -6,6 +6,28 @@ class NotificationRepository {
         this.knex = knex;
     }
 
+    async likeNotification(user_id, like_id) {
+        let likeNotification = await this.knex('notifications')
+                                         .insert({
+                                             user_id           : user_id,
+                                             like_id           : like_id,
+                                             notification_time : dateTime()
+                                         });
+        return new Notification(likeNotification[0]);
+    }
+
+    async commentNotification() {
+
+    }
+
+    async shareNotification() {
+        
+    }
+
+    async friendNotification() {
+
+    }
+
     // async findCommentOwner(user_id, comment_id) {
     //     let comment = await this.knex.select('*').from('comment').where({
     //         user_id: user_id,
