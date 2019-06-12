@@ -36,6 +36,11 @@
 											<svg class="olymp-three-dots-icon">
 												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
+											<ul class="more-dropdown more-with-triangle">
+												<li>
+													<a href="#" data-toggle="modal" data-target="#report-profile">Report Profile</a>
+												</li>
+											</ul>
 										</div>
 									</li>
 								</ul>
@@ -99,7 +104,7 @@
 						{% endif %}
 					</div>
 					<div class="top-header-author">
-						<a href="/profile" class="author-thumb">
+						<a href="/profile?id={{ user.getUserId() }}" class="author-thumb">
 							<img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="author">
 						</a>
 						<div class="author-content">

@@ -68,7 +68,7 @@ class FriendRepository {
                                             'followers.user_id' : user_id,
                                             follower_status : 'waiting'
                                         });
-            return listFriend.map((friend) => new Friend(friend));
+        return findRequestFollowers.map((friend) => new Friend(friend));
     }
 
 }

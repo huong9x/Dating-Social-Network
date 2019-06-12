@@ -80,7 +80,6 @@ router
     .post('/postShare', logginRequiredMiddleware, postController.postShare)
 
     .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
-
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
@@ -91,18 +90,16 @@ router
     .get('/photos', logginRequiredMiddleware, topPanelProfile, photosController.getPhotos)
     
     .get('/videos', logginRequiredMiddleware, topPanelProfile, videoController.getVideos)
-    
-    .get('/search/friends:name', logginRequiredMiddleware)
 
     .get('/404page', logginRequiredMiddleware, topPanelProfile, aboutController.getNullPage)
     
-    .get('/search/people:name', logginRequiredMiddleware)
-    
-    .get('/mylocation', logginRequiredMiddleware)
-
     .get('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.getChangePassword)
 
     .post('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.postChangePassword)
+    
+    .get('/search', logginRequiredMiddleware, topPanelProfile, profileController.searchUser)
+    .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
+
     ;
 
 module.exports = router.routes();

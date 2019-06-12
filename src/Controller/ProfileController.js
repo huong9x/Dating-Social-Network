@@ -37,12 +37,15 @@ class ProfileController {
         // let my_id = ctx.session.loggedInUserId;
 
     }
+
     async updateProfileCover(ctx) {
 
     }
+
     async getChangePassword(ctx) {
         return ctx.render('changepass.html', { ctx });
     }
+
     async postChangePassword(ctx) {
         const {oldpassword, newpassword, confirmpassword} = ctx.request.body;
         console.log(ctx.request.body);
@@ -57,7 +60,15 @@ class ProfileController {
         }
         await ctx.userRepository.changeUserPassword(ctx.session.loggedInUserId, await ctx.hasher.generate(newpassword));
         return ctx.redirect('/');
+    }
 
+    async searchUser(ctx) {
+        let users = await ctx.userRepository.searchUser(ctx.query.user);
+        return ctx.render('searchpage.html', { ctx, users });
+    }
+
+    async searchNearBy(ctx) {
+        return ctx.render('searchnearby.html', { ctx });
     }
 
 }
