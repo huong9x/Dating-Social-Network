@@ -1,0 +1,42 @@
+{% extends 'masterpage.html' %}
+
+{% block title %}
+Notifications Page
+{% endblock %}
+
+{% block titleheader %}
+Notifications Page
+{% endblock %}
+
+{% block container %}
+<div class="container">
+	<div class="row">
+		<div class="col col-xl-2"></div>
+		<div class="col col-xl-8 order-xl-12 col-lg-12 order-lg-12 col-md-12 order-md-12 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Notifications</h6>
+				</div>
+				<ul class="notification-list">
+					<li>
+						<div class="author-thumb">
+							<img src="https://html.crumina.net/html-olympus/img/avatar62-sm.jpg" alt="author">
+						</div>
+						<div class="notification-event">
+							<div><a href="#" class="h6 notification-friend">Mathilda Brinker</a> commented on your new <a href="#" class="notification-link">profile status</a>.</div>
+							<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+						</div>
+						<a href="#">
+							<div class="more">
+								<svg class="olymp-little-delete">
+									<use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
+								</svg>
+							</div>
+						</a>
+					</li>
+				</ul>			
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

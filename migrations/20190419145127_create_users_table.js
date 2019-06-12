@@ -13,7 +13,7 @@ exports.up = async knex => {
         table.string('phone_number', 15);
         table.string('address');
         table.string('user_avatar');
-        table.string('cover_avatar');
+        table.string('user_cover');
     });
 };
 
