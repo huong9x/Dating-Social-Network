@@ -62,6 +62,13 @@ class UserRepository {
                             .update('password', password);
     }
 
+    async reportUser(user_id, content) {
+        return await this.knex('reports').insert({
+                                    user_id : user_id,
+                                    content : content
+                                    });
+    }
+
     async searchUser(name) {
         let users = await this.knex.select('*')
                                     .from('users')

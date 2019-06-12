@@ -100,6 +100,7 @@ router
     .get('/search', logginRequiredMiddleware, topPanelProfile, profileController.searchUser)
     .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
 
+    .post('/report', logginRequiredMiddleware, profileController.reportUser)
     ;
 
 module.exports = router.routes();
