@@ -27,7 +27,7 @@ class FriendRepository {
     }
     async listFriend(user_id) {
         let listFriend = await this.knex
-                                    .select('first_name', 'last_name', 'followers.user_id', 'friend_id', 'follower_status', 'follower_id')
+                                    .select('first_name', 'last_name', 'user_avatar', 'followers.user_id', 'friend_id', 'follower_status', 'follower_id')
                                     .from('users')
                                     .join('followers', {'followers.friend_id': 'users.user_id'})
                                     .where({
