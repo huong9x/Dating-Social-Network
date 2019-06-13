@@ -14,14 +14,6 @@ class PostRepository {
         return new Post(findPostOwner);
     }
 
-    async findShareOwner(post_id, user_id) {
-        let findPostOwner = await this.knex.select('*').from('post').where({
-            user_id: user_id,
-            post_id: post_id
-        });
-        return new Post(findPostOwner);
-    }
-    
     async findPost(post_id) {
         let post = await this.knex
                                 .select('first_name', 'last_name', 'post_id', 'post.user_id', 'content', 'like_count', 'comment_count', 'share_count', 'post_share_id', 'post_time')
@@ -29,7 +21,7 @@ class PostRepository {
                                 .join('users', {'users.user_id': 'post.user_id'})
                                 .where('post_id', '=', post_id);
         if (!post.length) {
-            throw new Error("Post do not exist");
+            throw new Error("Post does not exist");
         }
         if(post[0].post_share_id) {
             let originalPost = await this.knex
@@ -37,9 +29,13 @@ class PostRepository {
                                     .from('post')
                                     .join('users', {'users.user_id': 'post.user_id'})
                                     .where('post_id', '=', post[0].post_share_id);
-            return new Post(post[0].post_id, post[0].user_id, post[0].first_name, post[0].last_name,post[0].content, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+            let mediaPost = await this.knex.select('*').from('media').where('post_id', post[0].post_id);
+            let medias = mediaPost.map((media) => media.filename);
+            return new Post(post[0].post_id, post[0].user_id, post[0].first_name, post[0].last_name,post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
         }
-        return new Post(post[0].post_id, post[0].user_id, post[0].first_name, post[0].last_name, post[0].content, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time);
+        let mediaPost = await this.knex.select('*').from('media').where('post_id', post[0].post_id);
+        let medias = mediaPost.map((media) => media.filename);
+        return new Post(post[0].post_id, post[0].user_id, post[0].first_name, post[0].last_name, post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time);
     }
     
     async addNewPost(user_id, content) {
@@ -61,9 +57,13 @@ class PostRepository {
                                                 .from('post')
                                                 .join('users', {'users.user_id': 'post.user_id'})
                                                 .where('post_id', '=', post.post_share_id);
-                return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+                let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_share_id);
+                let medias = mediaPost.map((media) => media.filename);
+                return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
             }
-            return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
+            let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
+            let medias = mediaPost.map((media) => media.filename);
+            return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
         return Promise.all(result);
     }
@@ -85,9 +85,13 @@ class PostRepository {
                                                 .from('post')
                                                 .join('users', {'users.user_id': 'post.user_id'})
                                                 .where('post_id', '=', post.post_share_id);
-                return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+                let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_share_id);
+                let medias = mediaPost.map((media) => media.filename);
+                return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
             }
-            return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
+            let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
+            let medias = mediaPost.map((media) => media.filename);
+            return new Post(post.post_id, post.user_id, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
         return Promise.all(result);
     }

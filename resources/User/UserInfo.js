@@ -48,6 +48,9 @@ class UserInfo {
         return this.relationship;
     }
     getUserAvatar() {
+        if(!this.user_avatar) {
+            return 'img/default-user.png';
+        }
         return '/uploadedFiles/' + this.user_avatar;        
     }
     getUserCover() {
@@ -61,9 +64,6 @@ class UserInfo {
     }
     getExistAvatar() {
         return this.user_avatar;
-    }
-    getDefaultAvatar() {
-        return 'img/default-user.png';
     }
     getFollowerStatus() {
         return this.follower_status;

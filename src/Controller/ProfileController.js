@@ -8,18 +8,20 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
 
-        let user  = await ctx.userRepository.getUserInfo(uid);
-        let posts = await ctx.postRepository.getUserPost(uid);
+        let user       = await ctx.userRepository.getUserInfo(uid);
+        let posts      = await ctx.postRepository.getUserPost(uid);
+        let lastPhotos = await ctx.mediaRepository.getLastPhotos(uid);
+        let friends    = await ctx.friendRepository.listFriend(uid);
 
         if(!user) {
             return ctx.redirect('/404page');
         }
         try {
         let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
-        return ctx.render('profile.html', { ctx, user, posts, isFriend });                    
+        return ctx.render('profile.html', { ctx, user, posts, lastPhotos, friends, isFriend });                    
         } catch (e) {
             console.log(e.message);
-            await ctx.render('profile.html', { ctx, user, posts });                    
+            await ctx.render('profile.html', { ctx, user, lastPhotos, friends, posts });                    
         }    
     }
 
@@ -72,11 +74,12 @@ class ProfileController {
     async postStatus(ctx) {
         const {status} = ctx.req.body;
 
-        let post = await ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
+        let post       = await ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
 
-        let data = ctx.req.files.map(file => ({ post_id: post.getPostId(), filename: file.filename}));
-
-        let mediaPost = await ctx.mediaRepository.addMedia(data);
+        if(ctx.req.files) {
+            let data   = ctx.req.files.map(file => ({ post_id: post.getPostId(), user_id: ctx.session.loggedInUserId, filename: file.filename, file_type: file.mimetype}));
+            await ctx.mediaRepository.addMedia(data);
+        }
         
         return ctx.redirect('/newsfeed');
     }

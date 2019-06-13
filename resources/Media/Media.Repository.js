@@ -4,12 +4,23 @@ class MediaRepository {
     constructor(knex) {
         this.knex = knex;
     }
-    async addMedia(media) {
+    async addMedia(media) {        
         let medias = await this.knex('media').insert(media);
         console.log(medias);
         return new Media(medias);
-
     }
+    async getLastPhotos(user_id) {
+        let photos     = await this.knex('media').count({ count: 'user_id' });
+        if(photos[0].count < 10) {
+        let lastPhotos = await this.knex.select('*').from('media').where('user_id', user_id).andWhere('file_type', 'like', 'image/%').orderBy('media_id', 'desc');
+        return lastPhotos.map((photo) => {
+            return new Media(photo);
+        });
+        }
+        let lastPhotos = await this.knex.select('*').from('media').where('user_id', user_id).andWhere('file_type', 'like', 'image/%').limit(9).offset(photos[0].count - 9);
+        return lastPhotos.map((photo) => new Media(photo));
+    }
+
 }
 
 module.exports = MediaRepository;
