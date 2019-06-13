@@ -25,11 +25,13 @@ Notifications Page
 					<li>You have no notifications</li>
 					{% else %}
 					{% for notification in notifications %}
-					{% if notification.getNotificationStatus() == 'unread' %}
-					<li style="background-color: #3f42573d;">
-					{% else %}
-					<li>
-					{% endif %}
+
+						{% if notification.getNotificationStatus() == 'unread' %}
+							<li style="background-color: #3f42573d;">
+						{% else %}
+							<li>
+						{% endif %}
+
 						<div class="author-thumb">
 							{% if notification.getUserAvatar() == '/uploadedFiles/null' %}
 							<img src="img/default-user.png" alt="author">
@@ -38,13 +40,17 @@ Notifications Page
 							{% endif %}
 						</div>
 						<div class="notification-event">
-							<a href="#" class="h6 notification-friend">{{ notification.getUserName() }}</a>
+							<a href="/profile?id={{ notification.getUserId() }}" class="h6 notification-friend">{{ notification.getUserName() }}</a>
 							{% if notification.getLikeId() %}
-								liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>
+								liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>.
 							{% elseif notification.getCommentId() %}
-								commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>
+								commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>.
 							{% elseif notification.getPostShareId() %}
-								shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>
+								shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>.
+							{% elseif notification.getFriendType() == 'waiting' %}
+								sent you a friend request.
+							{% elseif notification.getFriendType() == 'friend' %}
+								accepted your friend request.
 							{% endif %}
 							<span class="notification-date">
 								<time class="entry-date updated">{{ notification.getNotificationTime() }}</time>

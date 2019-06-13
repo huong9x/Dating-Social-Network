@@ -60,74 +60,120 @@
                     <i class="fa fa-user"></i>
                     {% if ctx.listFriendRequests.length == 0 %}
                     {% else %}
-                        <div class="label-avatar bg-blue">   
-                            {{ ctx.listFriendRequests.length }}
+                    <div class="label-avatar bg-blue">
+                        {{ ctx.listFriendRequests.length }}
+                    </div>
+                    {% endif %}
+                    <div class="more-dropdown more-with-triangle triangle-top-center" style="padding: 0px;">
+                        <div class="ui-block-title ui-block-title-small">
+                            <h6 class="title">Friend Requests</h6>
                         </div>
-                        <div class="more-dropdown more-with-triangle triangle-top-center">
-                            <div class="ui-block-title ui-block-title-small">
-                                <h6 class="title">Friend Requests</h6>
-                                <a href="#">Find Friends</a>
-                                <a href="#">Settings</a>
-                            </div>
-                            <div class="mCustomScrollbar" data-mcs-theme="dark">
-                                <ul class="notification-list friend-requests">
-                                    {% for friendRequest in ctx.listFriendRequests %}
-                                    <li>
-                                        <div class="author-thumb">
-                                            <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
-                                        </div>
-                                        <div class="notification-event">
-                                            <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
-                                            <span class="chat-message-item">Mutual Friend: We're working on it</span>
-                                        </div>
-                                        <span class="notification-icon">
-                                    <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
-                                        <span class="without-text">
-                                            <i class="fas fa-user-plus"></i>
-                                        </span>
+                        <div class="mCustomScrollbar" data-mcs-theme="dark">
+                            <ul class="notification-list friend-requests">
+                                {% if ctx.listFriendRequests.length == 0 %}
+                                <li>You have no friend requests</li>
+                                {% else %}
+                                {% for friendRequest in ctx.listFriendRequests %}
+                                <li>
+                                    <div class="author-thumb">
+                                        <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
+                                    </div>
+                                    <div class="notification-event">
+                                        <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                        <span class="chat-message-item">Mutual Friend: We're working on it</span>
+                                    </div>
+                                    <span class="notification-icon">
+                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                            <span class="without-text">
+                                                <i class="fas fa-user-plus"></i>
+                                            </span>
                                         </a>
                                         <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
                                             <span class="">
-                                            <i class="fa fa-user-times"></i>
-                                        </span>
+                                                <i class="fa fa-user-times"></i>
+                                            </span>
                                         </a>
-                                        </span>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="control-icon more has-items">
-                    <i class="fa fa-bell"></i>
-                    <div class="label-avatar bg-primary">8</div>
-                    <div class="more-dropdown more-with-triangle triangle-top-center">
-                        <div class="ui-block-title ui-block-title-small">
-                            <h6 class="title">Notifications</h6>
-                            <a href="#">Mark all as read</a>
-                            <a href="#">Settings</a>
-                        </div>
-                        <div class="mCustomScrollbar" data-mcs-theme="dark">
-                            <ul class="notification-list">
+                                    </span>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
                                 <li>
-                                    <div class="author-thumb">
-                                        <img src="https://html.crumina.net/html-olympus/img/avatar62-sm.jpg" alt="author">
-                                    </div>
-                                    <div class="notification-event">
-                                        <div><a href="#" class="h6 notification-friend">Mathilda Brinker</a> commented on your new <a href="#" class="notification-link">profile status</a>.</div>
-                                        <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                    </div>
-                                    <div class="more">
-                                        <svg class="olymp-little-delete">
-                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-                                        </svg>
-                                    </div>
+                                    <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
                                 </li>
                             </ul>
                         </div>
-                        <a href="/notifications" class="view-all bg-primary">View All Notifications</a>
+                    </div>
+                </div>
+                <div class="control-icon more has-items">
+                    <i class="fa fa-bell"></i>
+                    {% if ctx.countNotifications.length == 0 %}
+                    {% else %}
+                    <div class="label-avatar bg-primary">{{ ctx.countNotifications.length }}</div>
+                    {% endif %}
+                    <div class="more-dropdown more-with-triangle triangle-top-center" style="padding: 0px;">
+                        <div class="ui-block-title ui-block-title-small">
+                            <h6 class="title">Notifications</h6>
+                            <a href="/markAllAsRead">Mark all as read</a>
+                        </div>
+                        <div class="mCustomScrollbar" data-mcs-theme="dark">
+                            <ul class="notification-list">
+                                {% if ctx.notifications.length == 0 %}
+                                <li>You have no notifications</li>
+                                {% else %}
+                                {% for notification in ctx.notifications %}
+                                    {% if notification.getNotificationStatus() == 'unread' %}
+                                        <li style="background-color: #3f42573d;">
+                                    {% else %}
+                                        <li>
+                                    {% endif %}
+                                    <div class="author-thumb">
+                                        {% if notification.getUserAvatar() == '/uploadedFiles/null' %}
+                                        <img src="img/default-user.png" alt="author">
+                                        {% else %}
+                                        <img src="{{ notification.getUserAvatar() }}" alt="author">
+                                        {% endif %}
+                                    </div>
+                                    <div class="notification-event">
+                                        <a href="/profile?id={{ notification.getUserId() }}" class="h6 notification-friend">{{ notification.getUserName() }}</a>
+                                        {% if notification.getLikeId() %}
+                                            liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>.
+                                        {% elseif notification.getCommentId() %}
+                                            commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>.
+                                        {% elseif notification.getPostShareId() %}
+                                            shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>.
+                                        {% elseif notification.getFriendType() == 'waiting' %}
+                                            sent you a friend request.
+                                        {% elseif notification.getFriendType() == 'friend' %}
+                                            accepted your friend request.
+                                        {% endif %}
+                                        <span class="notification-date">
+                                            <time class="entry-date updated">{{ notification.getNotificationTime() }}</time>
+                                            {% if notification.getNotificationStatus() == 'unread' %}
+                                                <a href="/markAsRead?id={{ notification.getNotificationId() }}">Read</a>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <a onclick="deleteNotification({{ notification.getNotificationId() }});" style="cursor: pointer;">
+                                        <div class="more">
+                                            <svg class="olymp-little-delete">
+                                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+                                <li><a href="/notifications" class="view-all bg-primary">View All Notifications</a></li>
+                            </ul>
+                            <script>
+                                function deleteNotification(number){
+                                    var answer = confirm("Do you want delete?")
+                                    if (answer) {
+                                        window.location.href="/deleteNotification?id=" + number;
+                                    }
+                                }
+                            </script>	
+                        </div>
                     </div>
                 </div>
                 <div class="author-page author vcard inline-items more">
@@ -205,7 +251,10 @@
                     <a class="nav-link" data-toggle="tab" href="#notification" role="tab">
                         <div class="control-icon has-items">
                             <i class="fa fa-bell"></i>
-                            <div class="label-avatar bg-primary">8</div>
+                            {% if ctx.countNotifications.length == 0 %}
+                            {% else %}
+                            <div class="label-avatar bg-primary">{{ ctx.countNotifications.length }}</div>
+                            {% endif %}
                         </div>
                     </a>
                 </li>
@@ -224,17 +273,15 @@
         </div>
         <!-- Tab panes -->
         <div class="tab-content tab-content-responsive">
-            {% if ctx.listFriendRequests.length == 0 %}
-            {% else %}
             <div class="tab-pane " id="request" role="tabpanel">
-
                 <div class="mCustomScrollbar" data-mcs-theme="dark">
                     <div class="ui-block-title ui-block-title-small">
                         <h6 class="title">FRIEND REQUESTS</h6>
-                        <a href="#">Find Friends</a>
-                        <a href="#">Settings</a>
                     </div>
-                    <ul class="notification-list friend-requests">                        
+                    <ul class="notification-list friend-requests">
+                        {% if ctx.listFriendRequests.length == 0 %}
+                        <li>You have no friend requests</li>
+                        {% else %}
                         {% for friendRequest in ctx.listFriendRequests %}
                         <li>
                             <div class="author-thumb">
@@ -259,11 +306,11 @@
                             </span>
                         </li>
                         {% endfor %}
+                        {% endif %}
                     </ul>
                     <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Request</a>
                 </div>
             </div>
-            {% endif %}
 
             <div class="tab-pane " id="chat" role="tabpanel">
 
@@ -362,35 +409,69 @@
             </div>
 
             <div class="tab-pane " id="notification" role="tabpanel">
-
                 <div class="mCustomScrollbar" data-mcs-theme="dark">
                     <div class="ui-block-title ui-block-title-small">
                         <h6 class="title">Notifications</h6>
-                        <a href="#">Mark all as read</a>
-                        <a href="#">Settings</a>
+                        <a href="/markAllAsRead">Mark all as read</a>
                     </div>
-
                     <ul class="notification-list">
-                        <li>
+                        {% if ctx.notifications.length == 0 %}
+                        <li>You have no notifications</li>
+                        {% else %}
+                        {% for notification in ctx.notifications %}
+                            {% if notification.getNotificationStatus() == 'unread' %}
+                                <li style="background-color: #3f42573d;">
+                            {% else %}
+                                <li>
+                            {% endif %}
                             <div class="author-thumb">
-                                <img src="https://html.crumina.net/html-olympus/img/avatar62-sm.jpg" alt="author">
+                                {% if notification.getUserAvatar() == '/uploadedFiles/null' %}
+                                <img src="img/default-user.png" alt="author">
+                                {% else %}
+                                <img src="{{ notification.getUserAvatar() }}" alt="author">
+                                {% endif %}
                             </div>
                             <div class="notification-event">
-                                <div><a href="#" class="h6 notification-friend">Mathilda Brinker</a> commented on your new <a href="#" class="notification-link">profile status</a>.</div>
-                                <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                                <a href="/profile?id={{ notification.getUserId() }}" class="h6 notification-friend">{{ notification.getUserName() }}</a>
+                                {% if notification.getLikeId() %}
+                                    liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>.
+                                {% elseif notification.getCommentId() %}
+                                    commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>.
+                                {% elseif notification.getPostShareId() %}
+                                    shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>.
+                                {% elseif notification.getFriendType() == 'waiting' %}
+                                    sent you a friend request.
+                                {% elseif notification.getFriendType() == 'friend' %}
+                                    accepted your friend request.
+                                {% endif %}
+                                <span class="notification-date">
+                                    <time class="entry-date updated">{{ notification.getNotificationTime() }}</time>
+                                    {% if notification.getNotificationStatus() == 'unread' %}
+                                        <a href="/markAsRead?id={{ notification.getNotificationId() }}">Read</a>
+                                    {% endif %}
+                                </span>
                             </div>
-
-                            <div class="more">
-                                <svg class="olymp-little-delete">
-                                    <use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-                                </svg>
-                            </div>
+                            <a onclick="deleteNotification({{ notification.getNotificationId() }});" style="cursor: pointer;">
+                                <div class="more">
+                                    <svg class="olymp-little-delete">
+                                        <use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
+                                    </svg>
+                                </div>
+                            </a>
                         </li>
+                        {% endfor %}
+                        {% endif %}
+                        <li><a href="/notifications" class="view-all bg-primary">View All Notifications</a></li>
                     </ul>
-
-                    <a href="/notifications" class="view-all bg-primary">View All Notifications</a>
+                    <script>
+                        function deleteNotification(number){
+                            var answer = confirm("Do you want delete?")
+                            if (answer) {
+                                window.location.href="/deleteNotification?id=" + number;
+                            }
+                        }
+                    </script>
                 </div>
-
             </div>
 
             <div class="tab-pane" id="search" role="tabpanel">

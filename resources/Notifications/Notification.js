@@ -11,7 +11,6 @@ class Notification {
         this.like_id             = rawNotification.like_id;
         this.comment_id          = rawNotification.comment_id;
         this.post_share_id       = rawNotification.post_share_id;
-        this.friend_id           = rawNotification.friend_id;
         this.friend_type         = rawNotification.friend_type;
         this.notification_status = rawNotification.notification_status;
         this.notification_time   = rawNotification.notification_time;
@@ -43,9 +42,6 @@ class Notification {
     }
     getPostShareId() {
         return this.post_share_id;
-    }
-    getFriendId() {
-        return this.friend_id;
     }
     getFriendType() {
         return this.friend_type;
