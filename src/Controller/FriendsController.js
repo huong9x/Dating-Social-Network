@@ -9,7 +9,7 @@ class FriendsController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-        return ctx.render('friends.html', { ctx, user, friends });        
+        return ctx.render('friends.html', { ctx, user, friends });
     }
 
     async getFriendRequest(ctx) {
@@ -22,6 +22,7 @@ class FriendsController {
         }
         if(ref == 'friendRequest') {
             await ctx.friendRepository.sendFriendRequest(my_id, uid);
+            await ctx.notificationRepository.sendFriendRequestNotification(ctx.query.id, my_id);
             return ctx.redirect('/profile?id=' + uid);
         }
         if(ref == 'cancel') {
@@ -30,6 +31,7 @@ class FriendsController {
         }
         if(ref == 'friendAccept') {
             await ctx.friendRepository.addFriend(my_id, uid);
+            await ctx.notificationRepository.acceptFriendRequestNotification(ctx.query.id, my_id);
             return ctx.redirect('/profile?id=' + uid);
         }
         if(ref == 'requests') {

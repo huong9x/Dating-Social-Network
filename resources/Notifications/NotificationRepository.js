@@ -23,6 +23,16 @@ class NotificationRepository {
         return notifications.map((notification) => { return new Notification(notification) });
     }
 
+    async countNotification(owner_id) {
+        let countNotifications = await this.knex('notifications')
+                                        .select('notification_id')
+                                        .where({
+                                            notification_status : 'unread',
+                                            owner_id            : owner_id
+                                        });
+        return countNotifications.map((countNotification) => { return new Notification(countNotification) });
+    }
+
     async markAsRead(owner_id, notification_id) {
         return await this.knex('notifications')
                                 .update({
@@ -89,8 +99,26 @@ class NotificationRepository {
         return new Notification(shareNotification[0]);
     }
 
-    async friendNotification() {
+    async sendFriendRequestNotification(owner_id, user_id) {
+        return await this.knex('notifications')
+                                .insert({
+                                    owner_id            : owner_id,
+                                    user_id             : user_id,
+                                    friend_type         : 'waiting',
+                                    notification_status : 'unread',
+                                    notification_time   : dateTime()
+                                });
+    }
 
+    async acceptFriendRequestNotification(owner_id, user_id) {
+        return await this.knex('notifications')
+                                .insert({
+                                    owner_id            : owner_id,
+                                    user_id             : user_id,
+                                    friend_type         : 'friend',
+                                    notification_status : 'unread',
+                                    notification_time   : dateTime()
+                                });
     }
 }
 
