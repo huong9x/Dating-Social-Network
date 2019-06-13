@@ -13,7 +13,6 @@ class PostRepository {
         });
         return new Post(findPostOwner);
     }
-
     async findPost(post_id) {
         let post = await this.knex
                                 .select('first_name', 'last_name', 'post_id', 'post.user_id', 'content', 'like_count', 'comment_count', 'share_count', 'post_share_id', 'post_time')

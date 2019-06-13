@@ -7,7 +7,8 @@ class PostController {
             let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
-            let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId);            
+            let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
+            
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
             }
@@ -20,7 +21,10 @@ class PostController {
                     await ctx.likeRepository.unlikePost(ctx.session.loggedInUserId, ctx.query.id);
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 } else {
-                    let like_count = like_count_tmp.getLikeCount() + 1;
+                    let like_count       = like_count_tmp.getLikeCount() + 1;
+                    if (post.getUserId() != ctx.session.loggedInUserId) {
+                        await ctx.notificationRepository.likeNotification(post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);
+                    }
                     await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
                     await ctx.likeRepository.likePost(ctx.session.loggedInUserId, ctx.query.id);
                     return ctx.redirect('/post?id=' + ctx.query.id);
@@ -59,8 +63,12 @@ class PostController {
         const {content}     = ctx.request.body;
         let share_count_tmp = await ctx.postRepository.findPost(ctx.query.id);        
         let share_count     = share_count_tmp.getShareCount() + 1;
+        let post            = await ctx.postRepository.findPost(ctx.query.id);
         await ctx.postRepository.updateShareCount(ctx.query.id, share_count);
         await ctx.postRepository.postShare(ctx.session.loggedInUserId, content, ctx.query.id);
+        if (post.getUserId() != ctx.session.loggedInUserId) {
+            await ctx.notificationRepository.shareNotification(post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);            
+        }
         return ctx.redirect('/post?id=' + ctx.query.id);
     }
 }

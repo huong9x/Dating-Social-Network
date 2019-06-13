@@ -16,17 +16,44 @@ Notifications Page
 			<div class="ui-block">
 				<div class="ui-block-title">
 					<h6 class="title">Notifications</h6>
+					<a href="/markAllAsRead" style="display: inline-block; float: right; margin-left: 20px; text-transform: uppercase; font-size: 9px; padding: 0;">
+						Mark all as read
+					</a>
 				</div>
 				<ul class="notification-list">
+					{% if notifications.length == 0 %}
+					<li>You have no notifications</li>
+					{% else %}
+					{% for notification in notifications %}
+					{% if notification.getNotificationStatus() == 'unread' %}
+					<li style="background-color: #3f42573d;">
+					{% else %}
 					<li>
+					{% endif %}
 						<div class="author-thumb">
-							<img src="https://html.crumina.net/html-olympus/img/avatar62-sm.jpg" alt="author">
+							{% if notification.getUserAvatar() == '/uploadedFiles/null' %}
+							<img src="img/default-user.png" alt="author">
+							{% else %}
+							<img src="{{ notification.getUserAvatar() }}" alt="author">
+							{% endif %}
 						</div>
 						<div class="notification-event">
-							<div><a href="#" class="h6 notification-friend">Mathilda Brinker</a> commented on your new <a href="#" class="notification-link">profile status</a>.</div>
-							<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+							<a href="#" class="h6 notification-friend">{{ notification.getUserName() }}</a>
+							{% if notification.getLikeId() %}
+								liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>
+							{% elseif notification.getCommentId() %}
+								commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>
+							{% elseif notification.getPostShareId() %}
+								shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>
+							{% endif %}
+							<span class="notification-date">
+								<time class="entry-date updated">{{ notification.getNotificationTime() }}</time>
+								{% if notification.getNotificationStatus() == 'unread' %}
+									<a href="/markAsRead?id={{ notification.getNotificationId() }}">Read</a>
+								{% endif %}
+							</span>
 						</div>
-						<a href="#">
+						<a onclick="deleteNotification({{ notification.getNotificationId() }});" style="cursor: pointer;">
 							<div class="more">
 								<svg class="olymp-little-delete">
 									<use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use>
@@ -34,7 +61,17 @@ Notifications Page
 							</div>
 						</a>
 					</li>
-				</ul>			
+					{% endfor %}
+					{% endif %}
+				</ul>
+				<script>
+    				function deleteNotification(number){
+    					var answer = confirm("Do you want delete?")
+						if (answer) {
+    						window.location.href="/deleteNotification?id=" + number;
+						}
+					}
+				</script>		
 			</div>
 		</div>
 	</div>

@@ -105,6 +105,10 @@ router
     .post('/report', logginRequiredMiddleware, profileController.reportUser)
 
     .get('/notifications', logginRequiredMiddleware, topPanelProfile, notificationController.getNotifications)
+    .get('/markAsRead', logginRequiredMiddleware, topPanelProfile, notificationController.markAsRead)
+    .get('/markAllAsRead', logginRequiredMiddleware, topPanelProfile, notificationController.markAllAsRead)
+    .get('/deleteNotification', logginRequiredMiddleware, topPanelProfile, notificationController.deleteNotification)
+
     ;
 
 module.exports = router.routes();
