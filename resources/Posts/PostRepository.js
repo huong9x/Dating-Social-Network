@@ -13,14 +13,6 @@ class PostRepository {
         });
         return new Post(findPostOwner);
     }
-
-    async findShareOwner(post_id, user_id) {
-        let findPostOwner = await this.knex.select('*').from('post').where({
-            user_id: user_id,
-            post_id: post_id
-        });
-        return new Post(findPostOwner);
-    }
     
     async findPost(post_id) {
         let post = await this.knex

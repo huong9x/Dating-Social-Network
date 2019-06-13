@@ -7,7 +7,8 @@ class PostController {
             let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
             let comments         = await ctx.commentRepository.findComment(ctx.query.id);
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
-            let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId);            
+            let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
+            
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
             }
@@ -21,7 +22,9 @@ class PostController {
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 } else {
                     let like_count       = like_count_tmp.getLikeCount() + 1;
-                    await ctx.notificationRepository.likeNotification(ctx.session.loggedInUserId, ctx.query.id);
+                    if (post.getUserId() != ctx.session.loggedInUserId) {
+                        await ctx.notificationRepository.likeNotification(post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);
+                    }
                     await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
                     await ctx.likeRepository.likePost(ctx.session.loggedInUserId, ctx.query.id);
                     return ctx.redirect('/post?id=' + ctx.query.id);
