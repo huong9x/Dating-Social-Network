@@ -75,7 +75,6 @@ class ProfileController {
         const {status} = ctx.req.body;
 
         let post       = await ctx.postRepository.addNewPost(ctx.session.loggedInUserId, status);
-
         if(ctx.req.files) {
             let data   = ctx.req.files.map(file => ({ post_id: post.getPostId(), user_id: ctx.session.loggedInUserId, filename: file.filename, file_type: file.mimetype}));
             await ctx.mediaRepository.addMedia(data);
