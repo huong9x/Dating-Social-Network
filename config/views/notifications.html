@@ -43,7 +43,7 @@ Notifications Page
 								liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>
 							{% elseif notification.getCommentId() %}
 								commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>
-							{% elseif notification.getCommentId() %}
+							{% elseif notification.getPostShareId() %}
 								shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>
 							{% endif %}
 							<span class="notification-date">

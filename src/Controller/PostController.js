@@ -63,8 +63,12 @@ class PostController {
         const {content}     = ctx.request.body;
         let share_count_tmp = await ctx.postRepository.findPost(ctx.query.id);        
         let share_count     = share_count_tmp.getShareCount() + 1;
+        let post            = await ctx.postRepository.findPost(ctx.query.id);
         await ctx.postRepository.updateShareCount(ctx.query.id, share_count);
         await ctx.postRepository.postShare(ctx.session.loggedInUserId, content, ctx.query.id);
+        if (post.getUserId() != ctx.session.loggedInUserId) {
+            await ctx.notificationRepository.shareNotification(post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);            
+        }
         return ctx.redirect('/post?id=' + ctx.query.id);
     }
 }
