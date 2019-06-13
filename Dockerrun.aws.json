@@ -1,0 +1,50 @@
+{
+    "containerDefinitions": [
+        {
+            "essential": true,
+            "image": "mariadb",
+            "name": "database"
+        },
+        {
+            "essential": true,
+            "links": [
+                "database"
+            ],
+            "mountPoints": [
+                {
+                    "containerPath": "/app",
+                    "sourceVolume": "_"
+                },
+                {
+                    "containerPath": "/app/node_modules",
+                    "sourceVolume": "AppNode_Modules"
+                }
+            ],
+            "name": "dating",
+            "image": "huongnv9x/dating",
+            "memory": 128,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 5000
+                }
+            ],
+            "workingDirectory": "/app"
+        }
+    ],
+    "family": "",
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "."
+            },
+            "name": "_"
+        },
+        {
+            "host": {
+                "sourcePath": "/app/node_modules"
+            },
+            "name": "AppNode_Modules"
+        }
+    ]
+}

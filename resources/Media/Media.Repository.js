@@ -5,9 +5,7 @@ class MediaRepository {
         this.knex = knex;
     }
     async addMedia(media) {        
-        let medias = await this.knex('media').insert(media);
-        console.log(medias);
-        return new Media(medias);
+        return await this.knex('media').insert(media);
     }
     async getLastPhotos(user_id) {
         let photos     = await this.knex('media').count({ count: 'user_id' });
