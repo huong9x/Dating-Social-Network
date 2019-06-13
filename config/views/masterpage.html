@@ -64,7 +64,7 @@
                         {{ ctx.listFriendRequests.length }}
                     </div>
                     {% endif %}
-                    <div class="more-dropdown more-with-triangle triangle-top-center">
+                    <div class="more-dropdown more-with-triangle triangle-top-center" style="padding: 0px;">
                         <div class="ui-block-title ui-block-title-small">
                             <h6 class="title">Friend Requests</h6>
                         </div>
@@ -72,6 +72,7 @@
                             <ul class="notification-list friend-requests">
                                 {% if ctx.listFriendRequests.length == 0 %}
                                 <li>You have no friend requests</li>
+                                {% else %}
                                 {% for friendRequest in ctx.listFriendRequests %}
                                 <li>
                                     <div class="author-thumb">
@@ -82,23 +83,25 @@
                                         <span class="chat-message-item">Mutual Friend: We're working on it</span>
                                     </div>
                                     <span class="notification-icon">
-                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
-                                    <span class="without-text">
-                                        <i class="fas fa-user-plus"></i>
-                                    </span>
-                                    </a>
-                                    <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
-                                        <span class="">
-                                        <i class="fa fa-user-times"></i>
-                                    </span>
-                                    </a>
+                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                            <span class="without-text">
+                                                <i class="fas fa-user-plus"></i>
+                                            </span>
+                                        </a>
+                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                            <span class="">
+                                                <i class="fa fa-user-times"></i>
+                                            </span>
+                                        </a>
                                     </span>
                                 </li>
                                 {% endfor %}
                                 {% endif %}
+                                <li>
+                                    <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
+                                </li>
                             </ul>
                         </div>
-                        <a href="/friend?id={{ ctx.profile.getUserId() }}&ref_page=requests" class="view-all bg-blue">Check all Requests</a>
                     </div>
                 </div>
                 <div class="control-icon more has-items">
@@ -107,7 +110,7 @@
                     {% else %}
                     <div class="label-avatar bg-primary">{{ ctx.countNotifications.length }}</div>
                     {% endif %}
-                    <div class="more-dropdown more-with-triangle triangle-top-center">
+                    <div class="more-dropdown more-with-triangle triangle-top-center" style="padding: 0px;">
                         <div class="ui-block-title ui-block-title-small">
                             <h6 class="title">Notifications</h6>
                             <a href="/markAllAsRead">Mark all as read</a>
@@ -160,6 +163,7 @@
                                 </li>
                                 {% endfor %}
                                 {% endif %}
+                                <li><a href="/notifications" class="view-all bg-primary">View All Notifications</a></li>
                             </ul>
                             <script>
                                 function deleteNotification(number){
@@ -170,7 +174,6 @@
                                 }
                             </script>	
                         </div>
-                        <a href="/notifications" class="view-all bg-primary">View All Notifications</a>
                     </div>
                 </div>
                 <div class="author-page author vcard inline-items more">
@@ -458,6 +461,7 @@
                         </li>
                         {% endfor %}
                         {% endif %}
+                        <li><a href="/notifications" class="view-all bg-primary">View All Notifications</a></li>
                     </ul>
                     <script>
                         function deleteNotification(number){
@@ -467,7 +471,6 @@
                             }
                         }
                     </script>
-                    <a href="/notifications" class="view-all bg-primary">View All Notifications</a>
                 </div>
             </div>
 
