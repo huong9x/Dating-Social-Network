@@ -1,4 +1,4 @@
-const MediaRepository = require('./Media.Repository');
+const MediaRepository = require('./MediaRepository');
 
 module.exports = (knex) => {
     const mediaRepository = new MediaRepository(knex);

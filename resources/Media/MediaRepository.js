@@ -7,6 +7,7 @@ class MediaRepository {
     async addMedia(media) {        
         return await this.knex('media').insert(media);
     }
+    
     async getLastPhotos(user_id) {
         let photos     = await this.knex('media').count({ count: 'user_id' });
         if(photos[0].count < 10) {
@@ -17,6 +18,20 @@ class MediaRepository {
         }
         let lastPhotos = await this.knex.select('*').from('media').where('user_id', user_id).andWhere('file_type', 'like', 'image/%').limit(9).offset(photos[0].count - 9);
         return lastPhotos.map((photo) => new Media(photo));
+    }
+
+    async getPhotosProfile(user_id) {
+        let photos = await this.knex('media')
+                                    .select('*')
+                                    .where({
+                                        user_id   : user_id,
+                                        file_type : 'image/jpeg'
+                                    })
+                                    .orWhere({
+                                        user_id   : user_id,
+                                        file_type : 'image/png'
+                                    });
+        return photos.map((photo) => { return new Media(photo) });
     }
 
 }
