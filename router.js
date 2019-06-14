@@ -19,7 +19,7 @@ const SettingsController        = require('./src/Controller/SettingsController')
 const storage                   = multer.diskStorage({
 
                                     destination: function (req, file, cb) {
-                                        cb(null, './config/views/uploadedFiles/')
+                                        cb(null, './views/uploadedFiles/')
                                     },
 
                                     filename: function (req, file, cb) {
