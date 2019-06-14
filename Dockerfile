@@ -10,7 +10,7 @@ RUN npm install
 
 COPY ./app.js ./app.js
 
-EXPOSE 80/udp
+EXPOSE 80/tcp
 
 RUN npm install
 
