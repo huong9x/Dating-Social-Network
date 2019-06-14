@@ -20,6 +20,20 @@ class MediaRepository {
         return lastPhotos.map((photo) => new Media(photo));
     }
 
+    async getPhotosProfile(user_id) {
+        let photos = await this.knex('media')
+                                    .select('*')
+                                    .where({
+                                        user_id   : user_id,
+                                        file_type : 'image/jpeg'
+                                    })
+                                    .orWhere({
+                                        user_id   : user_id,
+                                        file_type : 'image/png'
+                                    });
+        return photos.map((photo) => { return new Media(photo) });
+    }
+
 }
 
 module.exports = MediaRepository;
