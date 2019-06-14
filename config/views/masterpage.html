@@ -76,7 +76,11 @@
                                 {% for friendRequest in ctx.listFriendRequests %}
                                 <li>
                                     <div class="author-thumb">
-                                        <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
+                                        {% if friendRequest.getFriendAvatar() == '/uploadedFiles/null' %}
+                                        <img src="img/default-user.png" alt="author">
+                                        {% else %}
+                                        <img src="{{ friendRequest.getFriendAvatar() }}" alt="author">
+                                        {% endif %}
                                     </div>
                                     <div class="notification-event">
                                         <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
@@ -178,7 +182,13 @@
                 </div>
                 <div class="author-page author vcard inline-items more">
                     <div class="author-thumb">
-                        <img alt="author" src="https://html.crumina.net/html-olympus/img/author-page.jpg" class="avatar">
+                        <div class="avatar" style="
+                        width: 36px;
+                        height: 36px;
+                        background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
+                        background-size: cover;
+                        background-position: center;
+                        "></div>
                         <span class="icon-status online"></span>
                         <div class="more-dropdown more-with-triangle">
                             <div class="mCustomScrollbar" data-mcs-theme="dark">
@@ -285,7 +295,11 @@
                         {% for friendRequest in ctx.listFriendRequests %}
                         <li>
                             <div class="author-thumb">
-                                <img src="https://html.crumina.net/html-olympus/img/avatar55-sm.jpg" alt="author">
+                                {% if friendRequest.getFriendAvatar() == '/uploadedFiles/null' %}
+                                <img src="img/default-user.png" alt="author">
+                                {% else %}
+                                <img src="{{ friendRequest.getFriendAvatar() }}" alt="author">
+                                {% endif %}
                             </div>
                             <div class="notification-event">
                                 <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
@@ -497,7 +511,14 @@
                 <div class="fixed-sidebar-left sidebar--small">
                     <a href="/profile?id={{ ctx.profile.getUserId() }}" class="logo" style="background-color: #38a9ff;">
                         <div class="img-wrap">
-                            <img src="https://html.crumina.net/html-olympus/img/author-main1.jpg" alt="Dating Social Network" style="border-radius: 50%;">
+                            <div style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
+                            background-size: cover;
+                            background-position: center;
+                            "></div>
                         </div>
                     </a>
                 </div>

@@ -20,6 +20,9 @@ Friend Requests
 				</div>
 				<!-- Notification List Frien Requests -->
 				<ul class="notification-list friend-requests">
+					{% if ctx.listFriendRequests.length ==0 %}
+					<li>You have no friend requests</li>
+					{% else %}
 					{% for friendRequest in ctx.listFriendRequests %}
 					<li>
 						<div class="author-thumb">
@@ -43,6 +46,7 @@ Friend Requests
 						</span>
 					</li>
 					{% endfor %}				
+					{% endif %}				
 				</ul>				
 				<!-- ... end Notification List Frien Requests -->
 			</div>
