@@ -17,7 +17,7 @@ Share
 
                 <article class="hentry post">
                     <div class="post__author author vcard inline-items">
-                        <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                        <img src="{{ userShare.getUserAvatar() }}" alt="author">
                         <div class="author-date">
                             <a class="h6 post__author-name fn" href="/profile?id=1">{{ userShare.getPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
                         </div>
@@ -28,7 +28,7 @@ Share
 
                         <article class="hentry post" style="border-bottom:none;">
                             <div class="post__author author vcard inline-items">
-                                <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                <img src="{{ user.getUserAvatar() }}" alt="author">
                                 <div class="author-date">
                                     <a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ user.getPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
                                     <div class="post__date">
@@ -41,7 +41,94 @@ Share
                             <p>
 								{{ post.getContent() }}
                             </p>
-
+                            {% if post.getPostMedia() %}
+					<div class="post-block-photo js-zoom-gallery">
+						{% for media in post.getPostMedia() %}
+							{% if post.getPostMedia().length == 1 %}
+							<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
+								<div style="							
+								width: 100%;
+								height: 566px;
+								background: url('/uploadedFiles/{{ media }}') no-repeat;
+								background-size: cover;
+								background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% if post.getPostMedia().length == 2 %}
+							<a href="/uploadedFiles/{{ media }}" class="half-width">
+								<div style="							
+								width: 100%;
+								height: 566px;
+								background: url('/uploadedFiles/{{ media }}') no-repeat;
+								background-size: cover;
+								background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% if post.getPostMedia().length == 3 %}
+							{% if loop.index0 < 2 %}  
+							<a href="/uploadedFiles/{{ media }}" class="half-width">
+								<div style="							
+								width: 100%;
+								height: 276px;
+								background: url('/uploadedFiles/{{ media }}') no-repeat;
+								background-size: cover;
+								background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% if loop.index0 == 2 %} 
+							<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
+								<div style="							
+								width: 100%;
+								height: 276px;
+								background: url('/uploadedFiles/{{ media }}') no-repeat;
+								background-size: cover;
+								background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% endif %}
+							{% if post.getPostMedia().length == 4 %}
+							<a href="/uploadedFiles/{{ media }}" class="half-width">
+								<div style="							
+									width: 100%;
+									height: 276px;
+									background: url('/uploadedFiles/{{ media }}') no-repeat;
+									background-size: cover;
+									background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% if post.getPostMedia().length  > 4 %}
+							{% if loop.index0 < 3 %}    
+							<a href="/uploadedFiles/{{ media }}" class="half-width">
+								<div style="							
+									width: 100%;
+									height: 276px;
+									background: url('/uploadedFiles/{{ media }}') no-repeat;
+									background-size: cover;
+									background-position: center;">
+								</div>
+							</a>
+							{% endif %}
+							{% if loop.index0 == 3 %}    
+                                    <a href="/uploadedFiles/{{ media }}" class="more-photos half-width">
+                                        <div style="							
+                                            width: 100%;
+                                            height: 276px;
+                                            background: url('/uploadedFiles/{{ media }}') no-repeat;
+                                            background-size: cover;
+                                            background-position: center;">
+                                        </div>
+                                        <span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+                                    </a>
+                                    {% endif %}						
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </article>
 
                         <div style="position: relative; padding-bottom: 25px;">
