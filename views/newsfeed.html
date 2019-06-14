@@ -159,7 +159,7 @@ News Feed
                                 <p>
                                     {{ post.getContent() }}
                                 </p>
-                                <!-- {% if post.getPostMedia() %}
+                                {% if post.getPostMedia() %}
 							<div class="post-block-photo js-zoom-gallery">
 								{% for media in post.getPostMedia() %}
 									{% if post.getPostMedia().length == 1 %}
@@ -245,7 +245,7 @@ News Feed
 									{% endif %}						
 									{% endif %}
                                 {% endfor %}
-                                {% endif %} -->
+                                {% endif %}
                                 {% if post.getPostShareId() %}
                                             <article class="hentry post">
                                                 <div class="post__author author vcard inline-items">
