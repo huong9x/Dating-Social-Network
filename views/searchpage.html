@@ -1,0 +1,49 @@
+{% extends 'masterpage.html' %}
+
+{% block title %}
+Search Page
+{% endblock %}
+
+{% block titleheader %}
+Search Page
+{% endblock %}
+
+{% block container %}
+<div class="container">
+	<div class="row">
+		<div class="col col-xl-2"></div>
+		<div class="col col-xl-8 order-xl-12 col-lg-12 order-lg-12 col-md-12 order-md-12 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Searched</h6>
+				</div>
+				<ul class="notification-list friend-requests">
+					{% if users.length %}
+					{% for user in users %}
+					<li>
+						<a href="/profile?id={{ user.getUserId() }}">
+						<div class="author-thumb">
+							<div style="
+								width:40px;
+								height: 40px;
+								border-radius: 100%;
+								background: url('{{ user.getUserAvatar() }}') no-repeat;
+								background-size: cover;
+								background-position: center;
+							"></div>
+						</div>
+						<div class="notification-event">
+							<a href="profile?id={{ user.getUserId() }}" class="h6 notification-friend">{{ user.getPresentationName() }}</a>
+						</div>
+						</a>
+					</li>
+					{% endfor %}
+					{% else %}
+					<li>No User Found</li>	
+					{% endif %}
+				</ul>				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
