@@ -11,7 +11,7 @@ class UserInfo {
         this.user_avatar     = rawUser.user_avatar;
         this.phone_number    = rawUser.phone_number;
         this.address         = rawUser.address;
-        this.password        = rawUser.password;
+        // this.password        = rawUser.password;
         this.follower_status = rawUser.follower_status;
         this.user_avatar     = rawUser.user_avatar;
         this.user_cover      = rawUser.user_cover;
@@ -20,9 +20,9 @@ class UserInfo {
     getUserId() {
         return this.user_id;
     }
-    getUserPassword() {
-        return this.password;
-    }
+    // getUserPassword() {
+    //     return this.password;
+    // }
     getName() {
         return capitalize(this.first_name);
     }
@@ -48,10 +48,11 @@ class UserInfo {
         return this.relationship;
     }
     getUserAvatar() {
-        if(!this.user_avatar) {
-            return 'img/default-user.png';
-        }
-        return '/uploadedFiles/' + this.user_avatar;        
+        return this.user_avatar ? '/uploadedFiles/' + this.user_avatar : 'img/default-user.png';
+        // if(!this.user_avatar) {
+        //     return 'img/default-user.png';
+        // }
+        // return '/uploadedFiles/' + this.user_avatar;        
     }
     getUserCover() {
         return '/uploadedFiles/' + this.user_cover;

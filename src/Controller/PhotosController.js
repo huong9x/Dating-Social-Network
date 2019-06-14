@@ -11,9 +11,9 @@ class PhotosController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-        return await ctx.render('photos.html', { ctx, user, getPhotosProfile});
+        
+        return await ctx.render('photos.html', { ctx, user, getPhotosProfile });
     }
-
 }
 
 module.exports = PhotosController;

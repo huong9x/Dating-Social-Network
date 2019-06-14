@@ -17,7 +17,7 @@ class ProfileController {
             return ctx.redirect('/404page');
         }
         try {
-        let isFriend = await ctx.friendRepository.isFriend(my_id, uid);            
+        let isFriend = await ctx.friendRepository.isFriend(my_id, uid);
         return ctx.render('profile.html', { ctx, user, posts, lastPhotos, friends, isFriend });                    
         } catch (e) {
             console.log(e.message);
