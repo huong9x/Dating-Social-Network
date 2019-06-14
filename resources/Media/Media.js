@@ -13,7 +13,7 @@ class Media {
         return this.post_id;
     }
     getFilename() {
-        return this.filename;
+        return '/uploadedFiles/' + this.filename;        
     }
     getFiletype() {
         return this.filetype;
