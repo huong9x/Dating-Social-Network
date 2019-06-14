@@ -1,0 +1,397 @@
+{% extends 'masterpage.html' %}
+
+{% block title %}
+News Feed
+{% endblock %}
+
+{% block titleheader %}
+News Feed
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <div class="row">
+        <!-- Main Content -->
+        <main class="col col-xl-8 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <div class="ui-block">
+                <!-- News Feed Form  -->
+                <div class="news-feed-form">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
+                                <i class="fa fa-list-alt"></i>
+                                <span>Status</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
+                            <form action="/postStatus" method="POST" enctype="multipart/form-data" >
+                                <div class="author-thumb">
+                                        <div alt="author" style="
+                                        width: 36px;
+                                        height: 36px;
+                                        border-radius: 100%;
+                                        background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
+                                        background-size: cover;
+                                        background-position: center;
+                                        "></div>    
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea type=textarea name="status" class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+
+                                    <div class="options-message">
+                                        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+                                        <style>
+                                            #file{
+                                                display: none;
+                                            }
+                                        </style>
+
+                                        <label for="file" class="input-label">
+                                            <i class="fa fa-camera"></i>
+                                            <span id="label_span"></span>
+                                        </label>
+                                        <input type="file" name="file" id="file" multiple accept=".3gp, .avi, .mp4, .wmv, .jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#file').on("change", function(e) {
+                                                    var files = $(this)[0].files;
+
+                                                    if(files.length >= 2) {
+                                                        $("#label_span").text(files.length + " files selected");
+                                                    } else {
+                                                        var filename = e.target.value.split('\\').pop();
+                                                        $("#label_span").text(filename);
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+                                    </div>
+
+                                    <button class="btn btn-primary btn-md-2" type="submit">Post Status</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="profile-1" role="tabpanel" aria-expanded="true">
+                            <form>
+                                <div class="author-thumb">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+                                    <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
+                                        <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+                                        </svg>
+                                    </a>
+                                    <button class="btn btn-primary btn-md-2">Post Status</button>
+                                    <button class="btn btn-md-2 btn-border-think btn-transparent c-grey">Preview</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="blog" role="tabpanel" aria-expanded="true">
+                            <form>
+                                <div class="author-thumb">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                </div>
+                                <div class="form-group with-icon label-floating is-empty">
+                                    <label class="control-label">Share what you are thinking here...</label>
+                                    <textarea class="form-control" placeholder=""></textarea>
+                                </div>
+                                <div class="add-options-message">
+                                    <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
+                                        <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+                                        </svg>
+                                    </a>
+                                    <button class="btn btn-primary btn-md-2">Post Status</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ... end News Feed Form  -->
+            </div>
+                    {% if posts %}  
+                    <div id="newsfeed-items-grid">
+                        {% for post in posts %}
+                        <div class="ui-block">
+                            <!-- Post -->
+                            <article class="hentry post">
+                                <div class="post__author author vcard inline-items">
+                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+        
+                                    <div class="author-date">
+                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ post.getUserPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                        <div class="post__date">
+                                            <a href="/post?id={{ post.getPostId() }}" style="color: #9697a1;"><time class="published" title="{{ post.getRawPostTime() }}">
+                                                {{ post.getPostTime() }}
+                                            </time></a>
+                                        </div>
+                                    </div>
+                                    {% if post.getUserId() == ctx.profile.getUserId() %}
+                                    <div class="more">
+                                        <svg class="olymp-three-dots-icon">
+                                            <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                                        </svg>
+                                        <ul class="more-dropdown">
+                                            <li>
+                                                <a href="/post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
+                                            </li>
+                                            <li>
+                                                <a href="/deletePost?id={{ post.getPostId() }}">Delete Post</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <p>
+                                    {{ post.getContent() }}
+                                </p>
+                                <!-- {% if post.getPostMedia() %}
+							<div class="post-block-photo js-zoom-gallery">
+								{% for media in post.getPostMedia() %}
+									{% if post.getPostMedia().length == 1 %}
+									<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
+										<div style="							
+										width: 100%;
+										height: 566px;
+										background: url('/uploadedFiles/{{ media }}') no-repeat;
+										background-size: cover;
+										background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% if post.getPostMedia().length == 2 %}
+									<a href="/uploadedFiles/{{ media }}" class="half-width">
+										<div style="							
+										width: 100%;
+										height: 566px;
+										background: url('/uploadedFiles/{{ media }}') no-repeat;
+										background-size: cover;
+										background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% if post.getPostMedia().length == 3 %}
+									{% if loop.index0 < 2 %}  
+									<a href="/uploadedFiles/{{ media }}" class="half-width">
+										<div style="							
+										width: 100%;
+										height: 276px;
+										background: url('/uploadedFiles/{{ media }}') no-repeat;
+										background-size: cover;
+										background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% if loop.index0 == 2 %} 
+									<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
+										<div style="							
+										width: 100%;
+										height: 276px;
+										background: url('/uploadedFiles/{{ media }}') no-repeat;
+										background-size: cover;
+										background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% endif %}
+									{% if post.getPostMedia().length == 4 %}
+									<a href="/uploadedFiles/{{ media }}" class="half-width">
+										<div style="							
+											width: 100%;
+											height: 276px;
+											background: url('/uploadedFiles/{{ media }}') no-repeat;
+											background-size: cover;
+											background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% if post.getPostMedia().length  > 4 %}
+									{% if loop.index0 < 3 %}    
+									<a href="/uploadedFiles/{{ media }}" class="half-width">
+										<div style="							
+											width: 100%;
+											height: 276px;
+											background: url('/uploadedFiles/{{ media }}') no-repeat;
+											background-size: cover;
+											background-position: center;">
+										</div>
+									</a>
+									{% endif %}
+									{% if loop.index0 == 3 %}    
+									<a href="/uploadedFiles/{{ media }}" class="more-photos half-width">
+										<div style="							
+											width: 100%;
+											height: 276px;
+											background: url('/uploadedFiles/{{ media }}') no-repeat;
+											background-size: cover;
+											background-position: center;">
+										</div>
+										<span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+									</a>
+									{% endif %}						
+									{% endif %}
+                                {% endfor %}
+                                {% endif %} -->
+                                {% if post.getPostShareId() %}
+                                            <article class="hentry post">
+                                                <div class="post__author author vcard inline-items">
+                                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                            
+                                                    <div class="author-date">
+                                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}"> {{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                                        <div class="post__date">
+                                                            <a href="/post?id={{ post.getOriginalPostId() }}" style="color: #9697a1;">
+                                                                <time class="published" title="">
+                                                                    {{ post.getOriginalPostTime() }}
+                                                                </time>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    {{ post.getOriginalPostContent() }}
+                                                </p>
+                                            </article>
+                                {% endif%}
+    
+                                <div class="post-additional-info inline-items">
+                                    <a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
+                                        <i class="fas fa-thumbs-up"></i>
+                                        <span>{{ post.getLikeCount() }}</span>
+                                    </a>
+                                    <div class="comments-shared">
+                                        <a href="/post?id={{ post.getPostId() }}" class="post-add-icon inline-items">
+                                            <i class="fas fa-comments"></i>
+                                            <span>{{ post.getCommentCount() }}</span>
+                                        </a>
+                                        {% if post.getPostShareId() %}
+                                            <a href="/post?id={{ post.getOriginalPostId() }}&ref_page=share" class="post-add-icon inline-items">
+                                            {% else %}
+                                            <a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
+                                        {% endif %}
+                                            <i class="fas fa-share"></i>
+                                            <span>{{ post.getShareCount() }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- .. end Post -->
+                        </div>
+                        {% endfor %} 
+                    </div>
+                    {% endif %}
+                    <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+        </main>
+        <!-- ... end Main Content -->
+        <!-- Right Sidebar -->
+        <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+            {% if ctx.listFriendRequests.length == 0 %}
+            {% else %}
+            <div class="ui-block">
+                <div class="ui-block-title">
+                    <h6 class="title">Friend Requests</h6>
+                </div>
+                <!-- W-Action -->
+                <ul class="widget w-friend-pages-added notification-list friend-requests">
+                    {% for friendRequest in ctx.listFriendRequests.slice(0, 4) %}
+                    <li>
+                        <div class="author-thumb">
+                            <div alt="author" style="
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 100%;
+                                background: url('{{ friendRequest.getFriendAvatar() }}') no-repeat;
+                                background-size: cover;
+                                background-position: center;    
+                            "></div>
+                        </div>
+                        <div class="notification-event">
+                            <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                            <span class="chat-message-item">Mutual Friend</span>
+                        </div>
+                        <span class="notification-icon">
+                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                <span class="without-text">
+                                    <i class="fas fa-user-plus"></i>
+                                </span>
+                            </a>
+                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                <span class="">
+                                    <i class="fas fa-user-times"></i>
+                                </span>
+                            </a>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- ... end W-Action -->
+            </div>
+            {% endif %}
+            <div class="ui-block">
+                <div class="ui-block-title">
+                    <h6 class="title">Notifications</h6>
+                </div>
+                <!-- W-Activity-Feed -->
+                <ul class="widget w-activity-feed notification-list">
+                    {% if ctx.notifications.length == 0 %}<li>You have no notifications</li>{%else%}
+                    {% for notification in ctx.notifications.slice(0, 5) %}
+                    {% if notification.getNotificationStatus() == 'unread' %}
+                        <li style="background-color: #3f42573d;">
+                    {% else %}
+                        <li>
+                    {% endif %}
+                        <div alt="author" style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 100%;
+                            background: url('{{ notification.getUserAvatar() }}') no-repeat;
+                            background-size: cover;
+                            background-position: center;    
+                        "></div>
+                        <div class="notification-event">
+                            <a href="/profile?id={{ notification.getUserId() }}" class="h6 notification-friend">{{ notification.getUserName() }}</a>
+                            {% if notification.getLikeId() %}
+                                liked on <a href="/post?id={{ notification.getLikeId() }}" class="notification-link">your post</a>.
+                            {% elseif notification.getCommentId() %}
+                                commented on <a href="/post?id={{ notification.getCommentId() }}" class="notification-link">your post</a>.
+                            {% elseif notification.getPostShareId() %}
+                                shared on <a href="/post?id={{ notification.getPostShareId() }}" class="notification-link">your post</a>.
+                            {% elseif notification.getFriendType() == 'waiting' %}
+                                sent you a friend request.
+                            {% elseif notification.getFriendType() == 'friend' %}
+                                accepted your friend request.
+                            {% endif %}
+                            <span class="notification-date">
+                                <time class="entry-date updated">{{ notification.getNotificationTime() }}</time>
+                                {% if notification.getNotificationStatus() == 'unread' %}
+                                    <a href="/markAsRead?id={{ notification.getNotificationId() }}">Read</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+                <!-- .. end W-Activity-Feed -->
+            </div>
+        </aside>
+        <!-- ... end Right Sidebar -->
+        </div>
+    </div>
+{% endblock %}

@@ -21,7 +21,7 @@ const authProvider         = require('./config/auth/Auth.Provider');
 const hasherProvider       = require('./config/hasher/hasherProvider');
 
 const njProvider           = require('./nunjucks.provider');
-const staticPath           = './config/views';
+const staticPath           = './views';
 
 const app                  = new Koa();
 app.keys                   = ['some-secret-key'];
