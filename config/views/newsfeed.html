@@ -33,6 +33,7 @@ News Feed
                                         <div alt="author" style="
                                         width: 36px;
                                         height: 36px;
+                                        border-radius: 100%;
                                         background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
                                         background-size: cover;
                                         background-position: center;
@@ -311,7 +312,14 @@ News Feed
                     {% for friendRequest in ctx.listFriendRequests.slice(0, 4) %}
                     <li>
                         <div class="author-thumb">
-                            <img src="{{ friendRequest.getFriendAvatar() }}" alt="author">
+                            <div alt="author" style="
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 100%;
+                                background: url('{{ friendRequest.getFriendAvatar() }}') no-repeat;
+                                background-size: cover;
+                                background-position: center;    
+                            "></div>
                         </div>
                         <div class="notification-event">
                             <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
@@ -348,13 +356,14 @@ News Feed
                     {% else %}
                         <li>
                     {% endif %}
-                        <div class="author-thumb">
-                            {% if notification.getUserAvatar() == '/uploadedFiles/null' %}
-                            <img src="img/default-user.png" alt="author">
-                            {% else %}
-                            <img src="{{ notification.getUserAvatar() }}" alt="author">
-                            {% endif %}
-                        </div>
+                        <div alt="author" style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 100%;
+                            background: url('{{ notification.getUserAvatar() }}') no-repeat;
+                            background-size: cover;
+                            background-position: center;    
+                        "></div>
                         <div class="notification-event">
                             <a href="/profile?id={{ notification.getUserId() }}" class="h6 notification-friend">{{ notification.getUserName() }}</a>
                             {% if notification.getLikeId() %}

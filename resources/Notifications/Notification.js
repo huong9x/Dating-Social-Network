@@ -20,7 +20,10 @@ class Notification {
         return this.notification_id;
     }
     getUserAvatar() {
-        return '/uploadedFiles/' + this.user_avatar;
+        if(!this.user_avatar) {
+            return 'img/default-user.png';
+        }
+        return '/uploadedFiles/' + this.user_avatar; 
     }
     getUserName() {
         return this.user_name;

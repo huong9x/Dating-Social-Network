@@ -27,13 +27,13 @@ class FriendRepository {
     }
     async listFriend(user_id) {
         let listFriend = await this.knex
-                                    .select('first_name', 'last_name', 'user_avatar', 'followers.user_id', 'friend_id', 'follower_status', 'follower_id')
-                                    .from('users')
-                                    .join('followers', {'followers.friend_id': 'users.user_id'})
-                                    .where({
-                                        'followers.user_id' : user_id,
-                                        follower_status: 'friend' }                                   
-                                    );
+                            .select('first_name', 'last_name', 'user_avatar', 'followers.user_id', 'friend_id', 'follower_status', 'follower_id')
+                            .from('users')
+                            .join('followers', {'followers.friend_id': 'users.user_id'})
+                            .where({
+                                'followers.user_id' : user_id,
+                                follower_status: 'friend' }                                   
+                            );
         return listFriend.map((friend) => new Friend(friend));
     }
     async listFriendRequests(user_id) {
@@ -71,6 +71,22 @@ class FriendRepository {
         return findRequestFollowers.map((friend) => new Friend(friend));
     }
 
+    async listFriendsProfile(user_id) {
+        let listFriendsProfile = await this.knex.select(
+                                                    'first_name',
+                                                    'last_name',
+                                                    'user_avatar',
+                                                    'user_cover',
+                                                    'followers.*'
+                                                )
+                                                .from('followers')
+                                                .leftJoin('users', 'friend_id', 'users.user_id')
+                                                .where({
+                                                    'followers.user_id' : user_id,
+                                                    follower_status     : 'friend'
+                                                });
+        return listFriendsProfile.map((listFriendProfile) => { return new Friend(listFriendProfile) });
+    }
 }
 
 module.exports = FriendRepository;

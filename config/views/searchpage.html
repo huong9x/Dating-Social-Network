@@ -21,27 +21,21 @@ Search Page
 					{% if users.length %}
 					{% for user in users %}
 					<li>
+						<a href="/profile?id={{ user.getUserId() }}">
 						<div class="author-thumb">
-							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+							<div style="
+								width:40px;
+								height: 40px;
+								border-radius: 100%;
+								background: url('{{ user.getUserAvatar() }}') no-repeat;
+								background-size: cover;
+								background-position: center;
+							"></div>
 						</div>
 						<div class="notification-event">
 							<a href="profile?id={{ user.getUserId() }}" class="h6 notification-friend">{{ user.getPresentationName() }}</a>
 						</div>
-						{% if user.getUserId() == ctx.session.loggedInUserId %}
-						{% else %}
-						<!-- <span class="notification-icon">
-							<a href="#" class="accept-request">
-								<span class="">
-									<svg class="fas fa-user-plus"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-								</span>
-							</a>
-							<a href="#" class="accept-request request-del">
-								<span class="">
-									<svg class="fas fa-user-times"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-								</span>
-							</a>
-						</span> -->
-						{% endif %}
+						</a>
 					</li>
 					{% endfor %}
 					{% else %}

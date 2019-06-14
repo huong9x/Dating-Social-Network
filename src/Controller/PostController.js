@@ -17,12 +17,15 @@ class PostController {
                 let like_count_tmp = await ctx.postRepository.findPost(ctx.query.id);
                 if (likeExist) {
                     let like_count = like_count_tmp.getLikeCount() - 1;
-                    await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
+                    // transaction
+                    // Promise.all()
                     await ctx.likeRepository.unlikePost(ctx.session.loggedInUserId, ctx.query.id);
+                    await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
                     return ctx.redirect('/post?id=' + ctx.query.id);
                 } else {
                     let like_count       = like_count_tmp.getLikeCount() + 1;
                     if (post.getUserId() != ctx.session.loggedInUserId) {
+                        //TODO trigger like Post event with user is post.getUserId()
                         await ctx.notificationRepository.likeNotification(post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);
                     }
                     await ctx.postRepository.updateLikeCount(ctx.query.id, like_count);
