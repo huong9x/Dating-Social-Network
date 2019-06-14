@@ -1,6 +1,6 @@
 const { format } = require('timeago.js');
 class Post {
-    constructor(post_id, user_id, user_avatar, first_name, last_name, content, medias, like_count, comment_count, share_count, post_share_id, post_time, post_id_o, post_time_o, content_o, first_name_o, last_name_o, user_id_o) {
+    constructor(post_id, user_id, user_avatar, first_name, last_name, content, medias, like_count, comment_count, share_count, post_share_id, post_time, post_id_o, post_time_o, content_o, first_name_o, last_name_o, user_id_o, user_avatar_o) {
         this.post_id       = post_id;
         this.user_id       = user_id;
         this.user_avatar   = user_avatar;
@@ -19,6 +19,7 @@ class Post {
         this.first_name_o  = first_name_o;
         this.last_name_o   = last_name_o;
         this.user_id_o     = user_id_o;
+        this.user_avatar_o = user_avatar_o;
     }
     
     getUserId() {
@@ -68,6 +69,9 @@ class Post {
     }
     getOriginalPostTime() {
         return format(this.post_time_o, 'en_US');
+    }
+    getOriginalPostAvatar() {
+        return this.user_avatar_o ? '/uploadedFiles/' + this.user_avatar_o : 'img/default-user.png';
     }
     getOriginalPostUserId() {
         return this.user_id_o;
