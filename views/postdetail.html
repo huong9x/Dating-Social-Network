@@ -17,7 +17,7 @@ Post Detail
 			
 				<article class="hentry post" >
 					<div class="post__author author vcard inline-items">
-						<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+						<img src="{{ post.getUserAvatar() }}" alt="author">
 						<div class="author-date">
 							<a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ post.getUserPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 							<div class="post__date">
@@ -151,7 +151,7 @@ Post Detail
 					{% if post.getPostShareId() %}
 								<article class="hentry post">
 									<div class="post__author author vcard inline-items">
-										<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+										<img src="{{ post.getOriginalPostAvatar() }}" alt="author">
 								
 										<div class="author-date">
 											<a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}">{{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
@@ -204,7 +204,7 @@ Post Detail
                     {% if (ctx.query.ref_page != 'editpost') and (ctx.query.ref_page != 'editcomment') %}
 					<form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
 						<div class="post__author author vcard inline-items">
-							<img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+							<img src="{{ ctx.profile.getUserAvatar() }}" alt="author">
 					
 							<div class="form-group with-icon-right is-empty">
 								<textarea class="form-control" required name="comment_text"></textarea>

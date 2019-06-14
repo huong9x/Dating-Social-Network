@@ -9,6 +9,7 @@ class PostController {
             let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
             let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
             
+
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
             }
@@ -34,7 +35,7 @@ class PostController {
                 }
             }
 
-            if(ctx.query.ref_page == 'share') {
+            if(ctx.query.ref_page == 'share') {                
                 return ctx.render('postshare.html', { ctx, post, user, userShare });
             }
 
