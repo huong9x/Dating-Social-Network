@@ -7,6 +7,7 @@ class MediaRepository {
     async addMedia(media) {        
         return await this.knex('media').insert(media);
     }
+    
     async getLastPhotos(user_id) {
         let photos     = await this.knex('media').count({ count: 'user_id' });
         if(photos[0].count < 10) {

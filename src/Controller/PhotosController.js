@@ -8,7 +8,7 @@ class PhotosController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-        return await ctx.render('photos.html', { ctx, user });        
+        return await ctx.render('photos.html', { ctx, user });
     }
 
 }
