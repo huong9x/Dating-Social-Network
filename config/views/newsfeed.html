@@ -30,7 +30,13 @@ News Feed
                         <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
                             <form action="/postStatus" method="POST" enctype="multipart/form-data" >
                                 <div class="author-thumb">
-                                    <img src="https://html.crumina.net/html-olympus/img/author-page.jpg" alt="author">
+                                        <div alt="author" style="
+                                        width: 36px;
+                                        height: 36px;
+                                        background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
+                                        background-size: cover;
+                                        background-position: center;
+                                        "></div>    
                                 </div>
                                 <div class="form-group with-icon label-floating is-empty">
                                     <label class="control-label">Share what you are thinking here...</label>
