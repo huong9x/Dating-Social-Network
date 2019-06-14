@@ -24,13 +24,13 @@ class PostRepository {
         }
         if(post[0].post_share_id) {
             let originalPost = await this.knex
-                                    .select('first_name', 'last_name', 'post_id', 'post.user_id', 'content', 'like_count', 'comment_count', 'share_count', 'post_share_id', 'post_time')
+                                    .select('first_name', 'users.user_avatar', 'last_name', 'post_id', 'post.user_id', 'content', 'like_count', 'comment_count', 'share_count', 'post_share_id', 'post_time')
                                     .from('post')
                                     .join('users', {'users.user_id': 'post.user_id'})
                                     .where('post_id', '=', post[0].post_share_id);
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post[0].post_id);
             let medias = mediaPost.map((media) => media.filename);
-            return new Post(post[0].post_id, post[0].user_id, originalPost[0].user_avatar, post[0].first_name, post[0].last_name,post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+            return new Post(post[0].post_id, post[0].user_id, post[0].user_avatar, post[0].first_name, post[0].last_name,post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id , originalPost[0].user_avatar);            
         }
         let mediaPost = await this.knex.select('*').from('media').where('post_id', post[0].post_id);
         let medias = mediaPost.map((media) => media.filename);
@@ -58,7 +58,7 @@ class PostRepository {
                                                 .where('post_id', '=', post.post_share_id);
                 let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_share_id);
                 let medias = mediaPost.map((media) => media.filename);
-                return new Post(post.post_id, post.user_id, originalPost[0].user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+                return new Post(post.post_id, post.user_id, post.user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id, originalPost[0].user_avatar);            
             }
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
             let medias = mediaPost.map((media) => media.filename);
@@ -86,7 +86,7 @@ class PostRepository {
                                                 .where('post_id', '=', post.post_share_id);
                 let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_share_id);
                 let medias = mediaPost.map((media) => media.filename);
-                return new Post(post.post_id, post.user_id, originalPost[0].user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id);            
+                return new Post(post.post_id, post.user_id, originalPost[0].user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id, originalPost[0].user_avatar);            
             }
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
             let medias = mediaPost.map((media) => media.filename);
