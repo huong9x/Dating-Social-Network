@@ -34,6 +34,16 @@ class MediaRepository {
         return photos.map((photo) => { return new Media(photo) });
     }
 
+    async getVideosProfile(user_id) {
+        let videos = await this.knex('media')
+                                    .select('*')
+                                    .where({
+                                        user_id   : user_id,
+                                        file_type : 'video/mp4'
+                                    })
+        return videos.map((video) => { return new Media(video) });
+    }
+
 }
 
 module.exports = MediaRepository;
