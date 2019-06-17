@@ -8,7 +8,7 @@ class PostController {
             let comments      = await ctx.commentRepository.findComment(ctx.query.id);
             let likeExist     = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
             let findPostOwner = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
-            // console.log(post.getPostMedia());
+            console.log(post.getPostMedia());
 
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
