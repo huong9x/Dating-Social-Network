@@ -45,7 +45,7 @@ Post Detail
 						{% endif %}
 					</div>
 					{% if (ctx.query.ref_page != 'editpost') or ((ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId != post.getUserId())) %}
-					<p>
+					<p style="word-break: break-all;">
 						{{ post.getContent() }}
 					</p>
 					{% if post.getPostMedia() %}
@@ -244,7 +244,7 @@ Post Detail
 							{% endif %}
 						</div>
 						{% if (ctx.query.ref_page != 'editcomment') or ((ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment != comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId())) %}
-						<p>
+						<p style="word-break: break-all;">
 							{{ comment.getCommentText() }}
                         </p>
                         {% endif %}
