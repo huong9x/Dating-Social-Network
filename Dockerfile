@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:11.15.0-alpine
 
 RUN mkdir /app
 
@@ -10,9 +10,11 @@ RUN npm install
 
 COPY ./app.js ./app.js
 
-EXPOSE 80/tcp
+RUN mkdir /config
 
-RUN npm install
+ADD ./ ./
+
+EXPOSE 5000
 
 CMD node app.js
 
