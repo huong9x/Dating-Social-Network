@@ -1,6 +1,6 @@
 .idea/
 /node_modules
-/views/uploadedFiles
+/views/uploadedFiles/
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
