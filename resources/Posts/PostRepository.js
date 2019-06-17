@@ -33,7 +33,7 @@ class PostRepository {
             return new Post(post[0].post_id, post[0].user_id, post[0].user_avatar, post[0].first_name, post[0].last_name,post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id , originalPost[0].user_avatar);            
         }
         let mediaPost = await this.knex.select('*').from('media').where('post_id', post[0].post_id);
-        let medias = mediaPost.map((media) => media.filename);
+        let medias = mediaPost.map((media) => [media.filename, media.file_type]);
         return new Post(post[0].post_id, post[0].user_id, post[0].user_avatar, post[0].first_name, post[0].last_name, post[0].content, medias, post[0].like_count, post[0].comment_count, post[0].share_count, post[0].post_share_id, post[0].post_time);
     }
     
@@ -62,7 +62,6 @@ class PostRepository {
             }
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
             let medias = mediaPost.map((media) => media.filename);
-            console.log(medias);
             return new Post(post.post_id, post.user_id, post.user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
         return Promise.all(result);

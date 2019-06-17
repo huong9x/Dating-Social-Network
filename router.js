@@ -63,7 +63,7 @@ router
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
-    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 10), profileController.postStatus)
+    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 100), profileController.postStatus)
 
     .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
 
