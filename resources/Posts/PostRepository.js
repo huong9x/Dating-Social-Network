@@ -62,6 +62,7 @@ class PostRepository {
             }
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
             let medias = mediaPost.map((media) => media.filename);
+            console.log(medias);
             return new Post(post.post_id, post.user_id, post.user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
         return Promise.all(result);

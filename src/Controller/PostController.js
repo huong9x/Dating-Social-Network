@@ -2,13 +2,13 @@ class PostController {
 
     async viewPost(ctx) {
         try {
-            let post             = await ctx.postRepository.findPost(ctx.query.id);
-            let user             = await ctx.userRepository.getUserInfo(post.getUserId());
-            let userShare        = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
-            let comments         = await ctx.commentRepository.findComment(ctx.query.id);
-            let likeExist        = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
-            let findPostOwner    = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
-            
+            let post          = await ctx.postRepository.findPost(ctx.query.id);
+            let user          = await ctx.userRepository.getUserInfo(post.getUserId());
+            let userShare     = await ctx.userRepository.getUserInfo(ctx.session.loggedInUserId);
+            let comments      = await ctx.commentRepository.findComment(ctx.query.id);
+            let likeExist     = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
+            let findPostOwner = await ctx.postRepository.findPostOwner(ctx.query.id, ctx.session.loggedInUserId); 
+            // console.log(post.getPostMedia());
 
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');
