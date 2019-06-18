@@ -57,11 +57,11 @@ class PostRepository {
                                                 .join('users', {'users.user_id': 'post.user_id'})
                                                 .where('post_id', '=', post.post_share_id);
                 let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_share_id);
-                let medias = mediaPost.map((media) => media.filename);
+                let medias = mediaPost.map((media) => [media.filename, media.file_type]);
                 return new Post(post.post_id, post.user_id, post.user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time, originalPost[0].post_id, originalPost[0].post_time, originalPost[0].content, originalPost[0].first_name, originalPost[0].last_name, originalPost[0].user_id, originalPost[0].user_avatar);            
             }
             let mediaPost = await this.knex.select('*').from('media').where('post_id', post.post_id);
-            let medias = mediaPost.map((media) => media.filename);
+            let medias = mediaPost.map((media) => [media.filename, media.file_type]);
             return new Post(post.post_id, post.user_id, post.user_avatar, post.first_name, post.last_name, post.content, medias, post.like_count, post.comment_count, post.share_count, post.post_share_id, post.post_time);
         });
         return Promise.all(result);
