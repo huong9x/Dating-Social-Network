@@ -63,7 +63,7 @@ router
      
     .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, newsfeedController.getNewsfeed)
 
-    .get('/post', logginRequiredMiddleware, topPanelProfile, postController.viewPost)
+    .get('/post', logginRequiredMiddleware, topPanelProfile, commentController.getPostComment, postController.viewPost)
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 

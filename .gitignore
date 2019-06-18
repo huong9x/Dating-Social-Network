@@ -3,8 +3,6 @@
 /views/uploadedFiles/*
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
 system.env
 system_bak.env
 .elasticbeanstalk

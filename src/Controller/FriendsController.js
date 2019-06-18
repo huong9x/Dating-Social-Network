@@ -4,15 +4,19 @@ class FriendsController {
         if(!ctx.query.id) {
             return ctx.redirect('/404page');
         }
-        let user               = await ctx.userRepository.getUserInfo(ctx.query.id);
-        let friends            = await ctx.friendRepository.listFriendsProfile(ctx.query.id);
-        let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id);
+        let user     = await ctx.userRepository.getUserInfo(ctx.query.id);
+        let friends  = await ctx.friendRepository.listFriendsProfile(ctx.query.id);
         
         if(!user) {
             return ctx.redirect('/404page');
         }
-
-        return ctx.render('friends.html', { ctx, user, friends, isFriend });
+        try {
+            let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id); 
+            return ctx.render('friends.html', { ctx, user, friends, isFriend});
+            } catch (e) {
+                console.log(e.message);
+                return ctx.render('friends.html', { ctx, user});
+            }
     }
 
     async getFriendRequest(ctx) {
