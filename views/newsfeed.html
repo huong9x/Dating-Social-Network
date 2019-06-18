@@ -130,7 +130,15 @@ News Feed
                             <!-- Post -->
                             <article class="hentry post">
                                 <div class="post__author author vcard inline-items">
-                                    <img src="{{ post.getUserAvatar() }}" alt="author">
+                                    <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 100%;
+                                    margin-right: 12px;
+                                    background: url('{{ post.getUserAvatar() }}') no-repeat;
+                                    background-size: cover;
+                                    background-position: center;
+                                    "></div>
         
                                     <div class="author-date">
                                         <a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ post.getUserPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
