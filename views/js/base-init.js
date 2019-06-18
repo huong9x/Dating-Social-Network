@@ -77,7 +77,7 @@ var CRUMINA = {};
         jQuery('.back-to-top').on('click', function () {
             $('html,body').animate({
                 scrollTop: 0
-            }, 1200);
+            }, 200);
             return false;
         });
 
