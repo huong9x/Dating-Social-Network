@@ -6,12 +6,13 @@ class FriendsController {
         }
         let user               = await ctx.userRepository.getUserInfo(ctx.query.id);
         let friends            = await ctx.friendRepository.listFriendsProfile(ctx.query.id);
+        let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id);
         
         if(!user) {
             return ctx.redirect('/404page');
         }
 
-        return ctx.render('friends.html', { ctx, user, friends });
+        return ctx.render('friends.html', { ctx, user, friends, isFriend });
     }
 
     async getFriendRequest(ctx) {

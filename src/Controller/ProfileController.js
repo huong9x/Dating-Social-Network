@@ -12,7 +12,6 @@ class ProfileController {
         let posts      = await ctx.postRepository.getUserPost(uid);
         let lastPhotos = await ctx.mediaRepository.getLastPhotos(uid);
         let friends    = await ctx.friendRepository.listFriend(uid);
-        console.log(posts);
         if(!user) {
             return ctx.redirect('/404page');
         }
