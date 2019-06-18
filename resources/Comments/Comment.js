@@ -7,6 +7,7 @@ class Comment {
         this.post_id      = rawComment.post_id;
         this.comment_text = rawComment.comment_text;
         this.comment_time = rawComment.comment_time;
+        this.user_avatar  = rawComment.user_avatar;
         this.fullname     = rawComment.first_name + ' ' + rawComment.last_name;
     }
 
@@ -24,6 +25,9 @@ class Comment {
     }
     getCommentText() {
         return this.comment_text;
+    }
+    getCommentAvatar() {
+        return this.user_avatar ? '/uploadedFiles/' + this.user_avatar : 'img/default-user.png';        
     }
     getCommentTime() {
         return format(this.comment_time, 'en_US');
