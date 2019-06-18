@@ -55,6 +55,10 @@ router
 
     .post('/signup', signupController.postSignup)
 
+    // .post('/like', (ctx) => {
+    //     console.log(context.request.body.idpost);
+    // })
+
     .get('/', (ctx) => ctx.redirect('/newsfeed'))
      
     .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, newsfeedController.getNewsfeed)
