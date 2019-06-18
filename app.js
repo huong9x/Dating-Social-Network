@@ -42,7 +42,7 @@ app.use(mediaProvider(knex));
 app.use(friendProvider(knex));
 app.use(authProvider());
 app.use(njProvider());
-// app.use(multerProvider());
+
 app.use(database.connectionProvider(config));
 app.use(routes);
 

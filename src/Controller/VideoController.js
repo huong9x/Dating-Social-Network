@@ -11,8 +11,13 @@ class VideoController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-
-        return await ctx.render('videos.html', { ctx, user, getVideosProfile, isFriend });        
+        try {
+            let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id); 
+            return ctx.render('about.html', { ctx, user, friends, getVideosProfile, isFriend});
+            } catch (e) {
+                console.log(e.message);
+                return ctx.render('about.html', { ctx, user});
+            }
     }
 }
 

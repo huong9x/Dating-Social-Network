@@ -10,8 +10,6 @@ RUN npm install
 
 COPY ./app.js ./app.js
 
-RUN mkdir /config
-
 ADD ./ ./
 
 EXPOSE 5000

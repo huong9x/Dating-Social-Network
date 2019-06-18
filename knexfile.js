@@ -1,3 +1,4 @@
+console.log(process.env.MYSQL_DATABASE, process.env.MYSQL_HOST, process.env.MYSQL_USER)
 module.exports = {
   client: 'mysql2',
   connection: {

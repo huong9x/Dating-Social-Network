@@ -5,13 +5,17 @@ class AboutController {
             return ctx.redirect('/404page');
         }
         let user = await ctx.userRepository.getUserInfo(ctx.query.id);
-        let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id);
 
         if(!user) {
             return ctx.redirect('/404page');
         }
-        
-        return ctx.render('about.html', { ctx, user, isFriend});
+        try {
+            let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id); 
+            return ctx.render('about.html', { ctx, user, isFriend});
+            } catch (e) {
+                console.log(e.message);
+                return ctx.render('about.html', { ctx, user});
+            }
     }
 
     async getNullPage(ctx) {

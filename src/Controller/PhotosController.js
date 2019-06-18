@@ -12,8 +12,13 @@ class PhotosController {
         if(!user) {
             return ctx.redirect('/404page');
         }
-        
-        return await ctx.render('photos.html', { ctx, user, getPhotosProfile, isFriend });
+        try {
+            let isFriend = await ctx.friendRepository.isFriend(ctx.session.loggedInUserId, ctx.query.id); 
+            return ctx.render('about.html', { ctx, user, friends, getPhotosProfile, isFriend});
+            } catch (e) {
+                console.log(e.message);
+                return ctx.render('about.html', { ctx, user});
+            }
     }
 }
 
