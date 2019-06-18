@@ -20,6 +20,7 @@ class CommentRepository {
         await this.knex.select(
             'first_name',
             'last_name',
+            'user_avatar',
             'comment_id',
             'comment.user_id',
             'post_id',
