@@ -1,9 +1,9 @@
 .idea/
 /node_modules
-/views/*
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 .env
 local.env
 .elasticbeanstalk
 README.md
+storage/
