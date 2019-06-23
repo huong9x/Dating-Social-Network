@@ -6,6 +6,6 @@
 local.env
 .elasticbeanstalk
 README.md
-storage/*
+UserFiles/
 .dockerignore
 .env.docker
