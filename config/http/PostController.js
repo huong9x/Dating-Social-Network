@@ -19,7 +19,6 @@ class PostController {
             let comments      = ctx.request.comments;
             let likeExist     = ctx.request.likeExist;
             let findPostOwner = ctx.request.findPostOwner;
-            console.log(likeExist);
 
             if(!ctx.query.id) {
                 return ctx.redirect('/404page');

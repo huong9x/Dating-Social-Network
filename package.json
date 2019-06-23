@@ -14,7 +14,6 @@
     "capitalize-first-letter": "^1.0.0",
     "date-time": "^3.1.0",
     "dotenv": "^8.0.0",
-    "iplocation": "^6.1.0",
     "knex": "^0.16.5",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
@@ -24,10 +23,8 @@
     "koa-session": "^5.11.0",
     "koa-static": "^5.0.0",
     "mysql": "^2.17.1",
-    "mysql2": "^1.6.5",
     "nunjucks": "^3.2.0",
     "path": "^0.12.7",
-    "public-ip": "^3.1.0",
     "timeago.js": "^4.0.0-beta.2"
   }
 }

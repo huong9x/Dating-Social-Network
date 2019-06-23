@@ -2,13 +2,13 @@ require('dotenv').config({ path: 'local.env'});
 // console.log(process.env.DB_CLIENT, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, process.env.MYSQL_DATABASE, process.env.MYSQL_HOST);
 
 module.exports = {
-  client: process.env.DB_CLIENT,
+  client: process.env.DB_CLIENT || 'mysql',
   connection: {
       charset  : 'utf8',
       dateString : true,
-      host: process.env.MYSQL_HOST || '127.0.0.1',
+      host: process.env.MYSQL_HOST || 'localhost',
       user: process.env.MYSQL_USER || 'root',
-      password: process.env.MYSQL_PASSWORD || '123',
+      password: process.env.MYSQL_PASSWORD || 'root',
       database: process.env.MYSQL_DATABASE || 'dating1'
       
   },

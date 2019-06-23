@@ -36,6 +36,11 @@ app.use(static(path.join( __dirname, storagePath)));
 app.use(session(app));
 app.use(hasherProvider(10));
 app.use(bodyParser());
+app.use(bodyParser({
+    'formLimit':'100mb',
+    'jsonLimit':'2mb',
+    'textLimit':'2mb',
+  }))
 app.use(userProvider(knex));
 app.use(postProvider(knex));
 app.use(likeProvider(knex));

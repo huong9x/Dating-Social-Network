@@ -64,6 +64,7 @@ router
                   postController.getPost,
                   commentController.getPostComment,
                   postController.checkLikeExist,
+                  postController.getPostOwner,
                   postController.viewPost)
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
