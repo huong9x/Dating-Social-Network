@@ -1,8 +1,9 @@
 .idea/
 /node_modules
-/views/uploadedFiles/*
+/views/*
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
-system.env
-system_bak.env
+.env
+local.env
 .elasticbeanstalk
+README.md

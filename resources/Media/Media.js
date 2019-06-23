@@ -1,8 +1,8 @@
 class Media {
     constructor(media){
-        this.media_id = media.media_id;
+        this.media_id = media.id;
         this.post_id  = media.post_id;
-        this.filename = media.filename;
+        this.file_name = media.file_name;
         this.filetype = media.file_type;
     }
 
@@ -13,7 +13,7 @@ class Media {
         return this.post_id;
     }
     getFilename() {
-        return '/uploadedFiles/' + this.filename;        
+        return '/UserFiles/' + this.file_name;        
     }
     getFiletype() {
         return this.filetype;

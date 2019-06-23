@@ -1,28 +1,23 @@
 const capitalize = require('capitalize-first-letter');
 class UserInfo {
     constructor(rawUser) {
-        this.user_id         = rawUser.user_id;
+        this.user_id         = rawUser.id;
         this.first_name      = rawUser.first_name;
         this.last_name       = rawUser.last_name;
         this.birth_date      = rawUser.birth_date;
         this.gender          = rawUser.gender;
         this.email           = rawUser.email;
         this.relationship    = rawUser.relationship;
-        this.user_avatar     = rawUser.user_avatar;
+        this.user_avatar     = rawUser.avatar;
         this.phone_number    = rawUser.phone_number;
         this.address         = rawUser.address;
-        // this.password        = rawUser.password;
-        this.follower_status = rawUser.follower_status;
-        this.user_avatar     = rawUser.user_avatar;
-        this.user_cover      = rawUser.user_cover;
+        this.user_avatar     = rawUser.avatar;
+        this.user_cover      = rawUser.cover;
     }
 
     getUserId() {
         return this.user_id;
     }
-    // getUserPassword() {
-    //     return this.password;
-    // }
     getName() {
         return capitalize(this.first_name);
     }
@@ -48,14 +43,10 @@ class UserInfo {
         return this.relationship;
     }
     getUserAvatar() {
-        return this.user_avatar ? '/uploadedFiles/' + this.user_avatar : 'img/default-user.png';
-        // if(!this.user_avatar) {
-        //     return 'img/default-user.png';
-        // }
-        // return '/uploadedFiles/' + this.user_avatar;        
+        return this.user_avatar ? '/UserFiles/' + this.user_avatar : 'img/default-user.png';       
     }
     getUserCover() {
-        return '/uploadedFiles/' + this.user_cover;
+        return '/UserFiles/' + this.user_cover;
     }
     getPhoneNumber() {
         return this.phone_number;
@@ -65,9 +56,6 @@ class UserInfo {
     }
     getExistAvatar() {
         return this.user_avatar;
-    }
-    getFollowerStatus() {
-        return this.follower_status;
     }
 }
 

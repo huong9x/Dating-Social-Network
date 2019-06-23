@@ -68,17 +68,17 @@
 							</div>
 						</div>
 						{% else %}
-						<div class="control-block-button">
+						<div class="control-block-button" value="">
 								{% if isFriend %}
 									{% if isFriend.getFollowerStatus() == 'friend' %}
-									<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
-										<i class="fa fa-user"></i>
-										<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-											<li>
-												<a href="friend?id={{ user.getUserId() }}&ref_page=cancel" data-toggle="" data-target="">Unfriend</a>
-											</li>
-										</ul>
-									</div>
+										<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
+											<i class="fa fa-user"></i>
+											<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+												<li>
+													<a href="friend?id={{ user.getUserId() }}&ref_page=cancel" data-toggle="" data-target="">Unfriend</a>
+												</li>
+											</ul>
+										</div>
 									{% elseif isFriend.getFollowerStatus() == 'pending' %}
 										<div class="btn btn-control bg-primary more" style="color: white; background-color: #38a8fe !important;">
 												<i class="fa fa-paper-plane"></i>

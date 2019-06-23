@@ -28,7 +28,7 @@ News Feed
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
-                            <form action="/postStatus" method="POST" enctype="multipart/form-data" >
+                            <form action="/publishNewPost" method="POST" enctype="multipart/form-data" >
                                 <div class="author-thumb">
                                         <div alt="author" style="
                                         width: 36px;
@@ -127,8 +127,8 @@ News Feed
                     <div id="newsfeed-items-grid">
                         {% for post in posts %}
                         <div class="ui-block">
-                            <!-- Post -->
-                            <article class="hentry post">
+                
+                            <article class="hentry post" >
                                 <div class="post__author author vcard inline-items">
                                     <div style="
                                     width: 40px;
@@ -139,23 +139,24 @@ News Feed
                                     background-size: cover;
                                     background-position: center;
                                     "></div>
-        
                                     <div class="author-date">
                                         <a class="h6 post__author-name fn" href="/profile?id={{ post.getUserId() }}">{{ post.getUserPresentationName()}} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
                                         <div class="post__date">
-                                            <a href="/post?id={{ post.getPostId() }}" style="color: #9697a1;"><time class="published" title="{{ post.getRawPostTime() }}">
-                                                {{ post.getPostTime() }}
-                                            </time></a>
+                                            <a href="/post?id={{ post.getPostId() }}" style="color: #9697a1;">
+                                                <time class="published">
+                                                    {{ post.getPostTime() }}
+                                                </time>
+                                            </a>
                                         </div>
                                     </div>
-                                    {% if post.getUserId() == ctx.profile.getUserId() %}
+                                    {% if (findPostOwner) and (ctx.session.loggedInUserId == post.getUserId()) %}
                                     <div class="more">
                                         <svg class="olymp-three-dots-icon">
                                             <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
                                         </svg>
                                         <ul class="more-dropdown">
                                             <li>
-                                                <a href="/post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
+                                                <a href="post?id={{ post.getPostId() }}&ref_page=editpost">Edit Post</a>
                                             </li>
                                             <li>
                                                 <a href="/deletePost?id={{ post.getPostId() }}">Delete Post</a>
@@ -164,152 +165,481 @@ News Feed
                                     </div>
                                     {% endif %}
                                 </div>
+                                {% if (ctx.query.ref_page != 'editpost') or ((ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId != post.getUserId())) %}
                                 <p style="word-break: break-all;">
                                     {{ post.getContent() }}
                                 </p>
                                 {% if post.getPostMedia() %}
-							<div class="post-block-photo js-zoom-gallery">
-								{% for media in post.getPostMedia() %}
-									{% if post.getPostMedia().length == 1 %}
-									<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
-										<div style="							
-										width: 100%;
-										height: 566px;
-										background: url('/uploadedFiles/{{ media }}') no-repeat;
-										background-size: cover;
-										background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% if post.getPostMedia().length == 2 %}
-									<a href="/uploadedFiles/{{ media }}" class="half-width">
-										<div style="							
-										width: 100%;
-										height: 566px;
-										background: url('/uploadedFiles/{{ media }}') no-repeat;
-										background-size: cover;
-										background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% if post.getPostMedia().length == 3 %}
-									{% if loop.index0 < 2 %}  
-									<a href="/uploadedFiles/{{ media }}" class="half-width">
-										<div style="							
-										width: 100%;
-										height: 276px;
-										background: url('/uploadedFiles/{{ media }}') no-repeat;
-										background-size: cover;
-										background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% if loop.index0 == 2 %} 
-									<a href="/uploadedFiles/{{ media }}" class="col col-1-width">
-										<div style="							
-										width: 100%;
-										height: 276px;
-										background: url('/uploadedFiles/{{ media }}') no-repeat;
-										background-size: cover;
-										background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% endif %}
-									{% if post.getPostMedia().length == 4 %}
-									<a href="/uploadedFiles/{{ media }}" class="half-width">
-										<div style="							
-											width: 100%;
-											height: 276px;
-											background: url('/uploadedFiles/{{ media }}') no-repeat;
-											background-size: cover;
-											background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% if post.getPostMedia().length  > 4 %}
-									{% if loop.index0 < 3 %}    
-									<a href="/uploadedFiles/{{ media }}" class="half-width">
-										<div style="							
-											width: 100%;
-											height: 276px;
-											background: url('/uploadedFiles/{{ media }}') no-repeat;
-											background-size: cover;
-											background-position: center;">
-										</div>
-									</a>
-									{% endif %}
-									{% if loop.index0 == 3 %}    
-									<a href="/uploadedFiles/{{ media }}" class="more-photos half-width">
-										<div style="							
-											width: 100%;
-											height: 276px;
-											background: url('/uploadedFiles/{{ media }}') no-repeat;
-											background-size: cover;
-											background-position: center;">
-										</div>
-										<span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
-									</a>
-									{% endif %}						
-									{% endif %}
-                                {% endfor %}
-                                {% endif %}
+                                <div class="post-block-photo js-zoom-gallery">
+                                    {% for media in post.getPostMedia() %}
+                                        {% if post.getPostMedia().length == 1 %}
+                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                            <a href="{{ media.getFilename() }}" class="col col-1-width">
+                                                <div style="							
+                                                width: 100%;
+                                                height: 500px;
+                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                background-size: cover;
+                                                background-position: center;">
+                                                </div>
+                                            </a>
+                                            {% endif %}
+            
+                                            {% if media.getFiletype() == 'video/mp4' %}
+                                            <video style="width: 100%; height: auto;" controls="">
+                                                <source src="{{ media.getFilename() }}" type="video/mp4">
+                                            </video>
+                                            {% endif %}
+                                        {% endif %}
+            
+                                        {% if post.getPostMedia().length == 2 %}
+                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                            <a href="{{ media.getFilename() }}" class="half-width">
+                                                <div style="							
+                                                width: 100%;
+                                                height: 400px;
+                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                background-size: cover;
+                                                background-position: center;">
+                                                </div>
+                                            </a>
+                                            {% endif %}
+            
+                                            {% if media.getFiletype() == 'video/mp4' %}
+                                            <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                <video style="width: 100%; height: 400px;" controls="">
+                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                </video>
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+            
+                                        {% if post.getPostMedia().length == 3 %}
+                                            {% if loop.index0 < 2 %}  
+                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                <a href="{{ media.getFilename() }}" class="half-width">
+                                                    <div style="							
+                                                    width: 100%;
+                                                    height: 275px;
+                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                    background-size: cover;
+                                                    background-position: center;">
+                                                    </div>
+                                                </a>
+                                                {% endif %}
+            
+                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                    <video style="width: 100%; height: 275px;" controls="">
+                                                        <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                    </video>
+                                                </div>
+                                                {% endif %}
+            
+                                            {% endif %}
+            
+                                            {% if loop.index0 == 2 %} 
+                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                <a href="{{ media.getFilename() }}" class="col col-1-width">
+                                                    <div style="							
+                                                    width: 100%;
+                                                    height: 275px;
+                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                    background-size: cover;
+                                                    background-position: center;">
+                                                    </div>
+                                                </a>
+                                                {% endif %}
+            
+                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                <div href="{{ media.getFilename() }}" class="col col-1-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                    <video style="width: 100%; height: 275px;" controls="">
+                                                        <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                    </video>
+                                                </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+            
+                                        {% if post.getPostMedia().length == 4 %}
+                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                            <a href="{{ media.getFilename() }}" class="half-width">
+                                                <div style="							
+                                                width: 100%;
+                                                height: 275px;
+                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                background-size: cover;
+                                                background-position: center;">
+                                                </div>
+                                            </a>
+                                            {% endif %}
+            
+                                            {% if media.getFiletype() == 'video/mp4' %}
+                                            <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                <video style="width: 100%; height: 275px;" controls="">
+                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                </video>
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+            
+                                        {% if post.getPostMedia().length  > 4 %}
+                                            {% if loop.index0 < 3 %}    
+                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg') %}
+                                                <a href="{{ media.getFilename() }}" class="half-width">
+                                                    <div style="							
+                                                    width: 100%;
+                                                    height: 276px;
+                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                    background-size: cover;
+                                                    background-position: center;">
+                                                    </div>
+                                                </a>
+                                                {% endif %}
+            
+                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                <video style="width: 100%; height: auto;" controls="">
+                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                </video>
+                                                {% endif %}
+                                            {% endif %}
+            
+                                            {% if loop.index0 == 3 %}    
+                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                <a href="{{ media.getFilename() }}" class="more-photos half-width">
+                                                    <div style="							
+                                                    width: 100%;
+                                                    height: 276px;
+                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                    background-size: cover;
+                                                    background-position: center;">
+                                                    </div>
+                                                    <span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+                                                </a>
+                                                {% endif %}
+            
+                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                <video style="width: 100%; height: 276px;" controls="" class="more-photos half-width">
+                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                </video>
+                                                <span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+                                                {% endif %}
+                                                
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
+                                {% endif %}
+                                {% endif %}
+                                {% if (ctx.query.ref_page == 'editpost') and (ctx.session.loggedInUserId == post.getUserId()) %}
+                                <form class="comment-form inline-items" action="/editPost?id={{ post.getPostId() }}" method="POST" style="border-top:none;">
+                                    <div class="post__author author vcard inline-items">
+                                        <div class="form-group with-icon-right is-empty">
+                                            <textarea class="form-control" required placeholder="" name="content">{{ post.getContent() }}</textarea>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
+                                    <button class="btn btn-md-2 btn-primary" type="submit">Save</button>
+                                </form>
+                                {% endif %}
                                 {% if post.getPostShareId() %}
                                             <article class="hentry post">
                                                 <div class="post__author author vcard inline-items">
-                                                    <img src="{{ post.getOriginalPostUserId() }}" alt="author">                                           
+                                                    <img src="{{ post.getSharedUserAvatar() }}" alt="author">
+                                            
                                                     <div class="author-date">
-                                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}"> {{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                                        <a class="h6 post__author-name fn" href="/profile?id={{ post.getSharedUserId() }}">{{ post.getSharedUserPresentationName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
                                                         <div class="post__date">
-                                                            <a href="/post?id={{ post.getOriginalPostId() }}" style="color: #9697a1;">
-                                                                <time class="published" title="">
-                                                                    {{ post.getOriginalPostTime() }}
+                                                            <a href="/post?id={{ post.getPostShareId() }}" style="color: #9697a1;">
+                                                                <time class="published">
+                                                                    {{ post.getSharedPostTime() }}
                                                                 </time>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <p>
-                                                    {{ post.getOriginalPostContent() }}
+                                                    {{ post.getSharedContent() }}
                                                 </p>
+                                                {% if post.getSharedPostMedia() %}
+                                                <div class="post-block-photo js-zoom-gallery">
+                                                    {% for media in post.getSharedPostMedia() %}
+                                                        {% if post.getSharedPostMedia().length == 1 %}
+                                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                            <a href="{{ media.getFilename() }}" class="col col-1-width">
+                                                                <div style="							
+                                                                width: 100%;
+                                                                height: 500px;
+                                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                                background-size: cover;
+                                                                background-position: center;">
+                                                                </div>
+                                                            </a>
+                                                            {% endif %}
+                            
+                                                            {% if media.getFiletype() == 'video/mp4' %}
+                                                            <video style="width: 100%; height: auto;" controls="">
+                                                                <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                            </video>
+                                                            {% endif %}
+                                                        {% endif %}
+                            
+                                                        {% if post.getSharedPostMedia().length == 2 %}
+                                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                            <a href="{{ media.getFilename() }}" class="half-width">
+                                                                <div style="							
+                                                                width: 100%;
+                                                                height: 400px;
+                                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                                background-size: cover;
+                                                                background-position: center;">
+                                                                </div>
+                                                            </a>
+                                                            {% endif %}
+                            
+                                                            {% if media.getFiletype() == 'video/mp4' %}
+                                                            <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                                <video style="width: 100%; height: 400px;" controls="">
+                                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                </video>
+                                                            </div>
+                                                            {% endif %}
+                                                        {% endif %}
+                            
+                                                        {% if post.getSharedPostMedia().length == 3 %}
+                                                            {% if loop.index0 < 2 %}  
+                                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                                <a href="{{ media.getFilename() }}" class="half-width">
+                                                                    <div style="							
+                                                                    width: 100%;
+                                                                    height: 275px;
+                                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                                    background-size: cover;
+                                                                    background-position: center;">
+                                                                    </div>
+                                                                </a>
+                                                                {% endif %}
+                            
+                                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                                <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                                    <video style="width: 100%; height: 275px;" controls="">
+                                                                        <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
+                                                                {% endif %}
+                            
+                                                            {% endif %}
+                            
+                                                            {% if loop.index0 == 2 %} 
+                                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                                <a href="{{ media.getFilename() }}" class="col col-1-width">
+                                                                    <div style="							
+                                                                    width: 100%;
+                                                                    height: 275px;
+                                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                                    background-size: cover;
+                                                                    background-position: center;">
+                                                                    </div>
+                                                                </a>
+                                                                {% endif %}
+                            
+                                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                                <div href="{{ media.getFilename() }}" class="col col-1-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                                    <video style="width: 100%; height: 275px;" controls="">
+                                                                        <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
+                            
+                                                        {% if post.getSharedPostMedia().length == 4 %}
+                                                            {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                            <a href="{{ media.getFilename() }}" class="half-width">
+                                                                <div style="							
+                                                                width: 100%;
+                                                                height: 275px;
+                                                                background: url('{{ media.getFilename() }}') no-repeat;
+                                                                background-size: cover;
+                                                                background-position: center;">
+                                                                </div>
+                                                            </a>
+                                                            {% endif %}
+                            
+                                                            {% if media.getFiletype() == 'video/mp4' %}
+                                                            <div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+                                                                <video style="width: 100%; height: 275px;" controls="">
+                                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                </video>
+                                                            </div>
+                                                            {% endif %}
+                                                        {% endif %}
+                            
+                                                        {% if post.getSharedPostMedia().length  > 4 %}
+                                                            {% if loop.index0 < 3 %}    
+                                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg') %}
+                                                                <a href="{{ media.getFilename() }}" class="half-width">
+                                                                    <div style="							
+                                                                    width: 100%;
+                                                                    height: 276px;
+                                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                                    background-size: cover;
+                                                                    background-position: center;">
+                                                                    </div>
+                                                                </a>
+                                                                {% endif %}
+                            
+                                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                                <video style="width: 100%; height: auto;" controls="">
+                                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                </video>
+                                                                {% endif %}
+                                                            {% endif %}
+                            
+                                                            {% if loop.index0 == 3 %}    
+                                                                {% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+                                                                <a href="{{ media.getFilename() }}" class="more-photos half-width">
+                                                                    <div style="							
+                                                                    width: 100%;
+                                                                    height: 276px;
+                                                                    background: url('{{ media.getFilename() }}') no-repeat;
+                                                                    background-size: cover;
+                                                                    background-position: center;">
+                                                                    </div>
+                                                                    <span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+                                                                </a>
+                                                                {% endif %}
+                            
+                                                                {% if media.getFiletype() == 'video/mp4' %}
+                                                                <video style="width: 100%; height: 276px;" controls="" class="more-photos half-width">
+                                                                    <source src="{{ media.getFilename() }}" type="video/mp4">
+                                                                </video>
+                                                                <span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+                                                                {% endif %}
+                                                                
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
                                             </article>
                                 {% endif%}
-    
+                                
                                 <div class="post-additional-info inline-items">
-                                    <a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items" >
-                                        <i class="fas fa-thumbs-up"></i>
+                                    <a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items"
+                                    {% if likeExist %}
+                                        style="color:red;"
+                                    {% endif %}
+                                    >
+                                        <svg class="svg-inline--fa fa-thumbs-up fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="thumbs-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path></svg>
                                         <span>{{ post.getLikeCount() }}</span>
                                     </a>
+                        
                                     <div class="comments-shared">
-                                        <a href="/post?id={{ post.getPostId() }}" class="post-add-icon inline-items">
-                                            <i class="fas fa-comments"></i>
+                                        <a href="#" class="post-add-icon inline-items">
+                                            <svg class="svg-inline--fa fa-comments fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="comments" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M224 358.857c-37.599 0-73.027-6.763-104.143-18.7-31.375 24.549-69.869 39.508-110.764 43.796a8.632 8.632 0 0 1-.89.047c-3.736 0-7.111-2.498-8.017-6.061-.98-3.961 2.088-6.399 5.126-9.305 15.017-14.439 33.222-25.79 40.342-74.297C17.015 266.886 0 232.622 0 195.429 0 105.16 100.297 32 224 32s224 73.159 224 163.429c-.001 90.332-100.297 163.428-224 163.428zm347.067 107.174c-13.944-13.127-30.849-23.446-37.46-67.543 68.808-64.568 52.171-156.935-37.674-207.065.031 1.334.066 2.667.066 4.006 0 122.493-129.583 216.394-284.252 211.222 38.121 30.961 93.989 50.492 156.252 50.492 34.914 0 67.811-6.148 96.704-17 29.134 22.317 64.878 35.916 102.853 39.814 3.786.395 7.363-1.973 8.27-5.467.911-3.601-1.938-5.817-4.759-8.459z"></path></svg>
                                             <span>{{ post.getCommentCount() }}</span>
                                         </a>
+            
                                         {% if post.getPostShareId() %}
-                                            <a href="/post?id={{ post.getOriginalPostId() }}&ref_page=share" class="post-add-icon inline-items">
-                                            {% else %}
+                                            <a href="/post?id={{ post.getPostShareId() }}&ref_page=share" class="post-add-icon inline-items">
+                                        {% else %}
                                             <a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
                                         {% endif %}
-                                            <i class="fas fa-share"></i>
+                                            <svg class="svg-inline--fa fa-share fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="share" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z"></path></svg>
                                             <span>{{ post.getShareCount() }}</span>
                                         </a>
                                     </div>
                                 </div>
+                                
                             </article>
-                            <!-- .. end Post -->
+                            
+                            <ul class="comments-list">
+                                <!-- Comment Form  -->
+                                {% if (ctx.query.ref_page != 'editpost') and (ctx.query.ref_page != 'editcomment') %}
+                                <form class="comment-form inline-items" action="/postComment?id={{ post.getPostId() }}" method="POST">
+                                    <div class="post__author author vcard inline-items">
+                                        <div style="
+                                        width: 28px;
+                                        height: 28px;
+                                        border-radius: 100%;
+                                        margin-right: 12px;
+                                        background: url('{{ ctx.profile.getUserAvatar() }}') no-repeat;
+                                        background-size: cover;
+                                        background-position: center;
+                                        "></div>
+                                        <div class="form-group with-icon-right is-empty">
+                                            <textarea class="form-control" required name="comment_text"></textarea>
+                                        <span class="material-input"></span></div>
+                                    </div>
+                                    <button class="btn btn-md-2 btn-primary" type="submit">Post Comment</button>
+                                </form>
+                                <!-- ... end Comment Form  -->
+                                {% endif %}
+                                {% for comment in comments %}
+                                <li class="comment-item">
+                                    <div class="post__author author vcard inline-items">
+                                        <div style="
+                                        width: 26px;
+                                        height: 26px;
+                                        border-radius: 100%;
+                                        margin-right: 12px;
+                                        background: url('{{ comment.getCommentAvatar() }}') no-repeat;
+                                        background-size: cover;
+                                        background-position: center;
+                                        "></div>				
+                                        <div class="author-date">
+                                            <a class="h6 post__author-name fn" href="/profile?id={{ comment.getUserId() }}">{{ comment.getFullName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+                                            <div class="post__date">
+                                                <time class="published">
+                                                    {{ comment.getCommentTime() }}
+                                                </time>
+                                            </div>
+                                        </div>
+                                        {% if comment.getUserId() == ctx.session.loggedInUserId %}
+                                        <div class="more">
+                                            <svg class="olymp-three-dots-icon">
+                                                <use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                                            </svg>
+                                            <ul class="more-dropdown">
+                                                <li>
+                                                    <a href="/post?id={{ post.getPostId() }}&ref_page=editcomment&idcomment={{ comment.getCommentId() }}">Edit Comment</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/deleteComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}">Delete Comment</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if (ctx.query.ref_page != 'editcomment') or ((ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment != comment.getCommentId()) and (ctx.session.loggedInUserId != findCommentOwner.getUserId())) %}
+                                    <p style="word-break: break-all;">
+                                        {{ comment.getCommentText() }}
+                                    </p>
+                                    {% endif %}
+                                    {% if (ctx.query.ref_page == 'editcomment') and (ctx.query.idcomment == comment.getCommentId()) and (ctx.session.loggedInUserId == comment.getUserId()) %}
+                                    <form class="comment-form inline-items" action="/editComment?id={{ post.getPostId() }}&idcomment={{ comment.getCommentId() }}" method="POST" style="border-top:none;">
+                                        <div class="post__author author vcard inline-items">
+                                            <div class="form-group with-icon-right is-empty">
+                                                <textarea class="form-control" required name="comment_text">{{ comment.getCommentText() }}</textarea>
+                                            <span class="material-input"></span></div>
+                                        </div>
+                                        <button type="button" onclick="window.location='/post?id={{ post.getPostId() }}';" class="btn btn-md-2 btn-border-think btn-transparent c-grey">Cancel</button>
+                                        <button class="btn btn-md-2 btn-primary" type="submit">Save</button>
+                                    </form>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                         {% endfor %} 
                     </div>
                     {% endif %}
-                    <a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
-                        <i class="fa fa-chevron-down"></i>
-                    </a>
         </main>
         <!-- ... end Main Content -->
         <!-- Right Sidebar -->
         <aside class="col col-xl-4 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
-            {% if ctx.listFriendRequests.length == 0 %}
+            {% if ctx.friend_requests.length == 0 %}
             {% else %}
             <div class="ui-block">
                 <div class="ui-block-title">
@@ -317,29 +647,29 @@ News Feed
                 </div>
                 <!-- W-Action -->
                 <ul class="widget w-friend-pages-added notification-list friend-requests">
-                    {% for friendRequest in ctx.listFriendRequests.slice(0, 4) %}
+                    {% for request in ctx.friend_requests.slice(0, 4) %}
                     <li>
                         <div class="author-thumb">
                             <div alt="author" style="
                                 width: 40px;
                                 height: 40px;
                                 border-radius: 100%;
-                                background: url('{{ friendRequest.getFriendAvatar() }}') no-repeat;
+                                background: url('{{ request.getUserAvatar() }}') no-repeat;
                                 background-size: cover;
                                 background-position: center;    
                             "></div>
                         </div>
                         <div class="notification-event">
-                            <a href="#" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                            <a href="#" class="h6 notification-friend">{{ request.getPresentationName() }}</a>
                             <span class="chat-message-item">Mutual Friend</span>
                         </div>
                         <span class="notification-icon">
-                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                            <a href="friend?id={{ request.getUserId() }}&ref_page=friendAccept" class="accept-request">
                                 <span class="without-text">
                                     <i class="fas fa-user-plus"></i>
                                 </span>
                             </a>
-                            <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                            <a href="friend?id={{ request.getUserId() }}&ref_page=cancel" class="accept-request request-del">
                                 <span class="">
                                     <i class="fas fa-user-times"></i>
                                 </span>

@@ -1,4 +1,4 @@
-{% extends 'masterpage.html' %}
+{% extends 'about.html' %}
 
 {% block title %}
 {{ user.getName() }}'s Friends
@@ -8,9 +8,6 @@
 Friends
 {% endblock %}
 
-{% block profilecover %}
-	{% include 'profilecover.html' %}
-{% endblock %}
 
 {% block container %}
 <!-- Friends -->
@@ -38,7 +35,7 @@ Friends
 						<div alt="friend" style="
 							width: 245.5px;
 							height: 94.17px;
-							background: url('{{ friend.getFriendCover() }}') no-repeat;
+							background: url('{{ friend.getUserCover() }}') no-repeat;
 							background-size: cover;
 							background-position: center;
 						"></div>
@@ -51,13 +48,13 @@ Friends
 									width: 98px;
 									height: 98px;
 									border-radius: 100%;
-									background: url('{{ friend.getFriendAvatar() }}') no-repeat;
+									background: url('{{ friend.getUserAvatar() }}') no-repeat;
 									background-size: cover;
 									background-position: center;
 								"></div>
 							</div>
 							<div class="author-content">
-								<a href="profile?id={{ friend.getFriendId() }}" class="h5 author-name">{{ friend.getFollowerName() }}</a>
+								<a href="profile?id={{ friend.getUserId() }}" class="h5 author-name">{{ friend.getPresentationName() }}</a>
 							</div>
 						</div>
 					</div>
