@@ -3,9 +3,9 @@ services:
     dating:
         build: .
         ports:
-            - 5000:3000
+            - 5000:5000
         env_file:
-            - system.env
+            - .env
         working_dir: /app
         volumes:
             - .:/app
@@ -16,6 +16,6 @@ services:
     database:
         image: "mariadb"
         ports:
-            - 3306:3306
+            - 3307:3306
         env_file:
-          - system.env
+          - .env

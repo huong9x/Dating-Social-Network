@@ -1,25 +1,25 @@
 const Router                    = require('koa-router');
 const multer                    = require('koa-multer');
-const logginRequiredMiddleware  = require('./config/Middleware/logginRequiredMiddleware');
-const topPanelProfile           = require('./config/Middleware/topPanelProfile');
-const LoginController           = require('./src/Controller/LoginController');
-const NewsfeedController        = require('./src/Controller/NewsfeedController');
-const LogoutController          = require('./src/Controller/LogoutController');
-const ProfileController         = require('./src/Controller/ProfileController');
-const AboutController           = require('./src/Controller/AboutController');
-const FriendsController         = require('./src/Controller/FriendsController');
-const PhotosController          = require('./src/Controller/PhotosController');
-const VideoController           = require('./src/Controller/VideoController');
-const SignupController          = require('./src/Controller/SignupController');
-const PostController            = require('./src/Controller/PostController');
-const CommentController         = require('./src/Controller/CommentController');
-const NotificationController    = require('./src/Controller/NotificationController');
-const SettingsController        = require('./src/Controller/SettingsController');
+const logginRequiredMiddleware  = require('./config/http/Middleware/logginRequiredMiddleware');
+const topPanelProfile           = require('./config/http/Middleware/topPanelProfile');
+const LoginController           = require('./config/http/LoginController');
+const NewsfeedController        = require('./config/http/NewsfeedController');
+const LogoutController          = require('./config/http/LogoutController');
+const ProfileController         = require('./config/http/ProfileController');
+const AboutController           = require('./config/http/AboutController');
+const FriendsController         = require('./config/http/FriendsController');
+const PhotosController          = require('./config/http/PhotosController');
+const VideoController           = require('./config/http/VideoController');
+const SignupController          = require('./config/http/SignupController');
+const PostController            = require('./config/http/PostController');
+const CommentController         = require('./config/http/CommentController');
+const NotificationController    = require('./config/http/NotificationController');
+const SettingsController        = require('./config/http/SettingsController');
 
 const storage                   = multer.diskStorage({
 
                                     destination: function (req, file, cb) {
-                                        cb(null, './views/uploadedFiles/')
+                                        cb(null, './storage/UserFiles/')
                                     },
 
                                     filename: function (req, file, cb) {
@@ -55,47 +55,119 @@ router
 
     .post('/signup', signupController.postSignup)
 
-    // .post('/like', (ctx) => {
-    //     console.log(context.request.body.idpost);
-    // })
-
     .get('/', (ctx) => ctx.redirect('/newsfeed'))
      
-    .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, newsfeedController.getNewsfeed)
+    .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, profileController.getUserFriend, newsfeedController.getNewsfeed)
 
-    .get('/post', logginRequiredMiddleware, topPanelProfile, commentController.getPostComment, postController.viewPost)
+    .get('/post', logginRequiredMiddleware,
+                  topPanelProfile,
+                  postController.getPost,
+                  commentController.getPostComment,
+                  postController.checkLikeExist,
+                  postController.viewPost)
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
-    .post('/postStatus', logginRequiredMiddleware, upload.array('file', 100), profileController.postStatus)
+    .get('/unlike',
+            logginRequiredMiddleware,
+            postController.getPost,
+            postController.unlikePost,
+            postController.downLikeCount
+    )
+    .get('/like',
+            logginRequiredMiddleware,
+            postController.likePost,
+            postController.getPost,
+            postController.upLikeCount,
+            notificationController.notifyNewLike
 
-    .get('/profile', logginRequiredMiddleware, topPanelProfile, profileController.getProfile)
+    )
 
-    .post('/updateProfileAvatar', logginRequiredMiddleware, topPanelProfile, upload.single('avatar'), profileController.updateProfileAvatar)
+    .post('/publishNewPost', logginRequiredMiddleware, upload.array('file', 100), postController.publishNewPost)
+
+    .get('/profile',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            profileController.getProfileInfo,
+            profileController.IsFriendCheck,
+            profileController.getUserPosts,
+            photosController.getProfilePhoto,
+            photosController.getLastPhotos,
+            profileController.getListFriend,
+            profileController.getProfile
+    )
+
+    .post('/updateProfileAvatar',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            upload.single('avatar'),
+            profileController.updateProfileAvatar
+            )
 
     .post('/updateProfileCover', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileCover)
 
     .get('/settings', logginRequiredMiddleware, topPanelProfile, settingsController.getSettings)
 
-    .post('/editSettings', logginRequiredMiddleware, settingsController.postEditSettings)
+    .post('/editSettings', logginRequiredMiddleware, topPanelProfile, settingsController.postEditSettings)
 
-    .post('/postComment', logginRequiredMiddleware, commentController.postComment)
+    .post('/postComment', logginRequiredMiddleware,
+                          commentController.postComment,
+                          postController.getPost,
+                          postController.updateCommentNumberUp,
+                          notificationController.notifyNewComment
+                          )
+
+
     .post('/editComment', logginRequiredMiddleware, commentController.editComment)
-    .get('/deleteComment',logginRequiredMiddleware, commentController.deleteComment)
 
-    .post('/postShare', logginRequiredMiddleware, postController.postShare)
+    .get('/deleteComment',logginRequiredMiddleware,
+                          commentController.deleteComment,
+                          postController.getPost,
+                          postController.updateCommentNumberDown)
 
-    .get('/about', logginRequiredMiddleware, topPanelProfile, aboutController.getAbout)
+    .post('/share', logginRequiredMiddleware,
+                    postController.postShare,
+                    postController.getPost,
+                    postController.upShareCount,
+                    notificationController.notifyNewShare
+    )
+
+    .get('/about', logginRequiredMiddleware,
+                   topPanelProfile,
+                   profileController.getProfileInfo,
+                   profileController.IsFriendCheck,
+                   aboutController.getAbout
+                   )
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
-    .get('/friends', logginRequiredMiddleware, topPanelProfile, friendsController.getFriends)
+    .get('/friends',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            profileController.getProfileInfo,
+            profileController.IsFriendCheck,
+            profileController.getListFriend,
+            friendsController.getFriends)
 
     .get('/friend', logginRequiredMiddleware, topPanelProfile, friendsController.getFriendRequest)
     
-    .get('/photos', logginRequiredMiddleware, topPanelProfile, photosController.getPhotos)
+    .get('/photos',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            profileController.getProfileInfo,
+            profileController.IsFriendCheck,
+            photosController.getProfilePhoto,
+            photosController.getPhotos
+            )
     
-    .get('/videos', logginRequiredMiddleware, topPanelProfile, videoController.getVideos)
+    .get('/videos',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            profileController.getProfileInfo,
+            profileController.IsFriendCheck,
+            videoController.getProfileVideo,
+            videoController.getVideos
+            )
 
     .get('/404page', logginRequiredMiddleware, topPanelProfile, aboutController.getNullPage)
     
@@ -103,7 +175,12 @@ router
 
     .post('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.postChangePassword)
     
-    .get('/search', logginRequiredMiddleware, topPanelProfile, profileController.searchUser)
+    .get('/search',
+            logginRequiredMiddleware,
+            topPanelProfile,
+            profileController.searchUser
+            )
+            
     .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
 
     .post('/report', logginRequiredMiddleware, profileController.reportUser)

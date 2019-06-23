@@ -58,10 +58,10 @@
             <div class="control-block">
                 <div class="control-icon more has-items">
                     <i class="fa fa-user"></i>
-                    {% if ctx.listFriendRequests.length == 0 %}
+                    {% if ctx.friend_requests.length == 0 %}
                     {% else %}
                     <div class="label-avatar bg-blue">
-                        {{ ctx.listFriendRequests.length }}
+                        {{ ctx.friend_requests.length }}
                     </div>
                     {% endif %}
                     <div class="more-dropdown more-with-triangle triangle-top-center" style="padding: 0px;">
@@ -70,31 +70,31 @@
                         </div>
                         <div class="mCustomScrollbar" data-mcs-theme="dark">
                             <ul class="notification-list friend-requests">
-                                {% if ctx.listFriendRequests.length == 0 %}
+                                {% if ctx.friend_requests.length == 0 %}
                                 <li>You have no friend requests</li>
                                 {% else %}
-                                {% for friendRequest in ctx.listFriendRequests %}
+                                {% for friendRequest in ctx.friend_requests %}
                                 <li>
                                     <div alt="author" style="
                                         width: 40px;
                                         height: 40px;
                                         border-radius: 100%;
-                                        background: url('{{ friendRequest.getFriendAvatar() }}') no-repeat;
+                                        background: url('{{ friendRequest.getUserAvatar() }}') no-repeat;
                                         background-size: cover;
                                         background-position: center;    
                                     "></div>
 
                                     <div class="notification-event">
-                                        <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                        <a href="profile?id={{ friendRequest.getUserId() }}" class="h6 notification-friend">{{ friendRequest.getPresentationName() }}</a>
                                         <span class="chat-message-item">Mutual Friend: We're working on it</span>
                                     </div>
                                     <span class="notification-icon">
-                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                        <a href="friend?id={{ friendRequest.getUserId() }}&ref_page=friendAccept" class="accept-request">
                                             <span class="without-text">
                                                 <i class="fas fa-user-plus"></i>
                                             </span>
                                         </a>
-                                        <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                        <a href="friend?id={{ friendRequest.getUserId() }}&ref_page=cancel" class="accept-request request-del">
                                             <span class="">
                                                 <i class="fa fa-user-times"></i>
                                             </span>
@@ -256,9 +256,9 @@
                     <a class="nav-link" data-toggle="tab" href="#request" role="tab">
                         <div class="control-icon has-items">
                             <i class="fa fa-user"></i>
-                            {% if ctx.listFriendRequests.length == 0 %}
+                            {% if ctx.friend_requests.length == 0 %}
                             {% else %}
-                            <div class="label-avatar bg-blue">{{ ctx.listFriendRequests.length }}</div>
+                            <div class="label-avatar bg-blue">{{ ctx.friend_requests.length }}</div>
                             {% endif %}
                         </div>
                     </a>
@@ -295,33 +295,33 @@
                         <h6 class="title">FRIEND REQUESTS</h6>
                     </div>
                     <ul class="notification-list friend-requests">
-                        {% if ctx.listFriendRequests.length == 0 %}
+                        {% if ctx.friend_requests.length == 0 %}
                         <li>You have no friend requests</li>
                         {% else %}
-                        {% for friendRequest in ctx.listFriendRequests %}
+                        {% for friendRequest in ctx.friend_requests %}
                         <li>
                             <div class="author-thumb">
                                 <div alt="author" style="
                                     width: 40px;
                                     height: 40px;
                                     border-radius: 100%;
-                                    background: url('{{ friendRequest.getFriendAvatar() }}') no-repeat;
+                                    background: url('{{ friendRequest.getUserAvatar() }}') no-repeat;
                                     background-size: cover;
                                     background-position: center;    
                                 "></div>
                             </div>
                             <div class="notification-event">
-                                <a href="profile?id={{ friendRequest.getFriendId() }}" class="h6 notification-friend">{{ friendRequest.getFollowerName() }}</a>
+                                <a href="profile?id={{ friendRequest.getUserId() }}" class="h6 notification-friend">{{ friendRequest.getPresentationName() }}</a>
                                 <span class="chat-message-item">Mutual Friend: plz wait </span>
                             </div>
                             <span class="notification-icon">
-                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=friendAccept" class="accept-request">
+                                <a href="friend?id={{ friendRequest.getUserId() }}&ref_page=friendAccept" class="accept-request">
                                     <span class="without-text">
                                         <i class="fas fa-user-plus"></i>
                                     </span>
                                 </a>
 
-                                <a href="friend?id={{ friendRequest.getFriendId() }}&ref_page=cancel" class="accept-request request-del">
+                                <a href="friend?id={{ friendRequest.getUserId() }}&ref_page=cancel" class="accept-request request-del">
                                     <span class="">
                                         <i class="fas fa-user-times"></i>
                                     </span>

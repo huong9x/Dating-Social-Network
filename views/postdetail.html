@@ -60,42 +60,42 @@ Post Detail
 					<div class="post-block-photo js-zoom-gallery">
 						{% for media in post.getPostMedia() %}
 							{% if post.getPostMedia().length == 1 %}
-								{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-								<a href="/uploadedFiles/{{ media[0] }}" class="col col-1-width">
+								{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+								<a href="{{ media.getFilename() }}" class="col col-1-width">
 									<div style="							
 									width: 100%;
 									height: 500px;
-									background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+									background: url('{{ media.getFilename() }}') no-repeat;
 									background-size: cover;
 									background-position: center;">
 									</div>
 								</a>
 								{% endif %}
 
-								{% if media[1] == 'video/mp4' %}
+								{% if media.getFiletype() == 'video/mp4' %}
 								<video style="width: 100%; height: auto;" controls="">
-									<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+									<source src="{{ media.getFilename() }}" type="video/mp4">
 								</video>
 								{% endif %}
 							{% endif %}
 
 							{% if post.getPostMedia().length == 2 %}
-								{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-								<a href="/uploadedFiles/{{ media[0] }}" class="half-width">
+								{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+								<a href="{{ media.getFilename() }}" class="half-width">
 									<div style="							
 									width: 100%;
 									height: 400px;
-									background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+									background: url('{{ media.getFilename() }}') no-repeat;
 									background-size: cover;
 									background-position: center;">
 									</div>
 								</a>
 								{% endif %}
 
-								{% if media[1] == 'video/mp4' %}
-								<div href="/uploadedFiles/{{ media[0] }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+								{% if media.getFiletype() == 'video/mp4' %}
+								<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
 									<video style="width: 100%; height: 400px;" controls="">
-										<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+										<source src="{{ media.getFilename() }}" type="video/mp4">
 									</video>
 								</div>
 								{% endif %}
@@ -103,22 +103,22 @@ Post Detail
 
 							{% if post.getPostMedia().length == 3 %}
 								{% if loop.index0 < 2 %}  
-									{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-									<a href="/uploadedFiles/{{ media[0] }}" class="half-width">
+									{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+									<a href="{{ media.getFilename() }}" class="half-width">
 										<div style="							
 										width: 100%;
 										height: 275px;
-										background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+										background: url('{{ media.getFilename() }}') no-repeat;
 										background-size: cover;
 										background-position: center;">
 										</div>
 									</a>
 									{% endif %}
 
-									{% if media[1] == 'video/mp4' %}
-									<div href="/uploadedFiles/{{ media[0] }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+									{% if media.getFiletype() == 'video/mp4' %}
+									<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
 										<video style="width: 100%; height: 275px;" controls="">
-											<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+											<source src="{{ media.getFilename() }}" type="video/mp4">
 										</video>
 									</div>
 									{% endif %}
@@ -126,22 +126,22 @@ Post Detail
 								{% endif %}
 
 								{% if loop.index0 == 2 %} 
-									{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-									<a href="/uploadedFiles/{{ media[0] }}" class="col col-1-width">
+									{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+									<a href="{{ media.getFilename() }}" class="col col-1-width">
 										<div style="							
 										width: 100%;
 										height: 275px;
-										background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+										background: url('{{ media.getFilename() }}') no-repeat;
 										background-size: cover;
 										background-position: center;">
 										</div>
 									</a>
 									{% endif %}
 
-									{% if media[1] == 'video/mp4' %}
-									<div href="/uploadedFiles/{{ media[0] }}" class="col col-1-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+									{% if media.getFiletype() == 'video/mp4' %}
+									<div href="{{ media.getFilename() }}" class="col col-1-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
 										<video style="width: 100%; height: 275px;" controls="">
-											<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+											<source src="{{ media.getFilename() }}" type="video/mp4">
 										</video>
 									</div>
 									{% endif %}
@@ -149,22 +149,22 @@ Post Detail
 							{% endif %}
 
 							{% if post.getPostMedia().length == 4 %}
-								{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-								<a href="/uploadedFiles/{{ media[0] }}" class="half-width">
+								{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+								<a href="{{ media.getFilename() }}" class="half-width">
 									<div style="							
 									width: 100%;
 									height: 275px;
-									background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+									background: url('{{ media.getFilename() }}') no-repeat;
 									background-size: cover;
 									background-position: center;">
 									</div>
 								</a>
 								{% endif %}
 
-								{% if media[1] == 'video/mp4' %}
-								<div href="/uploadedFiles/{{ media[0] }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+								{% if media.getFiletype() == 'video/mp4' %}
+								<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
 									<video style="width: 100%; height: 275px;" controls="">
-										<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+										<source src="{{ media.getFilename() }}" type="video/mp4">
 									</video>
 								</div>
 								{% endif %}
@@ -172,32 +172,32 @@ Post Detail
 
 							{% if post.getPostMedia().length  > 4 %}
 								{% if loop.index0 < 3 %}    
-									{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg') %}
-									<a href="/uploadedFiles/{{ media[0] }}" class="half-width">
+									{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg') %}
+									<a href="{{ media.getFilename() }}" class="half-width">
 										<div style="							
 										width: 100%;
 										height: 276px;
-										background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+										background: url('{{ media.getFilename() }}') no-repeat;
 										background-size: cover;
 										background-position: center;">
 										</div>
 									</a>
 									{% endif %}
 
-									{% if media[1] == 'video/mp4' %}
+									{% if media.getFiletype() == 'video/mp4' %}
 									<video style="width: 100%; height: auto;" controls="">
-										<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+										<source src="{{ media.getFilename() }}" type="video/mp4">
 									</video>
 									{% endif %}
 								{% endif %}
 
 								{% if loop.index0 == 3 %}    
-									{% if (media[1] == 'image/jpg') or (media[1] == 'image/png')  or (media[1] == 'image/jpeg')  %}
-									<a href="/uploadedFiles/{{ media[0] }}" class="more-photos half-width">
+									{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+									<a href="{{ media.getFilename() }}" class="more-photos half-width">
 										<div style="							
 										width: 100%;
 										height: 276px;
-										background: url('/uploadedFiles/{{ media[0] }}') no-repeat;
+										background: url('{{ media.getFilename() }}') no-repeat;
 										background-size: cover;
 										background-position: center;">
 										</div>
@@ -205,9 +205,9 @@ Post Detail
 									</a>
 									{% endif %}
 
-									{% if media[1] == 'video/mp4' %}
+									{% if media.getFiletype() == 'video/mp4' %}
 									<video style="width: 100%; height: 276px;" controls="" class="more-photos half-width">
-										<source src="/uploadedFiles/{{ media[0] }}" type="video/mp4">
+										<source src="{{ media.getFilename() }}" type="video/mp4">
 									</video>
 									<span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
 									{% endif %}
@@ -232,28 +232,189 @@ Post Detail
 					{% if post.getPostShareId() %}
 								<article class="hentry post">
 									<div class="post__author author vcard inline-items">
-										<img src="{{ post.getOriginalPostAvatar() }}" alt="author">
+										<img src="{{ post.getSharedUserAvatar() }}" alt="author">
 								
 										<div class="author-date">
-											<a class="h6 post__author-name fn" href="/profile?id={{ post.getOriginalPostUserId() }}">{{ post.getOriginalPostName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
+											<a class="h6 post__author-name fn" href="/profile?id={{ post.getSharedUserId() }}">{{ post.getSharedUserPresentationName() }} <img src="http://azizanosman.com/imkk-mei2015/images/icon/facebook-verified-check-mark.png" style="width: 15px;height: auto;padding-bottom: 2%;"></a>
 											<div class="post__date">
-												<a href="/post?id={{ post.getOriginalPostId() }}" style="color: #9697a1;">
+												<a href="/post?id={{ post.getPostShareId() }}" style="color: #9697a1;">
 													<time class="published">
-														{{ post.getOriginalPostTime() }}
+														{{ post.getSharedPostTime() }}
 													</time>
 												</a>
 											</div>
 										</div>
 									</div>
 									<p>
-										{{ post.getOriginalPostContent() }}
+										{{ post.getSharedContent() }}
 									</p>
+									{% if post.getSharedPostMedia() %}
+									<div class="post-block-photo js-zoom-gallery">
+										{% for media in post.getSharedPostMedia() %}
+											{% if post.getSharedPostMedia().length == 1 %}
+												{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+												<a href="{{ media.getFilename() }}" class="col col-1-width">
+													<div style="							
+													width: 100%;
+													height: 500px;
+													background: url('{{ media.getFilename() }}') no-repeat;
+													background-size: cover;
+													background-position: center;">
+													</div>
+												</a>
+												{% endif %}
+				
+												{% if media.getFiletype() == 'video/mp4' %}
+												<video style="width: 100%; height: auto;" controls="">
+													<source src="{{ media.getFilename() }}" type="video/mp4">
+												</video>
+												{% endif %}
+											{% endif %}
+				
+											{% if post.getSharedPostMedia().length == 2 %}
+												{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+												<a href="{{ media.getFilename() }}" class="half-width">
+													<div style="							
+													width: 100%;
+													height: 400px;
+													background: url('{{ media.getFilename() }}') no-repeat;
+													background-size: cover;
+													background-position: center;">
+													</div>
+												</a>
+												{% endif %}
+				
+												{% if media.getFiletype() == 'video/mp4' %}
+												<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+													<video style="width: 100%; height: 400px;" controls="">
+														<source src="{{ media.getFilename() }}" type="video/mp4">
+													</video>
+												</div>
+												{% endif %}
+											{% endif %}
+				
+											{% if post.getSharedPostMedia().length == 3 %}
+												{% if loop.index0 < 2 %}  
+													{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+													<a href="{{ media.getFilename() }}" class="half-width">
+														<div style="							
+														width: 100%;
+														height: 275px;
+														background: url('{{ media.getFilename() }}') no-repeat;
+														background-size: cover;
+														background-position: center;">
+														</div>
+													</a>
+													{% endif %}
+				
+													{% if media.getFiletype() == 'video/mp4' %}
+													<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+														<video style="width: 100%; height: 275px;" controls="">
+															<source src="{{ media.getFilename() }}" type="video/mp4">
+														</video>
+													</div>
+													{% endif %}
+				
+												{% endif %}
+				
+												{% if loop.index0 == 2 %} 
+													{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+													<a href="{{ media.getFilename() }}" class="col col-1-width">
+														<div style="							
+														width: 100%;
+														height: 275px;
+														background: url('{{ media.getFilename() }}') no-repeat;
+														background-size: cover;
+														background-position: center;">
+														</div>
+													</a>
+													{% endif %}
+				
+													{% if media.getFiletype() == 'video/mp4' %}
+													<div href="{{ media.getFilename() }}" class="col col-1-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+														<video style="width: 100%; height: 275px;" controls="">
+															<source src="{{ media.getFilename() }}" type="video/mp4">
+														</video>
+													</div>
+													{% endif %}
+												{% endif %}
+											{% endif %}
+				
+											{% if post.getSharedPostMedia().length == 4 %}
+												{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+												<a href="{{ media.getFilename() }}" class="half-width">
+													<div style="							
+													width: 100%;
+													height: 275px;
+													background: url('{{ media.getFilename() }}') no-repeat;
+													background-size: cover;
+													background-position: center;">
+													</div>
+												</a>
+												{% endif %}
+				
+												{% if media.getFiletype() == 'video/mp4' %}
+												<div href="{{ media.getFilename() }}" class="half-width" style="float: left; overflow: hidden; padding: 0 8px 8px 0;"></a>
+													<video style="width: 100%; height: 275px;" controls="">
+														<source src="{{ media.getFilename() }}" type="video/mp4">
+													</video>
+												</div>
+												{% endif %}
+											{% endif %}
+				
+											{% if post.getSharedPostMedia().length  > 4 %}
+												{% if loop.index0 < 3 %}    
+													{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg') %}
+													<a href="{{ media.getFilename() }}" class="half-width">
+														<div style="							
+														width: 100%;
+														height: 276px;
+														background: url('{{ media.getFilename() }}') no-repeat;
+														background-size: cover;
+														background-position: center;">
+														</div>
+													</a>
+													{% endif %}
+				
+													{% if media.getFiletype() == 'video/mp4' %}
+													<video style="width: 100%; height: auto;" controls="">
+														<source src="{{ media.getFilename() }}" type="video/mp4">
+													</video>
+													{% endif %}
+												{% endif %}
+				
+												{% if loop.index0 == 3 %}    
+													{% if (media.getFiletype() == 'image/jpg') or (media.getFiletype() == 'image/png')  or (media.getFiletype() == 'image/jpeg')  %}
+													<a href="{{ media.getFilename() }}" class="more-photos half-width">
+														<div style="							
+														width: 100%;
+														height: 276px;
+														background: url('{{ media.getFilename() }}') no-repeat;
+														background-size: cover;
+														background-position: center;">
+														</div>
+														<span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+													</a>
+													{% endif %}
+				
+													{% if media.getFiletype() == 'video/mp4' %}
+													<video style="width: 100%; height: 276px;" controls="" class="more-photos half-width">
+														<source src="{{ media.getFilename() }}" type="video/mp4">
+													</video>
+													<span class="h2">+{{ post.getPostMedia().length - 4 }}</span>
+													{% endif %}
+													
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									</div>
+									{% endif %}
 								</article>
 					{% endif%}
 					
 					<div class="post-additional-info inline-items">
 						<a href="post?id={{ post.getPostId() }}&ref_page=like" class="post-add-icon inline-items"
-						{% if likeExist %}
+						{% if likeExist.length %}
 							style="color:red;"
 						{% endif %}
 						>
@@ -268,7 +429,7 @@ Post Detail
 							</a>
 
 							{% if post.getPostShareId() %}
-								<a href="/post?id={{ post.getOriginalPostId() }}&ref_page=share" class="post-add-icon inline-items">
+								<a href="/post?id={{ post.getPostShareId() }}&ref_page=share" class="post-add-icon inline-items">
 							{% else %}
 								<a href="/post?id={{ post.getPostId() }}&ref_page=share" class="post-add-icon inline-items">
 							{% endif %}
