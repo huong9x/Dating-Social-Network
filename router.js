@@ -69,19 +69,12 @@ router
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
-    .get('/unlike',
+    .post('/like',
             logginRequiredMiddleware,
-            postController.getPost,
-            postController.unlikePost,
-            postController.downLikeCount
-    )
-    .get('/like',
-            logginRequiredMiddleware,
-            postController.likePost,
-            postController.getPost,
-            postController.upLikeCount,
-            notificationController.notifyNewLike
-
+            postController.checkLikeExist,
+            postController.getDataPost,
+            postController.reactionPost,
+            notificationController.notifyNewReaction
     )
 
     .post('/publishNewPost', logginRequiredMiddleware, upload.array('file', 100), postController.publishNewPost)

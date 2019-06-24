@@ -19,6 +19,7 @@ class NotificationController {
         await ctx.notificationRepository.deleteNotification(ctx.session.loggedInUserId, ctx.query.id);
         return ctx.redirect('/notifications', { ctx });        
     }
+    
     async notifyNewComment(ctx) {
         let user_id = ctx.request.post.getUserId()
         if (user_id != ctx.session.loggedInUserId) {
@@ -26,14 +27,15 @@ class NotificationController {
         }
         return ctx.redirect('/post?id=' + ctx.query.id);
     }
-    async notifyNewLike(ctx) {
+
+    async notifyNewReaction(ctx) {
         let user_id = ctx.request.post.getUserId();
         let my_id   = ctx.session.loggedInUserId;
         if (user_id != my_id) {
-            await ctx.notificationRepository.likeNotification(user_id, my_id, ctx.query.id);
+            await ctx.notificationRepository.likeNotification(user_id, my_id, ctx.request.body.post_id);
         }
-        return ctx.redirect('/post?id=' + ctx.query.id);
     }
+
     async notifyNewShare(ctx) {
         if (ctx.request.post.getUserId() != ctx.session.loggedInUserId) {
             await ctx.notificationRepository.shareNotification(ctx.request.post.getUserId(), ctx.session.loggedInUserId, ctx.query.id);            
