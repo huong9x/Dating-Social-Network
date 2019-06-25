@@ -558,11 +558,35 @@
             </div>
         </div>
     </div>
+    
     <!-- end Report-profile -->
     <a class="back-to-top" href="#">
         <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
     </a>
     <!-- JS Scripts -->
+
+    <script>
+        function reactPost(post_id) {
+            $.ajax({
+                url: "/like",
+                data: {
+                    post_id: post_id
+                },
+                type: 'POST',
+                success: function(result) {
+                    if(result.status == 'unlike') {
+                        $("#likeCount" + post_id).html(result.likeCount);
+                        $(".like" + post_id).css("color", "red");
+                    }
+                    else if(result.status == 'like') {
+                        $("#likeCount" + post_id).html(result.likeCount);
+                        $(".like" + post_id).css("color", "");
+                    }
+                }
+            }); 
+        }
+    </script>
+
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery.appear.js"></script>
     <script src="js/jquery.mousewheel.js"></script>

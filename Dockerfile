@@ -10,8 +10,8 @@ RUN npm install
 
 COPY ./app.js ./app.js
 
-ADD ./ ./
+# ADD ./ ./
 
-EXPOSE 5000
+# EXPOSE 5000
 
 CMD node app.js

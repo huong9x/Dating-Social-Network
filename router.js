@@ -59,51 +59,46 @@ router
      
     .get('/newsfeed', logginRequiredMiddleware, topPanelProfile, profileController.getUserFriend, newsfeedController.getNewsfeed)
 
-    .get('/post', logginRequiredMiddleware,
-                  topPanelProfile,
-                  postController.getPost,
-                  commentController.getPostComment,
-                  postController.checkLikeExist,
-                  postController.getPostOwner,
-                  postController.viewPost)
+    .get('/post',
+        logginRequiredMiddleware,
+        topPanelProfile,
+        postController.getPost,
+        commentController.getPostComment,
+        postController.checkLikeOnPost,
+        postController.getPostOwner,
+        postController.viewPost
+    )
     .post('/editPost', logginRequiredMiddleware, postController.editPost)
     .get('/deletePost', logginRequiredMiddleware, postController.deletePost)
 
-    .get('/unlike',
-            logginRequiredMiddleware,
-            postController.getPost,
-            postController.unlikePost,
-            postController.downLikeCount
-    )
-    .get('/like',
-            logginRequiredMiddleware,
-            postController.likePost,
-            postController.getPost,
-            postController.upLikeCount,
-            notificationController.notifyNewLike
-
+    .post('/like',
+        logginRequiredMiddleware,
+        postController.checkLikeExist,
+        postController.getDataPost,
+        postController.reactionPost,
+        notificationController.notifyNewReaction
     )
 
     .post('/publishNewPost', logginRequiredMiddleware, upload.array('file', 100), postController.publishNewPost)
 
     .get('/profile',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            profileController.getProfileInfo,
-            profileController.IsFriendCheck,
-            profileController.getUserPosts,
-            photosController.getProfilePhoto,
-            photosController.getLastPhotos,
-            profileController.getListFriend,
-            profileController.getProfile
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.getProfileInfo,
+        profileController.IsFriendCheck,
+        profileController.getUserPosts,
+        photosController.getProfilePhoto,
+        photosController.getLastPhotos,
+        profileController.getListFriend,
+        profileController.getProfile
     )
 
     .post('/updateProfileAvatar',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            upload.single('avatar'),
-            profileController.updateProfileAvatar
-            )
+        logginRequiredMiddleware,
+        topPanelProfile,
+        upload.single('avatar'),
+        profileController.updateProfileAvatar
+    )
 
     .post('/updateProfileCover', logginRequiredMiddleware, topPanelProfile, upload.single('file'), profileController.updateProfileCover)
 
@@ -111,64 +106,70 @@ router
 
     .post('/editSettings', logginRequiredMiddleware, topPanelProfile, settingsController.postEditSettings)
 
-    .post('/postComment', logginRequiredMiddleware,
-                          commentController.postComment,
-                          postController.getPost,
-                          postController.updateCommentNumberUp,
-                          notificationController.notifyNewComment
-                          )
+    .post('/postComment',
+        logginRequiredMiddleware,
+        commentController.postComment,
+        postController.getPost,
+        postController.updateCommentNumberUp,
+        notificationController.notifyNewComment
+    )
 
 
     .post('/editComment', logginRequiredMiddleware, commentController.editComment)
 
-    .get('/deleteComment',logginRequiredMiddleware,
-                          commentController.deleteComment,
-                          postController.getPost,
-                          postController.updateCommentNumberDown)
-
-    .post('/share', logginRequiredMiddleware,
-                    postController.postShare,
-                    postController.getPost,
-                    postController.upShareCount,
-                    notificationController.notifyNewShare
+    .get('/deleteComment',
+        logginRequiredMiddleware,
+        commentController.deleteComment,
+        postController.getPost,
+        postController.updateCommentNumberDown
     )
 
-    .get('/about', logginRequiredMiddleware,
-                   topPanelProfile,
-                   profileController.getProfileInfo,
-                   profileController.IsFriendCheck,
-                   aboutController.getAbout
-                   )
+    .post('/share',
+        logginRequiredMiddleware,
+        postController.postShare,
+        postController.getPost,
+        postController.upShareCount,
+        notificationController.notifyNewShare
+    )
+
+    .get('/about',
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.getProfileInfo,
+        profileController.IsFriendCheck,
+        aboutController.getAbout
+    )
     
     .get('/notifications', logginRequiredMiddleware, topPanelProfile)
     
     .get('/friends',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            profileController.getProfileInfo,
-            profileController.IsFriendCheck,
-            profileController.getListFriend,
-            friendsController.getFriends)
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.getProfileInfo,
+        profileController.IsFriendCheck,
+        profileController.getListFriend,
+        friendsController.getFriends
+    )
 
     .get('/friend', logginRequiredMiddleware, topPanelProfile, friendsController.getFriendRequest)
     
     .get('/photos',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            profileController.getProfileInfo,
-            profileController.IsFriendCheck,
-            photosController.getProfilePhoto,
-            photosController.getPhotos
-            )
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.getProfileInfo,
+        profileController.IsFriendCheck,
+        photosController.getProfilePhoto,
+        photosController.getPhotos
+    )
     
     .get('/videos',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            profileController.getProfileInfo,
-            profileController.IsFriendCheck,
-            videoController.getProfileVideo,
-            videoController.getVideos
-            )
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.getProfileInfo,
+        profileController.IsFriendCheck,
+        videoController.getProfileVideo,
+        videoController.getVideos
+    )
 
     .get('/404page', logginRequiredMiddleware, topPanelProfile, aboutController.getNullPage)
     
@@ -177,10 +178,10 @@ router
     .post('/changepassword', logginRequiredMiddleware, topPanelProfile, profileController.postChangePassword)
     
     .get('/search',
-            logginRequiredMiddleware,
-            topPanelProfile,
-            profileController.searchUser
-            )
+        logginRequiredMiddleware,
+        topPanelProfile,
+        profileController.searchUser
+    )
             
     .get('/searchnearby', logginRequiredMiddleware, topPanelProfile, profileController.searchNearBy)
 

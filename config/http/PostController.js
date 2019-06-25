@@ -53,26 +53,12 @@ class PostController {
 
     async getPost(ctx, next) {
         ctx.request.post  = await ctx.postDetailFinder.find(ctx.query.id);
-        // console.log(ctx.request.post.getUserId())        
         await next();
     }
-    async unlikePost(ctx, next) {
-        await ctx.likeRepository.reacting(new UnlikePost(ctx.session.loggedInUserId, ctx.query.id));
+
+    async getDataPost(ctx, next) {
+        ctx.request.post  = await ctx.postDetailFinder.find(ctx.request.body.post_id);
         await next();
-    }
-    async likePost(ctx, next) {
-        await ctx.likeRepository.reacting(new LikePost(ctx.session.loggedInUserId, ctx.query.id));
-        await next();
-    }
-    async upLikeCount(ctx, next) {
-        let like_count = ctx.request.post.getLikeCount() + 1;
-        await ctx.postRepository.update(new LikeCountUpdate(ctx.query.id, like_count));
-        await next();
-    }
-    async downLikeCount(ctx) {
-        let like_count = ctx.request.post.getLikeCount() - 1;
-        await ctx.postRepository.update(new LikeCountUpdate(ctx.query.id, like_count));
-        return ctx.redirect('/post?id=' + ctx.query.id);
     }
 
     async getPostOwner(ctx, next) {
@@ -80,7 +66,38 @@ class PostController {
         await next();
     }
 
-    async checkLikeExist (ctx, next) {
+    async reactionPost(ctx, next) {
+        if(ctx.request.reaction == "like") {
+            await ctx.likeRepository.reacting(new LikePost(ctx.session.loggedInUserId, ctx.request.body.post_id));
+            let like_count = ctx.request.post.getLikeCount() + 1;
+            await ctx.postRepository.update(new LikeCountUpdate(ctx.request.body.post_id, like_count));
+            ctx.response.body = {
+                status: 'unlike',
+                likeCount: like_count
+            };
+        } else if(ctx.request.reaction == "unlike") {
+            await ctx.likeRepository.reacting(new UnlikePost(ctx.session.loggedInUserId, ctx.request.body.post_id));
+            let like_count = ctx.request.post.getLikeCount() - 1;
+            await ctx.postRepository.update(new LikeCountUpdate(ctx.request.body.post_id, like_count));
+            ctx.response.body = {
+                status: 'like',
+                likeCount: like_count
+            };
+        }
+        await next();
+    }
+
+    async checkLikeExist(ctx, next) {
+        let likeExist = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.request.body.post_id);
+        if(likeExist.length) {
+            ctx.request.reaction = "unlike";
+        } else {
+            ctx.request.reaction = "like";
+        }
+        await next();
+    }
+
+    async checkLikeOnPost(ctx, next) {
         ctx.request.likeExist = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
         await next();
     }
