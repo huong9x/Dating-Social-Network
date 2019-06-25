@@ -75,7 +75,7 @@ class ProfileController {
         for (var i = 0; i < post_ids.length; i++) {
             let post = await ctx.postDetailFinder.find(post_ids[i].getPostId());
             posts.push(post);
-          };
+        };
         ctx.request.posts = posts;
         await next();
     }

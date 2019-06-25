@@ -53,7 +53,6 @@ class PostController {
 
     async getPost(ctx, next) {
         ctx.request.post  = await ctx.postDetailFinder.find(ctx.query.id);
-        // console.log(ctx.request.post.getUserId())
         await next();
     }
 
@@ -95,7 +94,11 @@ class PostController {
         } else {
             ctx.request.reaction = "like";
         }
-        ctx.request.likeExist = likeExist;
+        await next();
+    }
+
+    async checkLikeOnPost(ctx, next) {
+        ctx.request.likeExist = await ctx.likeRepository.likeExist(ctx.session.loggedInUserId, ctx.query.id);
         await next();
     }
 

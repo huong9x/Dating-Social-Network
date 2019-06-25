@@ -64,7 +64,7 @@ router
         topPanelProfile,
         postController.getPost,
         commentController.getPostComment,
-        postController.checkLikeExist,
+        postController.checkLikeOnPost,
         postController.getPostOwner,
         postController.viewPost
     )
